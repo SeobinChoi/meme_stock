@@ -110,7 +110,7 @@ class ModelEvaluator:
         else:
             # Regression metrics
             metrics['mae'] = mean_absolute_error(y_true, y_pred)
-            metrics['rmse'] = mean_squared_error(y_true, y_pred, squared=False)
+            metrics['rmse'] = np.sqrt(mean_squared_error(y_true, y_pred))
             metrics['directional_accuracy'] = self.calculate_directional_accuracy(y_true, y_pred)
         
         return metrics

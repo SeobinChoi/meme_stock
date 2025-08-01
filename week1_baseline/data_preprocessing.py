@@ -104,7 +104,6 @@ class DataPreprocessor:
         # Clean Reddit data
         if 'timestamp' in self.reddit_data.columns:
             self.reddit_data['timestamp'] = pd.to_datetime(self.reddit_data['timestamp'])
-            self.reddit_data['date'] = self.reddit_data['timestamp'].dt.date
             self.reddit_data = self.reddit_data.dropna(subset=['title', 'body'])
         
         # Clean stock data
@@ -127,12 +126,20 @@ class DataPreprocessor:
         # Start with stock data as base
         merged = self.stock_data.copy()
         
+        # Ensure date column is datetime
+        merged['date'] = pd.to_datetime(merged['date'])
+        
         # Merge with mention data
         if self.mention_data is not None:
+            self.mention_data['date'] = pd.to_datetime(self.mention_data['date'])
             merged = merged.merge(self.mention_data, on='date', how='left')
         
         # Aggregate Reddit data by date
         if self.reddit_data is not None:
+            # Convert timestamp to date for grouping
+            self.reddit_data['date'] = pd.to_datetime(self.reddit_data['timestamp']).dt.date
+            self.reddit_data['date'] = pd.to_datetime(self.reddit_data['date'])
+            
             daily_reddit = self.reddit_data.groupby('date').agg({
                 'score': ['mean', 'sum', 'count'],
                 'comms_num': ['mean', 'sum'],

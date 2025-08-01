@@ -124,7 +124,7 @@ class BaselineModels:
                 y_pred_binary = (y_pred > 0.5).astype(int)
                 score = accuracy_score(y_val, y_pred_binary)
             else:
-                score = mean_squared_error(y_val, y_pred, squared=False)
+                score = np.sqrt(mean_squared_error(y_val, y_pred))
             
             cv_scores.append(score)
             feature_importance += model.feature_importance()
@@ -190,7 +190,7 @@ class BaselineModels:
             if 'direction' in target_col:
                 score = accuracy_score(y_val, y_pred)
             else:
-                score = mean_squared_error(y_val, y_pred, squared=False)
+                score = np.sqrt(mean_squared_error(y_val, y_pred))
             
             cv_scores.append(score)
             feature_importance += model.feature_importances_
@@ -259,7 +259,7 @@ class BaselineModels:
                 y_pred_binary = (y_pred > 0.5).astype(int)
                 score = accuracy_score(y_val, y_pred_binary)
             else:
-                score = mean_squared_error(y_val, y_pred, squared=False)
+                score = np.sqrt(mean_squared_error(y_val, y_pred))
             
             cv_scores.append(score)
             print(f"Fold {fold+1}: Score = {score:.4f}")
