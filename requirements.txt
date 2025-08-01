@@ -1,0 +1,33 @@
+# Core data science libraries
+pandas>=1.5.0
+numpy>=1.21.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+scikit-learn>=1.1.0
+
+# Machine Learning
+lightgbm>=3.3.0
+xgboost>=1.6.0
+optuna>=3.0.0
+
+# Deep Learning
+tensorflow>=2.10.0
+keras>=2.10.0
+
+# NLP and Sentiment Analysis
+transformers>=4.20.0
+torch>=1.12.0
+nltk>=3.7
+textblob>=0.17.0
+
+# Technical Analysis
+ta-lib>=0.4.25
+yfinance>=0.1.70
+
+# Visualization and Analysis
+plotly>=5.10.0
+shap>=0.41.0
+
+# Utilities
+tqdm>=4.64.0
+joblib>=1.1.0 
