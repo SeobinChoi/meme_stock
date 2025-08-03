@@ -1,0 +1,132 @@
+{
+  "validation_timestamp": "2025-08-03T23:55:24.481685",
+  "data_directory": "data",
+  "reddit_validation": {
+    "file_size_mb": 41.71,
+    "total_rows": 53187,
+    "total_columns": 8,
+    "columns": [
+      "title",
+      "score",
+      "id",
+      "url",
+      "comms_num",
+      "created",
+      "body",
+      "timestamp"
+    ],
+    "date_range": null,
+    "missing_data": {
+      "body": {
+        "count": "28449",
+        "percentage": 53.49
+      }
+    },
+    "duplicates": "0",
+    "data_types": {
+      "title": "object",
+      "score": "int64",
+      "id": "object",
+      "url": "object",
+      "comms_num": "int64",
+      "created": "float64",
+      "body": "object",
+      "timestamp": "object"
+    },
+    "sample_data": [
+      {
+        "title": "It's not about the money, it's about sending a message. \ud83d\ude80\ud83d\udc8e\ud83d\ude4c",
+        "score": 55,
+        "id": "l6ulcx",
+        "url": "https://v.redd.it/6j75regs72e61",
+        "comms_num": 6,
+        "created": 1611862661.0,
+        "body": NaN,
+        "timestamp": "2021-01-28 21:37:41"
+      },
+      {
+        "title": "Math Professor Scott Steiner says the numbers spell DISASTER for Gamestop shorts",
+        "score": 110,
+        "id": "l6uibd",
+        "url": "https://v.redd.it/ah50lyny62e61",
+        "comms_num": 23,
+        "created": 1611862330.0,
+        "body": NaN,
+        "timestamp": "2021-01-28 21:32:10"
+      },
+      {
+        "title": "Exit the system",
+        "score": 0,
+        "id": "l6uhhn",
+        "url": "https://www.reddit.com/r/wallstreetbets/comments/l6uhhn/exit_the_system/",
+        "comms_num": 47,
+        "created": 1611862235.0,
+        "body": "The CEO of NASDAQ pushed to halt trading \u201cto give investors a chance to recalibrate their positions\u201d.\n\n[https://mobile.twitter.com/Mediaite/status/1354504710695362563](https://mobile.twitter.com/Mediaite/status/1354504710695362563)\n\nNow SEC is investigating, brokers are disallowing buying more calls. This is the institutions flat out admitting they will change the rules to bail out the rich but if it happens to us, we get a \u201cwell shucks you should have known investing is risky! have you tried cutting out avocados and coffee, maybe doing Uber on the side?\u201d\n\nWe may have collectively driven up enough sentiment in wall street to make other big players go long on GME with us (we do not have the money to move the stock as much as it did alone). we didn\u2019t hurt wall street as a whole, just a few funds went down while others went up and profited off the shorts the same as us. The media wants to pin the blame on us.\n\nIt should be crystal clear that this is a rigged game by now. Its time to build new exchanges that can\u2019t arbitrarily change the rules on us. Cr\\*\\*o has some version of these, maybe they can be repurposed to be trade stock without government intervention. I don\u2019t know exactly what it will look like yet, but the broad next steps i see are - 1. exit the current financial system 2. build a new one.",
+        "timestamp": "2021-01-28 21:30:35"
+      }
+    ],
+    "missing_columns": [
+      "num_comments",
+      "created_utc"
+    ],
+    "status": "WARNING",
+    "score_stats": {
+      "mean": 1382.46,
+      "median": 37.0,
+      "std": 7999.27,
+      "min": "0",
+      "max": "348241"
+    }
+  },
+  "stock_validation": {
+    "status": "PASS",
+    "stock_files": {
+      "AMC": {
+        "path": "data/raw/archive-2/AMC.csv",
+        "size_mb": 0.14,
+        "rows": 2111,
+        "columns": [
+          "Date",
+          "Open",
+          "High",
+          "Low",
+          "Close",
+          "Adj Close",
+          "Volume"
+        ],
+        "date_range": {
+          "start": "2013-12-18",
+          "end": "2022-05-06",
+          "total_days": 3061
+        },
+        "missing_data": {}
+      }
+    },
+    "total_files": 1,
+    "missing_stocks": [
+      "GME",
+      "BB"
+    ]
+  },
+  "temporal_alignment": {
+    "status": "PASS",
+    "reddit_date_range": null,
+    "stock_date_ranges": {
+      "AMC": {
+        "start": "2013-12-18",
+        "end": "2022-05-06",
+        "total_days": 3061
+      }
+    },
+    "overlap_analysis": {},
+    "recommendations": []
+  },
+  "overall_status": "WARNING",
+  "summary": {
+    "total_datasets": 2,
+    "total_rows": 55298,
+    "total_size_mb": 41.85,
+    "date_coverage": "Unknown",
+    "data_quality_score": 90.0
+  }
+}
