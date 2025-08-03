@@ -74,7 +74,7 @@ class DataValidator:
             }
             
             # Check for required columns
-            required_columns = ['title', 'score', 'num_comments', 'created_utc']
+            required_columns = ['title', 'score', 'comms_num', 'created']
             missing_columns = [col for col in required_columns if col not in df.columns]
             
             if missing_columns:

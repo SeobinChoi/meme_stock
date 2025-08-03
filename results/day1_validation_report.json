@@ -1,5 +1,5 @@
 {
-  "validation_timestamp": "2025-08-03T23:55:24.481685",
+  "validation_timestamp": "2025-08-04T00:36:59.594815",
   "data_directory": "data",
   "reddit_validation": {
     "file_size_mb": 41.71,
@@ -65,11 +65,7 @@
         "timestamp": "2021-01-28 21:30:35"
       }
     ],
-    "missing_columns": [
-      "num_comments",
-      "created_utc"
-    ],
-    "status": "WARNING",
+    "status": "PASS",
     "score_stats": {
       "mean": 1382.46,
       "median": 37.0,
@@ -121,12 +117,12 @@
     "overlap_analysis": {},
     "recommendations": []
   },
-  "overall_status": "WARNING",
+  "overall_status": "PASS",
   "summary": {
     "total_datasets": 2,
     "total_rows": 55298,
     "total_size_mb": 41.85,
     "date_coverage": "Unknown",
-    "data_quality_score": 90.0
+    "data_quality_score": 100.0
   }
 }

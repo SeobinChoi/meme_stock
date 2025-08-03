@@ -1,17 +1,17 @@
 === DAY 1 DATA VALIDATION SUMMARY ===
 
-Validation Timestamp: 2025-08-03T23:55:24.481685
-Overall Status: WARNING
+Validation Timestamp: 2025-08-04T00:36:59.594815
+Overall Status: PASS
 
 SUMMARY STATISTICS:
   Total Datasets: 2
   Total Rows: 55,298
   Total Size: 41.9 MB
   Date Coverage: Unknown
-  Data Quality Score: 90.0%
+  Data Quality Score: 100.0%
 
 REDDIT DATASET:
-  Status: WARNING
+  Status: PASS
   File Size: 41.71 MB
   Total Rows: 53,187
   Total Columns: 8
