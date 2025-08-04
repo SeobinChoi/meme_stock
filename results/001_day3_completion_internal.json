@@ -1,9 +1,9 @@
 {
-  "day3_timestamp": "2025-08-04T19:40:20.440045",
+  "day3_timestamp": "2025-08-04T20:28:01.285689",
   "overall_status": "PASS",
   "feature_summary": {
     "total_features_created": 193,
-    "total_samples": 1,
+    "total_samples": 176,
     "feature_categories": {
       "reddit": 48,
       "financial_gme": 41,
@@ -16,7 +16,7 @@
   },
   "quality_assessment": {
     "total_features": 193,
-    "total_samples": 1,
+    "total_samples": 176,
     "feature_categories": {
       "reddit": 48,
       "financial_gme": 41,
@@ -29,11 +29,12 @@
       "missing_values": "0",
       "missing_percentage": 0.0,
       "duplicate_rows": "0",
-      "constant_features": 193,
-      "high_correlation_pairs": 0
+      "constant_features": 137,
+      "high_correlation_pairs": 87
     },
     "recommendations": [
-      "\u26a0\ufe0f 193 constant features detected - consider removal"
+      "\u26a0\ufe0f 137 constant features detected - consider removal",
+      "\u26a0\ufe0f Many highly correlated features - consider feature selection"
     ]
   },
   "deliverables": {

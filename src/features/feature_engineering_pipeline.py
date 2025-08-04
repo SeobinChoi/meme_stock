@@ -74,7 +74,7 @@ class FeatureEngineeringPipeline:
         logger.info("STEP 2: Reddit-Based Feature Engineering (25 features)")
         logger.info("="*50)
         
-        reddit_features = self.feature_engineers['reddit'].generate_features(data['reddit'])
+        reddit_features = self.feature_engineers['reddit'].generate_features(data)
         self.feature_sets['reddit'] = reddit_features
         
         # Step 3: Generate Financial market features (35 features per stock)
@@ -82,7 +82,7 @@ class FeatureEngineeringPipeline:
         logger.info("STEP 3: Financial Market Feature Engineering (35 features per stock)")
         logger.info("="*50)
         
-        financial_features = self.feature_engineers['financial'].generate_features(data['stocks'])
+        financial_features = self.feature_engineers['financial'].generate_features(data)
         self.feature_sets['financial'] = financial_features
         
         # Step 4: Generate Temporal and cross-modal features (19 features)
@@ -132,36 +132,29 @@ class FeatureEngineeringPipeline:
         
         data = {}
         
-        # Load Reddit data
-        reddit_file = self.data_dir / "raw" / "reddit_wsb.csv"
-        if reddit_file.exists():
-            reddit_data = pd.read_csv(reddit_file)
-            logger.info(f"  Reddit data: {len(reddit_data)} records loaded")
-            data['reddit'] = reddit_data
+        # Load unified dataset (contains both Reddit and stock data)
+        unified_file = self.data_dir / "processed" / "unified_dataset.csv"
+        if unified_file.exists():
+            unified_data = pd.read_csv(unified_file, index_col=0, parse_dates=True)
+            logger.info(f"  Unified data: {len(unified_data)} records loaded")
+            data['unified'] = unified_data
         else:
-            logger.error("❌ Reddit data not found")
+            logger.error("❌ Unified dataset not found")
             return None
         
-        # Load stock data
+        # Load individual stock data for additional features
         stock_symbols = ["GME", "AMC", "BB"]
         stock_data = {}
         
         for symbol in stock_symbols:
-            stock_file = self.data_dir / "raw" / f"{symbol}_enhanced_stock_data.csv"
+            stock_file = self.data_dir / "processed" / f"cleaned_{symbol}_stock_data.csv"
             if stock_file.exists():
-                stock_df = pd.read_csv(stock_file)
+                stock_df = pd.read_csv(stock_file, index_col=0, parse_dates=True)
                 stock_data[symbol] = stock_df
-                logger.info(f"  {symbol} data: {len(stock_df)} records loaded")
+                logger.info(f"  {symbol} stock data: {len(stock_df)} records loaded")
             else:
-                logger.warning(f"⚠️ {symbol} enhanced data not found, trying original data")
-                original_file = self.data_dir / "raw" / f"{symbol}_stock_data.csv"
-                if original_file.exists():
-                    stock_df = pd.read_csv(original_file)
-                    stock_data[symbol] = stock_df
-                    logger.info(f"  {symbol} original data: {len(stock_df)} records loaded")
-                else:
-                    logger.error(f"❌ {symbol} data not found")
-                    return None
+                logger.warning(f"⚠️ {symbol} stock data not found")
+                stock_data[symbol] = None
         
         data['stocks'] = stock_data
         
@@ -175,22 +168,26 @@ class FeatureEngineeringPipeline:
         """
         Prepare data for feature engineering
         """
-        # Prepare Reddit data
-        reddit_data = data['reddit'].copy()
+        # The unified dataset already has proper date index
+        unified_data = data['unified'].copy()
         
-        # Convert timestamps
-        reddit_data['created'] = pd.to_datetime(reddit_data['created'])
-        reddit_data['date'] = reddit_data['created'].dt.date
+        # Ensure the index is timezone-naive
+        if hasattr(unified_data.index, 'tz') and unified_data.index.tz is not None:
+            unified_data.index = unified_data.index.tz_localize(None)
         
-        # Prepare stock data
+        # Prepare stock data (for additional features)
         stock_data = {}
         for symbol, df in data['stocks'].items():
-            stock_df = df.copy()
-            stock_df['Date'] = pd.to_datetime(stock_df['Date'], utc=True)
-            stock_df['date'] = stock_df['Date'].dt.date
-            stock_data[symbol] = stock_df
+            if df is not None:
+                stock_df = df.copy()
+                # Ensure the index is timezone-naive
+                if hasattr(stock_df.index, 'tz') and stock_df.index.tz is not None:
+                    stock_df.index = stock_df.index.tz_localize(None)
+                stock_data[symbol] = stock_df
+            else:
+                stock_data[symbol] = None
         
-        data['reddit'] = reddit_data
+        data['unified'] = unified_data
         data['stocks'] = stock_data
         
         return data
@@ -203,24 +200,28 @@ class FeatureEngineeringPipeline:
         
         # Start with Reddit features as base
         base_features = self.feature_sets['reddit'].copy()
-        base_features.index = pd.to_datetime(base_features.index).tz_localize(None)
+        if hasattr(base_features.index, 'tz') and base_features.index.tz is not None:
+            base_features.index = base_features.index.tz_localize(None)
         
         # Add financial features
         for symbol, features in self.feature_sets['financial'].items():
             # Rename columns to avoid conflicts
             symbol_features = features.copy()
-            symbol_features.index = pd.to_datetime(symbol_features.index).tz_localize(None)
+            if hasattr(symbol_features.index, 'tz') and symbol_features.index.tz is not None:
+                symbol_features.index = symbol_features.index.tz_localize(None)
             symbol_features.columns = [f"{symbol}_{col}" for col in symbol_features.columns]
             base_features = base_features.merge(symbol_features, left_index=True, right_index=True, how='left')
         
         # Add temporal features
         temporal_features = self.feature_sets['temporal'].copy()
-        temporal_features.index = pd.to_datetime(temporal_features.index).tz_localize(None)
+        if hasattr(temporal_features.index, 'tz') and temporal_features.index.tz is not None:
+            temporal_features.index = temporal_features.index.tz_localize(None)
         base_features = base_features.merge(temporal_features, left_index=True, right_index=True, how='left')
         
         # Add cross-modal features
         cross_modal_features = self.feature_sets['cross_modal'].copy()
-        cross_modal_features.index = pd.to_datetime(cross_modal_features.index).tz_localize(None)
+        if hasattr(cross_modal_features.index, 'tz') and cross_modal_features.index.tz is not None:
+            cross_modal_features.index = cross_modal_features.index.tz_localize(None)
         base_features = base_features.merge(cross_modal_features, left_index=True, right_index=True, how='left')
         
         # Fill missing values

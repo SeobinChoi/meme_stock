@@ -29,11 +29,11 @@ class TemporalFeatureEngineer:
         """
         logger.info("⏰ Generating temporal features...")
         
-        # Get date range from Reddit data
-        reddit_data = data['reddit']
+        # Get date range from unified data
+        unified_data = data['unified']
         date_range = pd.date_range(
-            start=reddit_data['date'].min(),
-            end=reddit_data['date'].max(),
+            start=unified_data.index.min(),
+            end=unified_data.index.max(),
             freq='D'
         )
         

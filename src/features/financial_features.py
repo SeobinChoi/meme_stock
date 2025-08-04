@@ -26,23 +26,43 @@ class FinancialFeatureEngineer:
     def __init__(self):
         self.feature_names = []
         
-    def generate_features(self, stock_data: Dict[str, pd.DataFrame]) -> Dict[str, pd.DataFrame]:
+    def generate_features(self, data: Dict) -> Dict[str, pd.DataFrame]:
         """
         Generate financial features for all stocks (35 features per stock)
         """
         logger.info("📈 Generating financial market features...")
         
         financial_features = {}
+        unified_data = data['unified']
+        stock_data = data['stocks']
         
-        for symbol, df in stock_data.items():
+        for symbol in ['GME', 'AMC', 'BB']:
             logger.info(f"  Processing {symbol} financial features...")
             
-            # Prepare stock data
-            stock_df = self._prepare_stock_data(df)
+            # Use stock data if available, otherwise use unified data
+            if symbol in stock_data and stock_data[symbol] is not None:
+                stock_df = self._prepare_stock_data(stock_data[symbol])
+            else:
+                # Extract from unified data
+                price_col = f'{symbol}_close'
+                volume_col = f'{symbol}_volume'
+                
+                if price_col in unified_data.columns and volume_col in unified_data.columns:
+                    # Create a stock-like DataFrame from unified data
+                    stock_df = pd.DataFrame({
+                        'Date': unified_data.index,
+                        'Close': unified_data[price_col],
+                        'Volume': unified_data[volume_col],
+                        'Open': unified_data[price_col],  # Use close as proxy
+                        'High': unified_data[price_col],  # Use close as proxy
+                        'Low': unified_data[price_col]    # Use close as proxy
+                    }).set_index('Date')
+                else:
+                    logger.warning(f"    ⚠️ No data for {symbol}")
+                    continue
             
             # Generate features
             features_df = self._generate_stock_features(stock_df, symbol)
-            
             financial_features[symbol] = features_df
             
             logger.info(f"    {symbol}: {features_df.shape[1]} features generated")
@@ -56,22 +76,25 @@ class FinancialFeatureEngineer:
         """
         stock_df = df.copy()
         
-        # Ensure required columns exist
-        required_cols = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
-        for col in required_cols:
-            if col not in stock_df.columns:
-                raise ValueError(f"Required column {col} not found in stock data")
-        
-        # Convert to numeric
-        for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
-            stock_df[col] = pd.to_numeric(stock_df[col], errors='coerce')
-        
-        # Sort by date
-        stock_df['Date'] = pd.to_datetime(stock_df['Date'])
-        stock_df = stock_df.sort_values('Date').reset_index(drop=True)
-        
-        # Set date as index
-        stock_df = stock_df.set_index('Date')
+        # Check if Date is already the index
+        if stock_df.index.name == 'Date' or isinstance(stock_df.index, pd.DatetimeIndex):
+            # Data is already properly indexed
+            pass
+        else:
+            # Ensure required columns exist
+            required_cols = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
+            for col in required_cols:
+                if col not in stock_df.columns:
+                    raise ValueError(f"Required column {col} not found in stock data")
+            
+            # Convert to numeric
+            for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
+                stock_df[col] = pd.to_numeric(stock_df[col], errors='coerce')
+            
+            # Sort by date and set as index
+            stock_df['Date'] = pd.to_datetime(stock_df['Date'])
+            stock_df = stock_df.sort_values('Date').reset_index(drop=True)
+            stock_df = stock_df.set_index('Date')
         
         return stock_df
     
