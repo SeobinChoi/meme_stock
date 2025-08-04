@@ -398,24 +398,27 @@ class EnhancedDataValidator:
         
         return improvements
     
-    def save_quality_report(self, report: Dict, output_path: str = "results/enhanced_quality_report.json"):
+    def save_quality_report(self, report: Dict):
         """
-        Save quality report to file
+        Save quality report to file with sequential numbering
         """
         import json
         
-        output_file = Path(output_path)
-        output_file.parent.mkdir(parents=True, exist_ok=True)
+        # Get next sequence number
+        sequence_num = self._get_next_sequence_number("quality_report")
         
-        with open(output_file, 'w') as f:
+        # Save detailed report (JSON for internal use only)
+        internal_file = Path("results") / f"{sequence_num:03d}_quality_report_internal.json"
+        internal_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        with open(internal_file, 'w') as f:
             json.dump(report, f, indent=2, default=str)
         
-        logger.info(f"✅ Quality report saved to {output_file}")
-        
-        # Also save human-readable summary
-        summary_file = output_file.with_suffix('.txt')
+        # Save human-readable summary
+        summary_file = Path("results") / f"{sequence_num:03d}_quality_report.txt"
         with open(summary_file, 'w') as f:
             f.write("=== ENHANCED DATA QUALITY REPORT ===\n\n")
+            f.write(f"Report #: {sequence_num:03d}\n")
             f.write(f"Report Generated: {report['report_timestamp']}\n")
             f.write(f"Overall Quality Score: {report['overall_quality_score']:.1f}%\n\n")
             
@@ -436,7 +439,32 @@ class EnhancedDataValidator:
                     f.write(f"    • {suggestion}\n")
                 f.write("\n")
         
-        logger.info(f"✅ Quality summary saved to {summary_file}")
+        logger.info(f"✅ Quality report #{sequence_num:03d} saved to {summary_file}")
+    
+    def _get_next_sequence_number(self, prefix: str) -> int:
+        """
+        Get next sequence number for file naming
+        """
+        results_dir = Path("results")
+        if not results_dir.exists():
+            return 1
+        
+        # Find existing files with the prefix
+        existing_files = list(results_dir.glob(f"*_{prefix}.txt"))
+        if not existing_files:
+            return 1
+        
+        # Extract sequence numbers and find the highest
+        sequence_numbers = []
+        for file in existing_files:
+            try:
+                # Extract number from filename like "001_quality_report.txt"
+                num_str = file.stem.split('_')[0]
+                sequence_numbers.append(int(num_str))
+            except (ValueError, IndexError):
+                continue
+        
+        return max(sequence_numbers) + 1 if sequence_numbers else 1
 
 
 def main():
