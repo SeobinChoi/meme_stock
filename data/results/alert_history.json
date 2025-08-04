@@ -1,0 +1,44 @@
+[
+  {
+    "severity": "WARNING",
+    "dataset": "stock_GME",
+    "metric": "timeliness",
+    "message": "timeliness below threshold: 85.0% < 98.0%",
+    "timestamp": "2025-08-04T19:12:48.592304"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "stock_BB",
+    "metric": "timeliness",
+    "message": "timeliness below threshold: 85.0% < 98.0%",
+    "timestamp": "2025-08-04T19:12:48.592318"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "reddit",
+    "metric": "timeliness",
+    "message": "timeliness below threshold: 85.0% < 98.0%",
+    "timestamp": "2025-08-04T19:12:48.592323"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "stock_AMC",
+    "metric": "timeliness",
+    "message": "timeliness below threshold: 85.0% < 98.0%",
+    "timestamp": "2025-08-04T19:12:48.592327"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "unified",
+    "metric": "accuracy",
+    "message": "accuracy below threshold: 85.0% < 95.0%",
+    "timestamp": "2025-08-04T19:12:48.592330"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "unified",
+    "metric": "timeliness",
+    "message": "timeliness below threshold: 85.0% < 98.0%",
+    "timestamp": "2025-08-04T19:12:48.592332"
+  }
+]

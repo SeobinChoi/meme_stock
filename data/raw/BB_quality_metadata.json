@@ -1,0 +1,35 @@
+{
+  "symbol": "BB",
+  "download_timestamp": "2025-08-04T19:13:15.998053",
+  "total_records": 504,
+  "date_range": {
+    "start": "2020-01-02T00:00:00-05:00",
+    "end": "2021-12-30T00:00:00-05:00"
+  },
+  "quality_score": 99.94520547945204,
+  "data_sources": [
+    "yahoo"
+  ],
+  "columns": [
+    "Date",
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "Volume",
+    "Dividends",
+    "Stock Splits",
+    "source"
+  ],
+  "missing_values": {
+    "Date": 0,
+    "Open": 0,
+    "High": 0,
+    "Low": 0,
+    "Close": 0,
+    "Volume": 0,
+    "Dividends": 0,
+    "Stock Splits": 0,
+    "source": 0
+  }
+}
