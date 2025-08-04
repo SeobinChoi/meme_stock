@@ -1,0 +1,16 @@
+{
+  "total_features": 257,
+  "original_features": 180,
+  "advanced_features": 76,
+  "feature_categories": {
+    "viral_features": 18,
+    "advanced_sentiment_features": 20,
+    "social_features": 9,
+    "cross_modal_features": 29
+  },
+  "quality_metrics": {
+    "missing_values_pct": 0.0,
+    "zero_variance_features": "156",
+    "high_correlation_pairs": "59"
+  }
+}
