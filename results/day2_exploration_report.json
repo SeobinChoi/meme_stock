@@ -1,0 +1,25 @@
+{
+  "exploration_timestamp": "2025-08-04T17:57:31.649996",
+  "datasets_analyzed": 1,
+  "reddit_analysis": {
+    "status": "ERROR",
+    "message": "Reddit data not loaded"
+  },
+  "stock_analysis": {},
+  "temporal_analysis": {
+    "date_ranges": {},
+    "overlap_analysis": {},
+    "missing_data_patterns": {},
+    "recommendations": []
+  },
+  "overall_assessment": {
+    "data_quality_score": 30.0,
+    "recommendations": [
+      "Overall data quality needs improvement"
+    ],
+    "critical_issues": [
+      "No temporal overlap between datasets"
+    ],
+    "strengths": []
+  }
+}
