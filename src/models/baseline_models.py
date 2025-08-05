@@ -138,10 +138,14 @@ class BaselineModelTrainer:
         Load the engineered dataset
         """
         try:
-            dataset_path = self.data_dir / "features" / "engineered_features_dataset.csv"
+            # Try the meme enhanced data first (which we know works)
+            dataset_path = self.data_dir / "processed" / "meme_enhanced_data.csv"
             if not dataset_path.exists():
-                logger.error(f"Dataset not found: {dataset_path}")
-                return None
+                # Fallback to the original engineered features dataset
+                dataset_path = self.data_dir / "features" / "engineered_features_dataset.csv"
+                if not dataset_path.exists():
+                    logger.error(f"Dataset not found: {dataset_path}")
+                    return None
             
             dataset = pd.read_csv(dataset_path)
             logger.info(f"✅ Loaded dataset with shape: {dataset.shape}")
