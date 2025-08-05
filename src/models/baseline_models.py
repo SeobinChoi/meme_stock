@@ -187,8 +187,24 @@ class BaselineModelTrainer:
                 for horizon in [1, 3, 7, 14]:
                     return_cols_to_exclude.append(f"{stock}_returns_{horizon}d")
             
+            # CRITICAL FIX: Also exclude magnitude columns that are targets
+            magnitude_cols_to_exclude = []
+            for stock in ['GME', 'AMC', 'BB']:
+                for horizon in [3, 7]:
+                    magnitude_cols_to_exclude.append(f"{stock}_magnitude_{horizon}d")
+            
+            # CRITICAL FIX: Also exclude direction columns that are targets
+            direction_cols_to_exclude = []
+            for stock in ['GME', 'AMC', 'BB']:
+                for horizon in [1, 3]:
+                    direction_cols_to_exclude.append(f"{stock}_direction_{horizon}d")
+            
+            # Combine all columns to exclude
+            all_exclude_cols = (target_cols + return_cols_to_exclude + 
+                              magnitude_cols_to_exclude + direction_cols_to_exclude)
+            
             feature_cols = [col for col in dataset.columns 
-                          if col not in target_cols and col not in return_cols_to_exclude and col != 'date']
+                          if col not in all_exclude_cols and col != 'date']
             
             features = dataset[feature_cols].copy()
             
@@ -211,6 +227,7 @@ class BaselineModelTrainer:
             
             logger.info(f"✅ Prepared {len(features.columns)} features and {len(targets)} targets")
             logger.info(f"✅ Train set: {len(train_data)} samples, Test set: {len(test_data)} samples")
+            logger.info(f"✅ Excluded {len(all_exclude_cols)} target/leakage columns")
             
             return {
                 'features': features,
@@ -257,17 +274,21 @@ class BaselineModelTrainer:
                     logger.warning(f"No valid data for {target}")
                     continue
                 
-                # Model parameters
+                # Model parameters with regularization to prevent overfitting
                 params = {
                     'objective': 'binary',
                     'metric': 'binary_logloss',
                     'boosting_type': 'gbdt',
-                    'num_leaves': 31,
-                    'learning_rate': 0.05,
-                    'feature_fraction': 0.9,
-                    'bagging_fraction': 0.8,
+                    'num_leaves': 15,  # Reduced from 31 to prevent overfitting
+                    'learning_rate': 0.01,  # Reduced from 0.05 for better generalization
+                    'feature_fraction': 0.7,  # Reduced from 0.9 to prevent overfitting
+                    'bagging_fraction': 0.7,  # Reduced from 0.8 to prevent overfitting
                     'bagging_freq': 5,
-                    'verbose': -1
+                    'verbose': -1,
+                    'reg_alpha': 0.1,  # L1 regularization
+                    'reg_lambda': 0.1,  # L2 regularization
+                    'min_child_samples': 20,  # Minimum samples per leaf
+                    'min_data_in_leaf': 10  # Minimum data in leaf
                 }
                 
                 # Train model on training data
@@ -349,15 +370,19 @@ class BaselineModelTrainer:
                     logger.warning(f"No valid data for {target}")
                     continue
                 
-                # Model parameters
+                # Model parameters with regularization to prevent overfitting
                 params = {
                     'objective': 'reg:squarederror',
-                    'max_depth': 6,
-                    'learning_rate': 0.1,
-                    'subsample': 0.8,
-                    'colsample_bytree': 0.8,
-                    'n_estimators': 1000,
-                    'random_state': 42
+                    'max_depth': 4,  # Reduced from 6 to prevent overfitting
+                    'learning_rate': 0.05,  # Reduced from 0.1 for better generalization
+                    'subsample': 0.7,  # Reduced from 0.8 to prevent overfitting
+                    'colsample_bytree': 0.7,  # Reduced from 0.8 to prevent overfitting
+                    'n_estimators': 100,  # Reduced from 1000 to prevent overfitting
+                    'random_state': 42,
+                    'reg_alpha': 0.1,  # L1 regularization
+                    'reg_lambda': 0.1,  # L2 regularization
+                    'min_child_weight': 3,  # Minimum sum of instance weight in child
+                    'gamma': 0.1  # Minimum loss reduction for split
                 }
                 
                 # Train model on training data
