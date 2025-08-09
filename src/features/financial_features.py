@@ -12,7 +12,13 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Technical analysis imports
-import talib
+try:
+    import talib  # type: ignore
+except Exception:  # [FIX] fallback to 'ta' if TA-Lib not available
+    talib = None
+    from ta.momentum import RSIIndicator  # type: ignore
+    from ta.trend import MACD  # type: ignore
+    from ta.volatility import BollingerBands  # type: ignore
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -112,6 +118,11 @@ class FinancialFeatureEngineer:
         
         # 3. Market microstructure features (10 features)
         features_df = self._add_microstructure_features(features_df, stock_df)
+        # [FIX] Add TA indicators (RSI/MACD/BBANDS) if available
+        try:
+            features_df = self._add_ta_indicators(features_df, stock_df)
+        except Exception:
+            pass
         
         # Fill missing values
         features_df = features_df.fillna(method='ffill').fillna(0)
@@ -234,6 +245,37 @@ class FinancialFeatureEngineer:
         # 10. Volatility of volatility
         features_df['vol_of_vol'] = features_df['volatility_5d'].rolling(10).std()
         
+        return features_df
+
+    # [FIX] Additional TA indicators using talib/ta where available
+    def _add_ta_indicators(self, features_df: pd.DataFrame, stock_df: pd.DataFrame) -> pd.DataFrame:
+        close = stock_df['Close']
+        if talib is not None:
+            try:
+                features_df['RSI_14'] = talib.RSI(close, timeperiod=14)
+                macd, macd_signal, macd_hist = talib.MACD(close, fastperiod=12, slowperiod=26, signalperiod=9)
+                features_df['MACD'] = macd
+                features_df['MACD_signal'] = macd_signal
+                features_df['MACD_hist'] = macd_hist
+                upper, middle, lower = talib.BBANDS(close, timeperiod=20, nbdevup=2, nbdevdn=2, matype=0)
+                features_df['BB_upper'] = upper
+                features_df['BB_middle'] = middle
+                features_df['BB_lower'] = lower
+            except Exception:
+                pass
+        else:
+            try:
+                features_df['RSI_14'] = RSIIndicator(close=close, window=14).rsi()
+                macd_ind = MACD(close=close, window_slow=26, window_fast=12, window_sign=9)
+                features_df['MACD'] = macd_ind.macd()
+                features_df['MACD_signal'] = macd_ind.macd_signal()
+                features_df['MACD_hist'] = macd_ind.macd_diff()
+                bb = BollingerBands(close=close, window=20, window_dev=2)
+                features_df['BB_upper'] = bb.bollinger_hband()
+                features_df['BB_middle'] = bb.bollinger_mavg()
+                features_df['BB_lower'] = bb.bollinger_lband()
+            except Exception:
+                pass
         return features_df
     
     def _calculate_price_efficiency(self, prices: pd.Series) -> pd.Series:

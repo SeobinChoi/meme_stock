@@ -13,13 +13,19 @@ def prepare_colab_dataset():
     
     print("🔧 Preparing advanced features dataset for Colab...")
     
-    # Load the enhanced dataset
+    # Load the enhanced dataset; fallback to unified if not available  # [FIX]
+    data = None
     try:
         data = pd.read_csv('data/processed/meme_enhanced_data.csv')
-        print(f"✅ Loaded dataset with shape: {data.shape}")
+        print(f"✅ Loaded enhanced dataset with shape: {data.shape}")
     except FileNotFoundError:
-        print("❌ Enhanced dataset not found. Please run feature engineering first.")
-        return None
+        print("⚠️ Enhanced dataset not found. Falling back to unified_dataset.csv [FIX]")
+        try:
+            data = pd.read_csv('data/processed/unified_dataset.csv')
+            print(f"✅ Loaded unified dataset with shape: {data.shape}")
+        except FileNotFoundError:
+            print("❌ Neither enhanced nor unified dataset found. Please run data pipeline first.")
+            return None
     
     # Remove target variables from features (to prevent data leakage)
     target_patterns = ['direction', 'magnitude', 'returns']

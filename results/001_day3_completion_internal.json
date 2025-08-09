@@ -1,45 +1,45 @@
 {
-  "day3_timestamp": "2025-08-04T20:28:01.285689",
+  "day3_timestamp": "2025-08-09T16:32:07.575863",
   "overall_status": "PASS",
   "feature_summary": {
-    "total_features_created": 193,
-    "total_samples": 176,
+    "total_features_created": 214,
+    "total_samples": 3330,
     "feature_categories": {
       "reddit": 48,
-      "financial_gme": 41,
-      "financial_amc": 41,
-      "financial_bb": 41,
+      "financial_gme": 48,
+      "financial_amc": 48,
+      "financial_bb": 48,
       "temporal": 9,
       "cross_modal": 13
     },
     "target_features": 79
   },
   "quality_assessment": {
-    "total_features": 193,
-    "total_samples": 176,
+    "total_features": 214,
+    "total_samples": 3330,
     "feature_categories": {
       "reddit": 48,
-      "financial_gme": 41,
-      "financial_amc": 41,
-      "financial_bb": 41,
+      "financial_gme": 48,
+      "financial_amc": 48,
+      "financial_bb": 48,
       "temporal": 9,
       "cross_modal": 13
     },
     "quality_metrics": {
       "missing_values": "0",
       "missing_percentage": 0.0,
-      "duplicate_rows": "0",
-      "constant_features": 137,
-      "high_correlation_pairs": 87
+      "duplicate_rows": "402",
+      "constant_features": 172,
+      "high_correlation_pairs": 132
     },
     "recommendations": [
-      "\u26a0\ufe0f 137 constant features detected - consider removal",
+      "\u26a0\ufe0f 172 constant features detected - consider removal",
       "\u26a0\ufe0f Many highly correlated features - consider feature selection"
     ]
   },
   "deliverables": {
     "reddit_features": 44,
-    "financial_features": 123,
+    "financial_features": 144,
     "temporal_features": 9,
     "cross_modal_features": 17,
     "feature_pipeline": true,

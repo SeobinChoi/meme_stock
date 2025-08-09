@@ -494,9 +494,13 @@ class DataLoader:
         """
         logger.info("Merging Reddit and stock datasets...")
         
-        # Ensure date columns are the same type
-        reddit_daily['date'] = pd.to_datetime(reddit_daily['date'])
-        stock_daily['date'] = pd.to_datetime(stock_daily['date'])
+        # Ensure date columns are the same type and timezone-naive  # [FIX]
+        def _to_naive_datetime(series: pd.Series) -> pd.Series:
+            dt = pd.to_datetime(series, errors='coerce', utc=True)
+            return dt.dt.tz_localize(None)
+
+        reddit_daily['date'] = _to_naive_datetime(reddit_daily['date'])  # [FIX]
+        stock_daily['date'] = _to_naive_datetime(stock_daily['date'])  # [FIX]
         
         # Merge on date
         merged_df = pd.merge(reddit_daily, stock_daily, on='date', how='outer')

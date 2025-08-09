@@ -33,9 +33,23 @@ class CrossModalFeatureEngineer:
         unified_data = data['unified']
         stock_data = data['stocks']
         
-        # Use existing Reddit aggregation from unified data
-        features_df = unified_data[['post_count', 'total_score', 'avg_score', 'total_comments']].copy()
-        features_df.columns = ['reddit_posts', 'reddit_total_score', 'reddit_avg_score', 'reddit_comments']
+        # Use existing Reddit aggregation from unified data; fallback to synthesized names  # [FIX]
+        base_cols_pref = ['post_count', 'total_score', 'avg_score', 'total_comments']
+        if all(c in unified_data.columns for c in base_cols_pref):
+            features_df = unified_data[base_cols_pref].copy()
+            features_df.columns = ['reddit_posts', 'reddit_total_score', 'reddit_avg_score', 'reddit_comments']
+        else:
+            synth_map = {
+                'reddit_posts': 'reddit_score_count',
+                'reddit_total_score': 'reddit_score_sum',
+                'reddit_avg_score': 'reddit_score_mean',
+                'reddit_comments': 'reddit_num_comments_sum',
+            }
+            avail = {k: v for k, v in synth_map.items() if v in unified_data.columns}
+            if len(avail) < 3:
+                raise KeyError("Required Reddit columns not found in unified dataset for cross-modal features")
+            features_df = unified_data[list(avail.values())].copy()
+            features_df.columns = list(avail.keys())
         
         # Generate cross-modal features
         features_df = self._add_sentiment_price_correlations(features_df, data)
@@ -59,7 +73,13 @@ class CrossModalFeatureEngineer:
         stock_data = data['stocks']
         
         # Use engagement as sentiment proxy
-        daily_sentiment = unified_data['avg_score']
+        # [FIX] Fallback for sentiment mean column
+        if 'avg_score' in unified_data.columns:
+            daily_sentiment = unified_data['avg_score']
+        elif 'reddit_score_mean' in unified_data.columns:
+            daily_sentiment = unified_data['reddit_score_mean']
+        else:
+            raise KeyError("avg_score/reddit_score_mean not found in unified dataset")
         
         # Calculate correlations with stock returns
         for symbol in ['GME', 'AMC', 'BB']:
@@ -95,7 +115,13 @@ class CrossModalFeatureEngineer:
         stock_data = data['stocks']
         
         # Use post count as mention proxy
-        daily_mentions = unified_data['post_count']
+        # [FIX] Fallback for mentions count column
+        if 'post_count' in unified_data.columns:
+            daily_mentions = unified_data['post_count']
+        elif 'reddit_score_count' in unified_data.columns:
+            daily_mentions = unified_data['reddit_score_count']
+        else:
+            raise KeyError("post_count/reddit_score_count not found in unified dataset")
         
         # Calculate correlations with stock volume
         for symbol in ['GME', 'AMC', 'BB']:
@@ -138,7 +164,13 @@ class CrossModalFeatureEngineer:
         stock_data = data['stocks']
         
         # Use engagement momentum as sentiment momentum proxy
-        sentiment_momentum = unified_data['avg_score'].diff(1)
+        # [FIX] Fallback for sentiment mean
+        if 'avg_score' in unified_data.columns:
+            sentiment_momentum = unified_data['avg_score'].diff(1)
+        elif 'reddit_score_mean' in unified_data.columns:
+            sentiment_momentum = unified_data['reddit_score_mean'].diff(1)
+        else:
+            raise KeyError("avg_score/reddit_score_mean not found for momentum")
         
         # Predict future returns using sentiment
         for symbol in ['GME']:  # Focus on GME for lag effects
@@ -187,7 +219,13 @@ class CrossModalFeatureEngineer:
                 stock_df['price_momentum'] = stock_df['Close'].pct_change(1)
                 
                 # Calculate subsequent social sentiment (using engagement as proxy)
-                subsequent_sentiment = unified_data['avg_score'].shift(-1)
+                # [FIX] Fallback for subsequent sentiment
+                if 'avg_score' in unified_data.columns:
+                    subsequent_sentiment = unified_data['avg_score'].shift(-1)
+                elif 'reddit_score_mean' in unified_data.columns:
+                    subsequent_sentiment = unified_data['reddit_score_mean'].shift(-1)
+                else:
+                    raise KeyError("avg_score/reddit_score_mean not found for feedback")
                 
                 # Merge price momentum and subsequent sentiment
                 merged = pd.DataFrame({

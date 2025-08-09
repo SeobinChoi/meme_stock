@@ -32,14 +32,40 @@ class RedditFeatureEngineer:
         # Extract Reddit data from unified dataset
         unified_data = data['unified']
         
-        # The unified dataset already has daily aggregated Reddit features
-        # We'll use the existing features and add some derived ones
-        features_df = unified_data[['post_count', 'total_score', 'avg_score', 'score_std', 
-                                   'total_comments', 'avg_comments', 'comment_std']].copy()
+        # The unified dataset may have either original or synthesized reddit columns
+        # Try preferred schema, fallback to synthesized names from archive builder  # [FIX]
+        base_cols_pref = ['post_count', 'total_score', 'avg_score', 'score_std', 
+                          'total_comments', 'avg_comments', 'comment_std']
+        if all(c in unified_data.columns for c in base_cols_pref):
+            features_df = unified_data[base_cols_pref].copy()
+        else:  # fallback [FIX]
+            # Map from synthesized columns
+            synth_map = {
+                'post_count': 'reddit_score_count',
+                'total_score': 'reddit_score_sum',
+                'avg_score': 'reddit_score_mean',
+                'score_std': 'reddit_score_std',
+                'total_comments': 'reddit_num_comments_sum',
+                'avg_comments': 'reddit_num_comments_mean',
+                'comment_std': 'reddit_num_comments_std',
+            }
+            available = {k: v for k, v in synth_map.items() if v in unified_data.columns}
+            if len(available) < 5:
+                raise KeyError("Required Reddit columns not found in unified dataset")
+            features_df = unified_data[list(available.values())].copy()
+            # rename to canonical
+            features_df.columns = list(available.keys())
         
         # Rename columns to match our feature naming convention
         features_df.columns = ['reddit_post_count', 'reddit_total_score', 'reddit_avg_score', 
                               'reddit_score_std', 'reddit_total_comments', 'reddit_avg_comments', 'reddit_comment_std']
+        # Ensure datetime index for temporal ops  # [FIX]
+        if not isinstance(features_df.index, pd.DatetimeIndex):
+            if 'date' in unified_data.columns:
+                idx = pd.to_datetime(unified_data['date'], errors='coerce')
+                features_df.index = idx
+            else:
+                features_df.index = pd.to_datetime(features_df.index, errors='coerce')
         
         # Generate additional derived features
         features_df = self._add_basic_engagement_features(features_df, unified_data)
@@ -72,10 +98,11 @@ class RedditFeatureEngineer:
         # 4. Weekend indicators
         features_df['reddit_weekend_indicator'] = (features_df.index.dayofweek.isin([5, 6])).astype(int)
         
-        # 5. Weekend post ratio
-        weekend_posts = features_df[features_df['reddit_weekend_indicator'] == 1]['reddit_post_count']
-        total_posts = features_df['reddit_post_count'].rolling(7).sum()
-        features_df['reddit_weekend_post_ratio'] = weekend_posts / (total_posts + 1)
+        # 5. Weekend post ratio (aligned rolling)  # [FIX]
+        weekend_mask = features_df['reddit_weekend_indicator'].astype(int)
+        weekend_posts_7d = (features_df['reddit_post_count'] * weekend_mask).rolling(7).sum()
+        total_posts_7d = features_df['reddit_post_count'].rolling(7).sum()
+        features_df['reddit_weekend_post_ratio'] = weekend_posts_7d / (total_posts_7d + 1)
         
         # 6. Activity concentration (variance in posting)
         features_df['reddit_activity_concentration'] = features_df['reddit_post_count'].rolling(7).std()
