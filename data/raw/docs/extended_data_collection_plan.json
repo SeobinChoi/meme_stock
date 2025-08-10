@@ -1,0 +1,41 @@
+{
+  "current_data": {
+    "stock_data": "2020-2021 (504 days per symbol)",
+    "reddit_data": "2021 (365 days, WSB only)",
+    "total_records": "~1,097 Reddit posts"
+  },
+  "planned_extensions": {
+    "stock_data": "2019-2024 (6 years, ~1,500 days per symbol)",
+    "reddit_data": "2019-2024 (6 years, multiple subreddits)",
+    "news_data": "2019-2024 (6 years, multiple sources)",
+    "options_data": "2019-2024 (6 years, options chain)"
+  },
+  "data_sources": {
+    "stock_data": [
+      "Yahoo Finance",
+      "Alpha Vantage",
+      "IEX Cloud"
+    ],
+    "reddit_data": [
+      "Reddit API",
+      "Pushshift API",
+      "Web scraping"
+    ],
+    "news_data": [
+      "NewsAPI",
+      "Alpha Vantage",
+      "Web scraping"
+    ],
+    "options_data": [
+      "TD Ameritrade",
+      "Interactive Brokers",
+      "CBOE"
+    ]
+  },
+  "estimated_total_records": {
+    "stock_data": "~10,500 records (7 symbols \u00d7 1,500 days)",
+    "reddit_data": "~50,000 records (8 subreddits \u00d7 2,190 days)",
+    "news_data": "~20,000 records (daily news \u00d7 2,190 days)",
+    "options_data": "~100,000 records (daily options \u00d7 2,190 days)"
+  }
+}

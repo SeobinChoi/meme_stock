@@ -1,0 +1,28 @@
+=== BB EXTENDED STOCK DATA DESCRIPTION ===
+
+Data Source: Yahoo Finance (yfinance)
+Symbol: BB
+Period: 2019-01-01 to 2024-12-31
+Total Records: 1,509
+Date Range: 2019-01-02 00:00:00-05:00 to 2024-12-30 00:00:00-05:00
+Columns: ['date', 'open', 'high', 'low', 'close', 'volume', 'Dividends', 'Stock Splits', 'sma_20', 'sma_50', 'ema_12', 'ema_26', 'rsi', 'macd', 'macd_signal', 'macd_histogram', 'bb_middle', 'bb_upper', 'bb_lower', 'volume_sma', 'volume_ratio', 'daily_return', 'volatility']
+
+Description:
+This dataset contains extended historical stock price data for BB.
+The data covers 6 years including the meme stock phenomenon period.
+Technical indicators have been added for enhanced analysis.
+
+Technical Indicators Added:
+- Moving Averages (SMA 20, 50, EMA 12, 26)
+- RSI (Relative Strength Index)
+- MACD (Moving Average Convergence Divergence)
+- Bollinger Bands
+- Volume indicators
+- Volatility measures
+
+Data Quality:
+- Missing values: 197
+- Data completeness: 99.43%
+- Trading days: 1509
+
+Downloaded on: 2025-08-10 17:03:49

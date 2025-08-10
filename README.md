@@ -1,233 +1,107 @@
-# 📊 Meme Stock Prediction Project - Week 1 Implementation
+# Meme Stock Analysis Project
 
-## 🎯 **Project Overview**
-Academic competition-winning meme stock prediction system with comprehensive data preprocessing, feature engineering, and baseline model construction. This Week 1 implementation provides a solid foundation for predicting meme stock movements using Reddit sentiment, technical indicators, and social media dynamics.
+## Overview
+This project analyzes meme stock movements using Reddit sentiment data, news data, and stock price data to predict market trends.
 
-## 🏆 **Academic Competition Features**
-- **40+ engineered features** combining Reddit sentiment, technical indicators, and cross-features
-- **3 baseline models**: LightGBM (short-term), XGBoost (long-term), LSTM (sequential patterns)
-- **Time series cross-validation** with walk-forward validation
-- **Comprehensive evaluation framework** with academic-grade metrics
-- **Reproducible research** with fixed random states and documentation
+## 🚀 Quick Start
 
-## 📁 **Project Structure**
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Reddit API Setup
+1. Get Reddit API credentials from [Reddit Apps](https://www.reddit.com/prefs/apps)
+2. Update `config/reddit_config.json` with your credentials
+3. Test connection: `python scripts/test_reddit_connection.py`
+
+### 3. Download Extended Reddit Data
+```bash
+python scripts/download_extended_reddit_data.py
+```
+
+## 📊 Data Sources
+
+### Current Data
+- **Reddit WSB Posts**: 399,637 posts from 2021
+- **Stock Price Data**: AMC, BlackBerry, GameStop, Wish (2013-2021)
+- **Processed Data**: 29,793 filtered posts
+
+### Extended Data (After Download)
+- **2020-2022 WSB Posts**: Complete 3-year dataset
+- **Enhanced Metadata**: Upvote ratios, author info, permalinks
+- **Keyword Filtering**: Focus on meme stock related posts
+- **Statistical Analysis**: Daily/monthly post counts, top posts
+
+## 📁 Project Structure
+
 ```
 meme_stock/
-├── week1_baseline/           # Week 1 implementation
-│   ├── data_preprocessing.py # Data loading, cleaning, merging
-│   ├── feature_engineering.py # 40+ feature generation
-│   ├── models.py             # LightGBM, XGBoost, LSTM models
-│   ├── evaluation.py         # Comprehensive evaluation framework
-│   └── main.py              # Complete pipeline orchestration
-├── data/                     # Data storage
-│   ├── reddit_wsb.csv       # Reddit WSB posts
-│   ├── meme_stocks.csv      # GME, AMC, BB price/volume data
-│   ├── wsb_mention_counts.csv # Daily stock mention counts
-│   └── processed_data.csv   # Preprocessed merged data
-├── models/                   # Trained models
-├── results/                  # Evaluation results and reports
-├── requirements.txt          # Python dependencies
-└── auto_push.sh             # Auto-push to GitHub
+├── data/
+│   ├── raw/
+│   │   ├── reddit/           # Reddit data files
+│   │   └── archive/          # Historical stock data
+│   └── processed/            # Cleaned and processed data
+├── scripts/
+│   ├── download_extended_reddit_data.py  # Main downloader
+│   └── test_reddit_connection.py         # Connection test
+├── config/
+│   └── reddit_config.json    # API credentials
+├── docs/
+│   ├── reddit_api_setup_guide.md         # Setup instructions
+│   └── reddit_data_analysis_summary.md   # Data overview
+└── requirements.txt           # Python dependencies
 ```
 
-## 🚀 **Quick Start**
+## 🔧 Configuration
 
-### **1. Environment Setup**
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# For GPU support (optional)
-pip install tensorflow-gpu
+### Reddit API Credentials
+Create `config/reddit_config.json`:
+```json
+{
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "user_agent": "MemeStockAnalysis/1.0 (by /u/YOUR_USERNAME)",
+    "username": "YOUR_USERNAME",
+    "password": "YOUR_PASSWORD"
+}
 ```
 
-### **2. Run Complete Pipeline**
-```bash
-cd week1_baseline
-python main.py
-```
+## 📈 Features
 
-### **3. Individual Execution**
-```bash
-# Data preprocessing only
-python data_preprocessing.py
+### Data Collection
+- **Multi-year Coverage**: 2020-2022 Reddit data
+- **Smart Filtering**: Meme stock keyword detection
+- **Rate Limiting**: Respects Reddit API limits
+- **Error Handling**: Robust error recovery
 
-# Feature engineering only
-python feature_engineering.py
+### Data Analysis
+- **Sentiment Analysis**: Post sentiment scoring
+- **Engagement Metrics**: Upvotes, comments, ratios
+- **Temporal Analysis**: Daily/monthly trends
+- **Top Content**: Highest scoring posts
 
-# Model training only
-python models.py
+## 🚨 Important Notes
 
-# Evaluation only
-python evaluation.py
-```
+- **API Limits**: Reddit has rate limiting - be patient
+- **Data Size**: Extended dataset will be several GB
+- **Authentication**: Requires Reddit account and app
+- **Storage**: Ensure sufficient disk space
 
-## 📊 **Feature Engineering (40+ Features)**
+## 📚 Documentation
 
-### **A. Reddit Features (15 features)**
-- **Sentiment Analysis**: BERT-based positive/negative/neutral scores
-- **Viral Indicators**: Mention surge rates (1, 3, 7-day rolling)
-- **Community Dynamics**: Sentiment consensus, weekend patterns
-- **Engagement Metrics**: Score/comment aggregation
+- [Reddit API Setup Guide](docs/reddit_api_setup_guide.md)
+- [Data Analysis Summary](docs/reddit_data_analysis_summary.md)
+- [Project Plan](docs/plan_meme_stock_formatted_v3.md)
 
-### **B. Technical Features (15 features)**
-- **Price Indicators**: Returns, moving averages, volatility
-- **Volume Analysis**: Volume ratios, VWAP deviations
-- **Technical Indicators**: RSI, MACD, Bollinger Bands
-- **Multi-timeframe**: 1-day, 3-day, 7-day horizons
+## 🤝 Contributing
 
-### **C. Cross Features (10 features)**
-- **Social-Price Correlations**: Sentiment vs price relationships
-- **Mention-Volume Sync**: Social activity vs trading volume
-- **Cross-Stock Correlations**: GME-AMC-BB relationships
-- **Weekend Effects**: Monday impact predictions
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## 🤖 **Baseline Models**
+## 📄 License
 
-### **Model 1: LightGBM (Short-term Specialized)**
-- **Target**: 1-3 day price direction prediction
-- **Features**: Optimized for short-term patterns
-- **Validation**: Time series cross-validation
-- **Performance Target**: >65% directional accuracy
-
-### **Model 2: XGBoost (Long-term Trend Specialized)**
-- **Target**: 3-7 day price change magnitude
-- **Features**: Focus on trend identification
-- **Interpretability**: SHAP analysis included
-- **Performance Target**: RMSE < 0.15
-
-### **Model 3: LSTM (Sequential Patterns)**
-- **Target**: Sequential pattern learning
-- **Architecture**: 60-day lookback window
-- **Regularization**: Dropout + Early stopping
-- **Use Case**: Complex temporal dependencies
-
-## 📈 **Evaluation Framework**
-
-### **Metrics**
-- **Classification**: Accuracy, F1-score, AUC-ROC
-- **Regression**: MAE, RMSE, Directional accuracy
-- **Trading**: Sharpe ratio, Maximum drawdown
-
-### **Validation Strategy**
-- **Time Series Split**: 5-fold walk-forward validation
-- **Out-of-Sample Testing**: Recent 3 months
-- **Feature Importance**: Model interpretability analysis
-
-## 🎯 **Performance Targets**
-
-| Model | Target | Metric | Goal |
-|-------|--------|--------|------|
-| LightGBM | Direction (1-3d) | Accuracy | >65% |
-| XGBoost | Magnitude (3-7d) | RMSE | <0.15 |
-| LSTM | Sequential | Pattern Capture | Confirmed |
-
-## 📋 **Deliverables**
-
-### **Data Products**
-- ✅ `processed_data.csv` - Clean, merged dataset
-- ✅ `features_data.csv` - 40+ engineered features
-- ✅ `baseline_performance.csv` - Model comparison
-
-### **Models**
-- ✅ Trained LightGBM models (`.pkl`)
-- ✅ Trained XGBoost models (`.pkl`)
-- ✅ Trained LSTM models (`.h5`)
-
-### **Visualizations**
-- ✅ `feature_importance.png` - Top features analysis
-- ✅ `model_comparison.png` - Performance comparison
-- ✅ `predictions_plot.png` - Predictions vs actual
-
-### **Reports**
-- ✅ `comprehensive_evaluation.csv` - Detailed metrics
-- ✅ `week1_final_report.txt` - Executive summary
-
-## 🔧 **Technical Implementation**
-
-### **Data Preprocessing Pipeline**
-1. **Loading**: Reddit posts, stock prices, mention counts
-2. **Cleaning**: Missing values, outliers, date alignment
-3. **Merging**: Time-based joins with forward filling
-4. **Validation**: Data quality checks and documentation
-
-### **Feature Engineering Pipeline**
-1. **Reddit Features**: Sentiment, viral indicators, community dynamics
-2. **Technical Features**: Price/volume indicators, volatility measures
-3. **Cross Features**: Social-price relationships, correlations
-4. **Scaling**: StandardScaler for numerical features
-
-### **Model Training Pipeline**
-1. **Data Preparation**: Feature selection, target creation
-2. **Cross-Validation**: Time series split with walk-forward
-3. **Hyperparameter Tuning**: Optuna optimization (optional)
-4. **Model Persistence**: Save/load functionality
-
-## 🚨 **Important Notes**
-
-### **Data Leakage Prevention**
-- ✅ No future information in features
-- ✅ Proper time series validation
-- ✅ Walk-forward testing strategy
-
-### **Reproducibility**
-- ✅ Fixed random states (42)
-- ✅ Version-controlled dependencies
-- ✅ Comprehensive logging
-
-### **Memory Management**
-- ✅ Chunked processing for large datasets
-- ✅ Efficient feature computation
-- ✅ Model serialization
-
-## 🎓 **Academic Competition Advantages**
-
-### **Technical Excellence**
-- **Comprehensive Feature Set**: 40+ engineered features
-- **Multiple Model Types**: Ensemble approach with different strengths
-- **Robust Validation**: Time series cross-validation
-- **Interpretability**: Feature importance and SHAP analysis
-
-### **Research Quality**
-- **Reproducible Code**: Clean, documented implementation
-- **Performance Metrics**: Academic-grade evaluation framework
-- **Visualization**: Professional-quality plots and reports
-- **Documentation**: Comprehensive README and inline comments
-
-### **Competitive Edge**
-- **Meme-Specific Features**: Reddit sentiment and viral indicators
-- **Cross-Asset Analysis**: GME-AMC-BB correlations
-- **Temporal Patterns**: Weekend effects and sequential learning
-- **Practical Metrics**: Sharpe ratio and drawdown analysis
-
-## 🔮 **Week 2 Roadmap**
-
-### **Meme-Specific Enhancements**
-- Advanced sentiment analysis with meme detection
-- Social media trend analysis (Twitter, TikTok)
-- Options flow analysis and gamma exposure
-- Short interest and squeeze indicators
-
-### **Advanced Models**
-- Transformer-based sequence models
-- Graph neural networks for social relationships
-- Reinforcement learning for trading strategies
-- Ensemble methods with dynamic weighting
-
-## 📞 **Support & Contact**
-
-For questions about the implementation or academic competition preparation:
-
-- **Repository**: https://github.com/SeobinChoi/meme_stock
-- **Documentation**: Comprehensive inline comments
-- **Issues**: GitHub issues for bug reports
-
-## 📄 **License**
-
-MIT License - Academic and research use encouraged.
-
----
-
-**🎯 Ready for Academic Competition Success! 🚀**
-
-This Week 1 implementation provides a solid, competitive foundation for meme stock prediction with proven ML techniques and comprehensive evaluation frameworks. 
+This project is for educational and research purposes. 
