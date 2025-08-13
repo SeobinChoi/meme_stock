@@ -1,0 +1,167 @@
+{
+  "processing_info": {
+    "source": "Reddit archive data (archive-3)",
+    "version": "2.0",
+    "processing_date": "2025-08-13T22:59:33.675306",
+    "script": "process_archive_reddit_data_v2.py"
+  },
+  "data_coverage": {
+    "years": [
+      "2021",
+      "2022"
+    ],
+    "subreddits": [
+      "wallstreetbets",
+      "cryptocurrency",
+      "stocks",
+      "investing",
+      "options",
+      "stockmarket",
+      "pennystocks"
+    ],
+    "tickers": {
+      "meme_stocks": [
+        "GME",
+        "AMC",
+        "BB",
+        "BBBY",
+        "KOSS"
+      ],
+      "crypto": [
+        "DOGE",
+        "SHIB",
+        "PEPE",
+        "BONK",
+        "BTC",
+        "ETH"
+      ],
+      "total": [
+        "GME",
+        "AMC",
+        "BB",
+        "BBBY",
+        "KOSS",
+        "DOGE",
+        "SHIB",
+        "PEPE",
+        "BONK",
+        "BTC",
+        "ETH"
+      ]
+    },
+    "date_range": [
+      "2021-01-01",
+      "2022-12-31"
+    ],
+    "total_days": 730
+  },
+  "statistics": {
+    "total_mentions": 6767827,
+    "unique_tickers": 8,
+    "total_records": 17155,
+    "average_daily_mentions": 9270.995890410959,
+    "peak_day": {
+      "date": "2021-01-28",
+      "mentions": 385551
+    }
+  },
+  "ticker_breakdown": {
+    "GME": {
+      "total_mentions": 3049655,
+      "days_active": 730,
+      "avg_daily_mentions": 4177.609589041096
+    },
+    "AMC": {
+      "total_mentions": 697048,
+      "days_active": 730,
+      "avg_daily_mentions": 954.8602739726027
+    },
+    "BB": {
+      "total_mentions": 278183,
+      "days_active": 730,
+      "avg_daily_mentions": 381.07260273972605
+    },
+    "BBBY": {
+      "total_mentions": 247886,
+      "days_active": 730,
+      "avg_daily_mentions": 339.56986301369864
+    },
+    "KOSS": {
+      "total_mentions": 0,
+      "days_active": 0,
+      "avg_daily_mentions": NaN
+    },
+    "DOGE": {
+      "total_mentions": 275379,
+      "days_active": 730,
+      "avg_daily_mentions": 377.23150684931505
+    },
+    "SHIB": {
+      "total_mentions": 126631,
+      "days_active": 730,
+      "avg_daily_mentions": 173.46712328767123
+    },
+    "PEPE": {
+      "total_mentions": 0,
+      "days_active": 0,
+      "avg_daily_mentions": NaN
+    },
+    "BONK": {
+      "total_mentions": 0,
+      "days_active": 0,
+      "avg_daily_mentions": NaN
+    },
+    "BTC": {
+      "total_mentions": 1328490,
+      "days_active": 730,
+      "avg_daily_mentions": 1819.849315068493
+    },
+    "ETH": {
+      "total_mentions": 764555,
+      "days_active": 730,
+      "avg_daily_mentions": 1047.335616438356
+    }
+  },
+  "output_files": {
+    "ticker_daily": "/Users/vin/Desktop/temp_code/meme_stock/data/processed/reddit/reddit_archive_ticker_daily_2021_2022_20250813_225933.csv",
+    "daily_aggregated": "/Users/vin/Desktop/temp_code/meme_stock/data/processed/reddit/reddit_archive_daily_2021_2022_20250813_225933.csv",
+    "ticker_summary": "/Users/vin/Desktop/temp_code/meme_stock/data/processed/reddit/reddit_archive_ticker_summary_2021_2022_20250813_225933.csv",
+    "ticker_stats": "/Users/vin/Desktop/temp_code/meme_stock/data/processed/reddit/reddit_archive_ticker_stats_2021_2022_20250813_225933.csv",
+    "top_ticker_days": "/Users/vin/Desktop/temp_code/meme_stock/data/processed/reddit/reddit_archive_top_ticker_days_2021_2022_20250813_225933.csv"
+  },
+  "schemas": {
+    "ticker_daily": [
+      "date",
+      "ticker",
+      "ticker_type",
+      "mentions",
+      "overall_rank",
+      "total",
+      "subreddit",
+      "year"
+    ],
+    "daily_aggregated": [
+      "date",
+      "total_mentions",
+      "unique_tickers",
+      "active_subreddits",
+      "score",
+      "num_comments",
+      "total_engagement",
+      "title_length",
+      "word_count",
+      "is_weekend",
+      "daily_records",
+      "subreddits_active"
+    ],
+    "ticker_summary": [
+      "date",
+      "ticker",
+      "ticker_type",
+      "mentions",
+      "avg_rank",
+      "subreddit_count",
+      "daily_rank"
+    ]
+  }
+}

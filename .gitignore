@@ -1,1 +1,55 @@
 meme_stock_env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large data files (keep metadata only)
+data/processed/reddit/*.csv
+data/processed/reddit/*.parquet
+data/processed/reddit/ml/*.csv
+data/processed/reddit/ml/*.parquet
+# Keep metadata files
+!data/processed/reddit/*.json
+!data/processed/reddit/ml/*.json
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Logs
+logs/
+*.log
