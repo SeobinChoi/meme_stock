@@ -1,0 +1,299 @@
+# Schema Contract for Meme Stock Data Collection Pipeline
+# Version 1.0 - Created: 2025-08-12
+# This contract defines exact schemas and validation rules for all data types
+
+# Standard datetime format for ALL data files
+datetime_format: "YYYY-MM-DDTHH:MM:SS+00:00"  # UTC ISO8601 only
+timezone: "UTC"
+
+# Schema definitions by data type
+schemas:
+  
+  # Raw stock data schema
+  stocks:
+    required_columns:
+      - name: "date"
+        dtype: "datetime64[ns, UTC]"
+        description: "Trading date in UTC"
+      - name: "open" 
+        dtype: "float64"
+        description: "Opening price"
+      - name: "high"
+        dtype: "float64" 
+        description: "Highest price"
+      - name: "low"
+        dtype: "float64"
+        description: "Lowest price"
+      - name: "close"
+        dtype: "float64"
+        description: "Closing price"
+      - name: "volume"
+        dtype: "int64"
+        description: "Trading volume"
+    optional_columns:
+      - name: "dividends"
+        dtype: "float64"
+        description: "Dividend payments"
+      - name: "stock_splits"
+        dtype: "float64"
+        description: "Stock split ratio"
+
+  # Raw crypto data schema  
+  crypto:
+    required_columns:
+      - name: "date"
+        dtype: "datetime64[ns, UTC]"
+        description: "Trading date in UTC"
+      - name: "open"
+        dtype: "float64"
+        description: "Opening price"
+      - name: "high"
+        dtype: "float64"
+        description: "Highest price"
+      - name: "low"
+        dtype: "float64"
+        description: "Lowest price"
+      - name: "close"
+        dtype: "float64"
+        description: "Closing price"
+      - name: "volume"
+        dtype: "int64"
+        description: "Trading volume"
+    optional_columns:
+      - name: "dividends"
+        dtype: "float64"
+        description: "Dividend payments (usually 0.0 for crypto)"
+      - name: "stock_splits"
+        dtype: "float64"
+        description: "Stock splits (usually 0.0 for crypto)"
+
+  # Raw Reddit/social media data schema
+  reddit:
+    required_columns:
+      - name: "date"
+        dtype: "datetime64[ns, UTC]"
+        description: "Post date in UTC"
+      - name: "score"
+        dtype: "int64"
+        description: "Reddit post score/upvotes"
+      - name: "num_comments"
+        dtype: "int64"
+        description: "Number of comments"
+      - name: "total_engagement"
+        dtype: "int64"
+        description: "Combined engagement metric"
+      - name: "title_length"
+        dtype: "int64"
+        description: "Length of post title"
+      - name: "word_count"
+        dtype: "int64"
+        description: "Total word count"
+      - name: "is_weekend"
+        dtype: "int64"
+        description: "Weekend flag (0/1)"
+
+  # Processed features data schema
+  features:
+    required_columns:
+      - name: "date"
+        dtype: "datetime64[ns, UTC]"
+        description: "Feature date in UTC"
+      # Stock price features
+      - name: "GME_close"
+        dtype: "float64"
+      - name: "GME_volume"
+        dtype: "float64"
+      - name: "AMC_close"
+        dtype: "float64"
+      - name: "AMC_volume"
+        dtype: "float64"
+      - name: "BB_close"
+        dtype: "float64"
+      - name: "BB_volume"
+        dtype: "float64"
+      # Reddit/social features
+      - name: "GME_mentions"
+        dtype: "float64"
+      - name: "AMC_mentions"
+        dtype: "float64"
+      - name: "BB_mentions"
+        dtype: "float64"
+      - name: "reddit_score_mean"
+        dtype: "float64"
+      - name: "reddit_score_sum"
+        dtype: "float64"
+      - name: "reddit_score_count"
+        dtype: "float64"
+      - name: "sentiment_positive"
+        dtype: "float64"
+      - name: "sentiment_negative"
+        dtype: "float64"
+      - name: "sentiment_neutral"
+        dtype: "float64"
+      - name: "is_weekend"
+        dtype: "bool"
+      # Technical indicators
+      - name: "GME_returns_1d"
+        dtype: "float64"
+      - name: "GME_returns_3d"
+        dtype: "float64"
+      - name: "GME_returns_7d"
+        dtype: "float64"
+      - name: "GME_volatility_1d"
+        dtype: "float64"
+      - name: "GME_volatility_3d"
+        dtype: "float64"
+      - name: "GME_volatility_7d"
+        dtype: "float64"
+
+  # Training dataset schema
+  training:
+    required_columns:
+      - name: "date"
+        dtype: "datetime64[ns, UTC]"
+        description: "Training sample date in UTC"
+      # All feature columns (subset of features schema)
+      - name: "reddit_score_count"
+        dtype: "float64"
+      - name: "reddit_score_sum"
+        dtype: "float64"
+      - name: "reddit_score_std"
+        dtype: "float64"
+      - name: "reddit_num_comments_sum"
+        dtype: "float64"
+      - name: "reddit_num_comments_mean"
+        dtype: "float64"
+      - name: "reddit_post_count"
+        dtype: "float64"
+      - name: "year"
+        dtype: "int64"
+      - name: "month"
+        dtype: "int64"
+      - name: "day_of_week"
+        dtype: "int64"
+      # Target variables
+      - name: "GME_target_1d_return"
+        dtype: "float64"
+        description: "1-day ahead GME return target"
+      - name: "GME_target_3d_return"
+        dtype: "float64"
+        description: "3-day ahead GME return target"
+      - name: "GME_target_7d_return"
+        dtype: "float64"
+        description: "7-day ahead GME return target"
+      - name: "GME_target_1d_direction"
+        dtype: "int64"
+        description: "1-day ahead direction (0/1)"
+      - name: "GME_target_3d_direction"
+        dtype: "int64"
+        description: "3-day ahead direction (0/1)"
+      - name: "AMC_target_1d_return"
+        dtype: "float64"
+      - name: "AMC_target_3d_return"
+        dtype: "float64"
+      - name: "AMC_target_7d_return"
+        dtype: "float64"
+      - name: "AMC_target_1d_direction"
+        dtype: "int64"
+      - name: "AMC_target_3d_direction"
+        dtype: "int64"
+      - name: "BB_target_1d_return"
+        dtype: "float64"
+      - name: "BB_target_3d_return"
+        dtype: "float64"
+      - name: "BB_target_7d_return"
+        dtype: "float64"
+      - name: "BB_target_1d_direction"
+        dtype: "int64"
+      - name: "BB_target_3d_direction"
+        dtype: "int64"
+
+# Required metadata for each file type
+metadata_fields:
+  - symbol              # Stock/crypto ticker (e.g., "GME", "BTC")
+  - asset_type          # "stock", "crypto", "reddit", "features", "training"
+  - source              # Data provider (e.g., "yfinance", "reddit_api")
+  - date_range          # "YYYY-MM-DD to YYYY-MM-DD"
+  - total_records       # Integer count
+  - missing_dates       # List of missing dates or "none"
+  - collection_timestamp # UTC timestamp when data was collected
+  - notes               # Additional information
+
+# Validation rules
+validation_rules:
+  datetime:
+    - no_duplicates: true
+    - monotonic_increasing: true
+    - timezone_aware: true
+    - format: "YYYY-MM-DDTHH:MM:SS+00:00"
+  
+  financial_data:
+    - no_negative_volume: true
+    - close_within_high_low: true  # Low <= Close <= High
+    - no_negative_prices: true
+    - reasonable_price_ranges: true  # No extreme outliers
+  
+  reddit_data:
+    - non_negative_counts: true    # score, comments, engagement >= 0
+    - integer_engagement_fields: true
+    - boolean_weekend_flag: true   # 0 or 1 only
+  
+  general:
+    - no_null_required_fields: true
+    - consistent_date_frequency: true  # Daily data should have no gaps
+    - utf8_encoding: true
+
+# Data type normalization rules
+normalization:
+  datetime_conversion:
+    input_formats:
+      - "YYYY-MM-DD"                    # Convert to YYYY-MM-DDTHH:MM:SS+00:00
+      - "YYYY-MM-DD HH:MM:SS"           # Add timezone
+      - "YYYY-MM-DD HH:MM:SS-05:00"     # Convert to UTC
+      - "YYYY-MM-DD HH:MM:SS+00:00"     # Keep as-is
+    output_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+  
+  column_naming:
+    case: "lowercase"
+    separators: "_"  # Use underscores, not spaces or camelCase
+    date_column: "date"  # Always use "date" not "Date" or "timestamp"
+
+# File naming conventions
+file_naming:
+  pattern: "{asset_type}_{symbol}_{data_type}_{YYYYMMDD}.csv"
+  examples:
+    - "stock_GME_raw_20210101.csv"
+    - "crypto_BTC_raw_20210101.csv" 
+    - "reddit_WSB_processed_20210101.csv"
+    - "features_combined_processed_20210101.csv"
+    - "training_full_dataset_20210101.csv"
+
+# Known inconsistencies found in current data
+current_inconsistencies:
+  datetime_formats:
+    - "GME stock data uses EST timezone (-05:00)"
+    - "BTC crypto data uses UTC timezone (+00:00)"
+    - "Reddit and features use simple date strings (YYYY-MM-DD)"
+    - "Training data uses simple date strings (YYYY-MM-DD)"
+  
+  column_naming:
+    - "Stock data uses 'Date' vs others use 'date'"
+    - "Mixed case in some stock columns (Open, High vs open, high)"
+  
+  data_ranges:
+    - "Stock data starts 2020-01-02"
+    - "Crypto data starts 2019-01-01"  
+    - "Reddit/features/training start 2021-01-01"
+  
+  missing_metadata:
+    - "No JSON metadata files for current datasets"
+    - "No collection timestamps recorded"
+    - "Source information not documented"
+
+# Migration plan for existing data
+migration_requirements:
+  1. "Convert all datetime columns to UTC ISO8601 format"
+  2. "Standardize column names to lowercase with underscores"
+  3. "Create metadata JSON files for each dataset"
+  4. "Validate data quality and fix inconsistencies"
+  5. "Rename files following new naming convention"
