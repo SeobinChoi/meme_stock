@@ -1,0 +1,12 @@
+{
+  "symbol": "DOGE",
+  "asset_type": "crypto",
+  "source": "coingecko",
+  "total_records": 2191,
+  "collection_timestamp": "2025-08-12T06:49:41.997879+00:00",
+  "notes": "backfilled",
+  "version": "20250812064941",
+  "date_range": "2019-01-01 to 2024-12-30",
+  "missing_dates": 0,
+  "checksum_sha256": "1059f191bc549c20726543522d1a01a662138be3c94777ea04f6ab252dfbc8ce"
+}

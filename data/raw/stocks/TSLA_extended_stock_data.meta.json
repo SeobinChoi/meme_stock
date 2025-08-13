@@ -1,0 +1,12 @@
+{
+  "symbol": "TSLA",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 1509,
+  "collection_timestamp": "2025-08-12T06:49:56.733085+00:00",
+  "notes": "backfilled",
+  "version": "20250812064956",
+  "date_range": "2019-01-02 to 2024-12-30",
+  "missing_dates": 681,
+  "checksum_sha256": "f9c16d4c003fcced7477182a6a0a13588379d31754c4c100abef1141705c8d11"
+}

@@ -1,0 +1,12 @@
+{
+  "symbol": "AAPL",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 1509,
+  "collection_timestamp": "2025-08-12T06:49:54.050928+00:00",
+  "notes": "backfilled",
+  "version": "20250812064954",
+  "date_range": "2019-01-02 to 2024-12-30",
+  "missing_dates": 681,
+  "checksum_sha256": "dfc0a0fad20e77c1dcdca55aff3a4777e9455202d27db48a70962268dc53c9c6"
+}

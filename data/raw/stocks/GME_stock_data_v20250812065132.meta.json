@@ -1,0 +1,12 @@
+{
+  "symbol": "GME",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 19,
+  "collection_timestamp": "2025-08-12T06:51:32.947501+00:00",
+  "notes": "delisted_handling=true; fallback_used=false; yf_rows=19; polygon_rows=0",
+  "version": "20250812065132",
+  "date_range": "2023-01-01 to 2023-01-31",
+  "missing_dates": 9,
+  "checksum_sha256": "d06c43b49a8550fdd62d6db6a414b318d6a263a9fd78bd9dd7f3c38ab84d81e4"
+}

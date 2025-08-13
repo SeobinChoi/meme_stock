@@ -1,0 +1,10 @@
+{
+  "symbol": "KOSS",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "date_range": "2020-12-01 to 2023-12-31",
+  "total_records": 775,
+  "missing_dates": 29,
+  "collection_timestamp": "2025-08-12T06:27:18.728631+00:00",
+  "notes": "delisted_handling=false"
+}

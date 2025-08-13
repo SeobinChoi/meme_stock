@@ -1,0 +1,12 @@
+{
+  "symbol": "ETH",
+  "asset_type": "crypto",
+  "source": "coingecko",
+  "total_records": 2191,
+  "collection_timestamp": "2025-08-12T06:49:42.386290+00:00",
+  "notes": "backfilled",
+  "version": "20250812064942",
+  "date_range": "2019-01-01 to 2024-12-30",
+  "missing_dates": 0,
+  "checksum_sha256": "b315fbd9e2b1c9639017d2c0ba947e592afaed903ccdf81ac81f43562bfb26ed"
+}

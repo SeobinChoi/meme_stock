@@ -1,0 +1,12 @@
+{
+  "symbol": "BTC",
+  "asset_type": "crypto",
+  "source": "coingecko",
+  "total_records": 2191,
+  "collection_timestamp": "2025-08-12T06:49:41.601973+00:00",
+  "notes": "backfilled",
+  "version": "20250812064941",
+  "date_range": "2019-01-01 to 2024-12-30",
+  "missing_dates": 0,
+  "checksum_sha256": "6c2f170f711c2a9ef276dde0876a470e39837b60853e92eb19c7db1c07f64839"
+}

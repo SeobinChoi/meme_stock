@@ -1,0 +1,12 @@
+{
+  "symbol": "QQQ",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 1509,
+  "collection_timestamp": "2025-08-12T06:49:56.090325+00:00",
+  "notes": "backfilled",
+  "version": "20250812064956",
+  "date_range": "2019-01-02 to 2024-12-30",
+  "missing_dates": 681,
+  "checksum_sha256": "8df48a3727ba3dc3f970d98611d458946e84de4ce745274a0e14a07bcd5db703"
+}

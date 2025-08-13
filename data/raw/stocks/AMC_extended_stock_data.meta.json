@@ -1,0 +1,12 @@
+{
+  "symbol": "AMC",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 1509,
+  "collection_timestamp": "2025-08-12T06:49:54.504295+00:00",
+  "notes": "backfilled",
+  "version": "20250812064954",
+  "date_range": "2019-01-02 to 2024-12-30",
+  "missing_dates": 681,
+  "checksum_sha256": "8e6b132a3b4342dacbf98751db82ce5c730bae578d31ed6957e9edd9c1a2dc17"
+}

@@ -1,0 +1,12 @@
+{
+  "symbol": "BB",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 504,
+  "collection_timestamp": "2025-08-12T06:49:55.452870+00:00",
+  "notes": "backfilled",
+  "version": "20250812064955",
+  "date_range": "2020-01-02 to 2021-12-30",
+  "missing_dates": 225,
+  "checksum_sha256": "05d800df6e9b50ba9739aa778b63963fa87749970073ea40415026d92b44015c"
+}
