@@ -1,0 +1,653 @@
+#!/usr/bin/env python3
+"""
+Leakage-Guarded Advanced Sequence Training
+
+- Loads CSV (default: training_data_2021.csv)
+- Strict leakage prevention (feature filtering, train-only scaling)
+- Chronological train/val/test split
+- Sequence modeling (Transformer, LSTM) with early stopping
+"""
+
+import argparse
+import json
+import os
+import warnings
+from typing import Dict, Tuple, List
+
+import numpy as np
+import pandas as pd
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import TensorDataset, DataLoader
+
+from sklearn.preprocessing import RobustScaler
+from sklearn.metrics import accuracy_score, r2_score, mean_squared_error, mean_absolute_error, precision_score, recall_score, f1_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.model_selection import cross_val_score
+import xgboost as xgb
+
+warnings.filterwarnings('ignore')
+
+
+def set_seed(seed: int = 42) -> None:
+    import random
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
+if torch.cuda.is_available():
+    print(f"GPU: {torch.cuda.get_device_name(0)}")
+
+
+def load_dataset(csv_path: str) -> pd.DataFrame:
+    if not os.path.exists(csv_path):
+        raise FileNotFoundError(f"Dataset not found: {csv_path}")
+    df = pd.read_csv(csv_path)
+    print(f"Loaded {csv_path}: shape={df.shape}")
+    return df
+
+
+def create_return_based_targets(df: pd.DataFrame) -> pd.DataFrame:
+    """Create return-based direction targets from actual daily returns"""
+    df = df.copy()
+    
+    # Find columns with daily returns that have actual data
+    return_cols = [c for c in df.columns if 'daily_return' in c and df[c].notna().sum() > 300]
+    
+    for return_col in return_cols:
+        # Extract stock name from column (e.g., 'AMC_amc_daily_return' -> 'AMC')
+        stock = return_col.split('_')[0]
+        
+        returns = df[return_col]
+        
+        # Basic direction: 1 if positive return, 0 if negative
+        df[f'{stock}_return_direction'] = (returns > 0).astype(int)
+        
+        # Significant move direction (filter out tiny movements)
+        abs_returns = returns.abs()
+        threshold = abs_returns.quantile(0.6)  # Top 40% of movements
+        significant_moves = abs_returns >= threshold
+        df[f'{stock}_significant_up'] = ((returns > 0) & significant_moves).astype(int)
+        df[f'{stock}_significant_down'] = ((returns < 0) & significant_moves).astype(int)
+        
+        # Volatility-adjusted direction
+        rolling_vol = returns.rolling(window=7, min_periods=3).std()
+        normalized_return = returns / (rolling_vol + 1e-8)  # Avoid division by zero
+        df[f'{stock}_vol_adj_direction'] = (normalized_return > 0.5).astype(int)  # Above 0.5 vol units
+        
+        # 3-day future return target (proper forward-looking)
+        future_3d = returns.rolling(window=3).sum().shift(-3)  # Next 3 days total return
+        df[f'{stock}_future_3d_return'] = future_3d
+        df[f'{stock}_future_3d_direction'] = (future_3d > 0).astype(int)
+    
+    return df
+
+
+def advanced_preprocessing(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, np.ndarray], List[str], List[str]]:
+    if 'date' in df.columns:
+        df['date'] = pd.to_datetime(df['date'])
+        df = df.sort_values('date').reset_index(drop=True)
+
+    numeric_cols = [c for c in df.columns if df[c].dtype in ['int64', 'float64']]
+
+    # Identify target-like columns
+    target_like_keywords = ['target', 'direction', 'label', 'class', 'return']
+    target_cols = [c for c in numeric_cols if any(k in c.lower() for k in target_like_keywords)]
+    if not target_cols:
+        raise ValueError("No target-like columns found (need one of: target, direction, label, return)")
+
+    # Features: numeric only; exclude date, targets, and leakage-like names
+    leakage_keywords = ['target', 'direction', 'label', 'next', 'future', 'leak', 'return']
+    feature_cols = [
+        c for c in numeric_cols
+        if c not in target_cols and c != 'date' and not any(k in c.lower() for k in leakage_keywords)
+    ]
+
+    X = df[feature_cols].copy()
+    y_dict = {t: df[t].values for t in target_cols}
+
+    # Fill missing with median
+    if X.isnull().sum().sum() > 0:
+        X = X.fillna(X.median())
+
+    # Drop constant features
+    constant_cols = X.columns[X.nunique() <= 1]
+    if len(constant_cols) > 0:
+        X = X.drop(columns=list(constant_cols))
+
+    # Drop highly correlated features (>0.98)
+    if X.shape[1] > 1:
+        corr = X.corr().abs()
+        upper = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
+        high_corr = [c for c in upper.columns if any(upper[c] > 0.98)]
+        if high_corr:
+            X = X.drop(columns=high_corr)
+
+    print(f"Preprocessed: features={X.shape[1]} targets={len(target_cols)} samples={len(X)}")
+    return X, y_dict, list(X.columns), target_cols
+
+
+def create_sequences(X: np.ndarray, y: np.ndarray, seq_len: int = 14) -> Tuple[np.ndarray, np.ndarray]:
+    X_seq, y_seq = [], []
+    for i in range(0, len(X) - seq_len):
+        X_seq.append(X[i:i + seq_len])
+        y_seq.append(y[i + seq_len])
+    return np.asarray(X_seq), np.asarray(y_seq)
+
+
+def prepare_sequence_data(
+    X_df: pd.DataFrame,
+    y: np.ndarray,
+    seq_len: int = 14,
+    test_ratio: float = 0.2,
+    val_ratio_within_train: float = 0.2,
+    task_hint: str = "",
+) -> Dict[str, torch.Tensor]:
+    valid_idx = ~np.isnan(y)
+    Xv = X_df.values[valid_idx]
+    yv = y[valid_idx]
+
+    if len(yv) < seq_len + 10:
+        raise ValueError(f"Insufficient samples after NaN removal: {len(yv)}")
+
+    X_seq, y_seq = create_sequences(Xv, yv, seq_len)
+
+    # Chronological split
+    n_total = len(X_seq)
+    n_test = max(1, int(n_total * test_ratio))
+    n_trainval = n_total - n_test
+    X_trainval, X_test = X_seq[:n_trainval], X_seq[n_trainval:]
+    y_trainval, y_test = y_seq[:n_trainval], y_seq[n_trainval:]
+
+    n_val = max(1, int(n_trainval * val_ratio_within_train))
+    X_train, X_val = X_trainval[:-n_val], X_trainval[-n_val:]
+    y_train, y_val = y_trainval[:-n_val], y_trainval[-n_val:]
+
+    # Train-only scaling
+    scaler = RobustScaler()
+    B, T, F = X_train.shape
+    scaler.fit(X_train.reshape(-1, F))
+
+    def scale_3d(arr: np.ndarray) -> np.ndarray:
+        arr2 = arr.reshape(-1, F)
+        arr2 = scaler.transform(arr2)
+        return arr2.reshape(-1, T, F)
+
+    X_train_s = scale_3d(X_train)
+    X_val_s = scale_3d(X_val)
+    X_test_s = scale_3d(X_test)
+
+    # Task determination
+    unique_vals = np.unique(y_train)
+    is_probably_classification = 'direction' in task_hint.lower() or (set(np.unique(yv)) <= {0, 1} and len(np.unique(yv)) <= 5)
+
+    if is_probably_classification:
+        classes = np.unique(y_train)
+        class_to_idx = {c: i for i, c in enumerate(classes)}
+        if len(classes) < 2:
+            raise ValueError("Classification target has <2 classes; choose another target.")
+        y_train_i = np.vectorize(class_to_idx.get)(y_train)
+        y_val_i = np.vectorize(class_to_idx.get)(y_val)
+        y_test_i = np.vectorize(class_to_idx.get)(y_test)
+        task_type = 'classification'
+        num_classes = len(classes)
+        y_train_t = torch.LongTensor(y_train_i)
+        y_val_t = torch.LongTensor(y_val_i)
+        y_test_t = torch.LongTensor(y_test_i)
+    else:
+        task_type = 'regression'
+        num_classes = 1
+        y_train_t = torch.FloatTensor(y_train)
+        y_val_t = torch.FloatTensor(y_val)
+        y_test_t = torch.FloatTensor(y_test)
+
+    return {
+        'X_train': torch.FloatTensor(X_train_s),
+        'X_val': torch.FloatTensor(X_val_s),
+        'X_test': torch.FloatTensor(X_test_s),
+        'y_train': y_train_t,
+        'y_val': y_val_t,
+        'y_test': y_test_t,
+        'task_type': task_type,
+        'num_classes': num_classes,
+        'sequence_length': T,
+        'feature_dim': F,
+        'scaler': scaler,
+    }
+
+
+class MultiHeadAttentionBlock(nn.Module):
+    def __init__(self, d_model: int, num_heads: int, dropout: float = 0.1):
+        super().__init__()
+        self.attn = nn.MultiheadAttention(d_model, num_heads, dropout=dropout, batch_first=True)
+        self.norm1 = nn.LayerNorm(d_model)
+        self.ff = nn.Sequential(
+            nn.Linear(d_model, d_model * 4),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(d_model * 4, d_model),
+        )
+        self.norm2 = nn.LayerNorm(d_model)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        attn_out, _ = self.attn(x, x, x)
+        x = self.norm1(x + attn_out)
+        ff_out = self.ff(x)
+        x = self.norm2(x + ff_out)
+        return x
+
+
+class TransformerModel(nn.Module):
+    def __init__(self, input_dim: int, d_model: int = 128, num_heads: int = 4, num_layers: int = 3, num_classes: int = 2):
+        super().__init__()
+        self.proj = nn.Linear(input_dim, d_model)
+        self.pe = nn.Parameter(torch.randn(512, d_model))
+        self.blocks = nn.ModuleList([MultiHeadAttentionBlock(d_model, num_heads) for _ in range(num_layers)])
+        self.cls = nn.Sequential(
+            nn.Linear(d_model, d_model // 2),
+            nn.GELU(),
+            nn.Dropout(0.1),
+            nn.Linear(d_model // 2, num_classes),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.proj(x)
+        seq_len = x.size(1)
+        x = x + self.pe[:seq_len].unsqueeze(0)
+        for blk in self.blocks:
+            x = blk(x)
+        weights = torch.softmax(x.mean(dim=-1), dim=1)
+        x = torch.sum(x * weights.unsqueeze(-1), dim=1)
+        return self.cls(x)
+
+
+class AttentionLSTM(nn.Module):
+    def __init__(self, input_dim: int, hidden_dim: int = 128, num_layers: int = 2, num_classes: int = 2):
+        super().__init__()
+        self.lstm = nn.LSTM(
+            input_dim, hidden_dim, num_layers=num_layers, bidirectional=True, batch_first=True, dropout=0.1 if num_layers > 1 else 0.0
+        )
+        self.attn = nn.MultiheadAttention(embed_dim=hidden_dim * 2, num_heads=4, batch_first=True)
+        self.cls = nn.Sequential(nn.LayerNorm(hidden_dim * 2), nn.Dropout(0.1), nn.Linear(hidden_dim * 2, num_classes))
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        lstm_out, _ = self.lstm(x)
+        attn_out, _ = self.attn(lstm_out, lstm_out, lstm_out)
+        pooled = attn_out.mean(dim=1)
+        return self.cls(pooled)
+
+
+class Trainer:
+    def __init__(self, model: nn.Module, task_type: str):
+        self.model = model.to(device)
+        self.task_type = task_type
+        self.history = {'train_loss': [], 'val_loss': []}
+
+    def train(self, X_train, y_train, X_val, y_val, epochs: int = 30, batch_size: int = 32, lr: float = 1e-3, patience: int = 6):
+        train_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=batch_size, shuffle=True)
+        val_loader = DataLoader(TensorDataset(X_val, y_val), batch_size=batch_size, shuffle=False)
+
+        optimizer = optim.AdamW(self.model.parameters(), lr=lr, weight_decay=1e-4)
+        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3)
+        criterion = nn.CrossEntropyLoss() if self.task_type == 'classification' else nn.MSELoss()
+
+        best_val = float('inf')
+        best_state = None
+        no_improve = 0
+
+        for epoch in range(epochs):
+            self.model.train()
+            total = 0.0
+            for bx, by in train_loader:
+                bx, by = bx.to(device), by.to(device)
+                optimizer.zero_grad()
+                out = self.model(bx)
+                if self.task_type == 'regression':
+                    out = out.squeeze()
+                loss = criterion(out, by)
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                optimizer.step()
+                total += loss.item()
+            train_loss = total / max(1, len(train_loader))
+
+            self.model.eval()
+            vtotal = 0.0
+            with torch.no_grad():
+                for bx, by in val_loader:
+                    bx, by = bx.to(device), by.to(device)
+                    out = self.model(bx)
+                    if self.task_type == 'regression':
+                        out = out.squeeze()
+                    vtotal += criterion(out, by).item()
+            val_loss = vtotal / max(1, len(val_loader))
+
+            scheduler.step(val_loss)
+            self.history['train_loss'].append(train_loss)
+            self.history['val_loss'].append(val_loss)
+
+            if val_loss < best_val:
+                best_val = val_loss
+                best_state = self.model.state_dict().copy()
+                no_improve = 0
+            else:
+                no_improve += 1
+                if no_improve >= patience:
+                    print(f"Early stopping at epoch {epoch+1}")
+                    break
+
+        if best_state is not None:
+            self.model.load_state_dict(best_state)
+
+    def evaluate(self, X_test, y_test):
+        self.model.eval()
+        with torch.no_grad():
+            out = self.model(X_test.to(device))
+            if self.task_type == 'classification':
+                preds = torch.argmax(out, dim=1).cpu().numpy()
+                targets = y_test.cpu().numpy()
+                acc = accuracy_score(targets, preds)
+                return {'accuracy': acc}, preds, targets
+            else:
+                out = out.squeeze().cpu().numpy()
+                targets = y_test.cpu().numpy()
+                return {
+                    'mse': mean_squared_error(targets, out),
+                    'mae': mean_absolute_error(targets, out),
+                    'r2': r2_score(targets, out)
+                }, out, targets
+
+
+def walk_forward_cv(X_df: pd.DataFrame, y: np.ndarray, seq_len: int, task_hint: str, n_splits: int = 5):
+    """Walk-forward cross-validation for time series"""
+    print(f"🔄 Starting {n_splits}-fold walk-forward CV...")
+    
+    # Remove NaN and create sequences first
+    valid_idx = ~np.isnan(y)
+    Xv = X_df.values[valid_idx]
+    yv = y[valid_idx]
+    X_seq, y_seq = create_sequences(Xv, yv, seq_len)
+    
+    n_total = len(X_seq)
+    min_train = max(50, n_total // (n_splits + 1))  # Minimum training size
+    
+    cv_results = []
+    for fold in range(n_splits):
+        # Progressive training size: start with min_train, grow each fold
+        train_end = min_train + fold * (n_total - min_train) // n_splits
+        test_start = train_end
+        test_end = min(test_start + (n_total - min_train) // n_splits, n_total)
+        
+        if test_start >= test_end or train_end <= seq_len:
+            continue
+            
+        X_train_fold = X_seq[:train_end]
+        y_train_fold = y_seq[:train_end]
+        X_test_fold = X_seq[test_start:test_end]
+        y_test_fold = y_seq[test_start:test_end]
+        
+        # Scale using only training data
+        scaler = RobustScaler()
+        B, T, F = X_train_fold.shape
+        scaler.fit(X_train_fold.reshape(-1, F))
+        
+        X_train_s = scaler.transform(X_train_fold.reshape(-1, F)).reshape(-1, T, F)
+        X_test_s = scaler.transform(X_test_fold.reshape(-1, F)).reshape(-1, T, F)
+        
+        # Determine task type (simplified)
+        task_type = 'classification' if 'direction' in task_hint.lower() else 'regression'
+        if task_type == 'classification':
+            classes = np.unique(y_train_fold)
+            if len(classes) < 2:
+                continue
+            class_to_idx = {c: i for i, c in enumerate(classes)}
+            y_train_i = np.vectorize(class_to_idx.get)(y_train_fold)
+            y_test_i = np.vectorize(class_to_idx.get)(y_test_fold)
+            y_train_t = torch.LongTensor(y_train_i)
+            y_test_t = torch.LongTensor(y_test_i)
+            num_classes = len(classes)
+        else:
+            y_train_t = torch.FloatTensor(y_train_fold)
+            y_test_t = torch.FloatTensor(y_test_fold)
+            num_classes = 1
+        
+        X_train_t = torch.FloatTensor(X_train_s)
+        X_test_t = torch.FloatTensor(X_test_s)
+        
+        fold_results = {}
+        print(f"  Fold {fold+1}: train={len(X_train_t)}, test={len(X_test_t)}")
+        
+        # Train models for this fold
+        models = {
+            'Transformer': TransformerModel(F, num_classes=num_classes),
+            'LSTM': AttentionLSTM(F, num_classes=num_classes)
+        }
+        
+        for name, model in models.items():
+            trainer = Trainer(model, task_type)
+            # Quick training for CV (fewer epochs)
+            trainer.train(X_train_t, y_train_t, X_test_t[:len(X_test_t)//2], y_test_t[:len(X_test_t)//2], 
+                         epochs=15, batch_size=16, lr=1e-3, patience=4)
+            metrics, _, _ = trainer.evaluate(X_test_t[len(X_test_t)//2:], y_test_t[len(X_test_t)//2:])
+            fold_results[name] = metrics
+            
+        cv_results.append(fold_results)
+    
+    # Aggregate CV results
+    if not cv_results:
+        return None
+        
+    agg_results = {}
+    for model_name in cv_results[0].keys():
+        model_metrics = {}
+        for metric_name in cv_results[0][model_name].keys():
+            values = [fold[model_name][metric_name] for fold in cv_results if model_name in fold]
+            model_metrics[metric_name + '_mean'] = np.mean(values)
+            model_metrics[metric_name + '_std'] = np.std(values)
+        agg_results[model_name] = model_metrics
+    
+    return agg_results
+
+
+def baseline_evaluation(X: np.ndarray, y: np.ndarray, task_type: str) -> Dict[str, Dict[str, float]]:
+    """Quick baseline model evaluation to assess predictability"""
+    print(f"🔍 Baseline evaluation for {task_type} task...")
+    
+    # Simple train/test split for quick assessment
+    split_idx = int(len(X) * 0.8)
+    X_train, X_test = X[:split_idx], X[split_idx:]
+    y_train, y_test = y[:split_idx], y[split_idx:]
+    
+    results = {}
+    
+    if task_type == 'classification':
+        # Check class distribution
+        unique, counts = np.unique(y_train, return_counts=True)
+        print(f"  Class distribution: {dict(zip(unique, counts))}")
+        
+        if len(unique) < 2:
+            print("  ⚠️ Single class - classification impossible")
+            return {}
+        
+        models = {
+            'LogisticRegression': LogisticRegression(random_state=42, max_iter=1000),
+            'RandomForest': RandomForestClassifier(n_estimators=50, random_state=42, max_depth=5),
+            'XGBoost': xgb.XGBClassifier(n_estimators=50, random_state=42, max_depth=3, eval_metric='logloss')
+        }
+        
+        for name, model in models.items():
+            try:
+                model.fit(X_train, y_train)
+                y_pred = model.predict(X_test)
+                y_pred_proba = model.predict_proba(X_test)
+                
+                results[name] = {
+                    'accuracy': accuracy_score(y_test, y_pred),
+                    'precision': precision_score(y_test, y_pred, average='weighted', zero_division=0),
+                    'recall': recall_score(y_test, y_pred, average='weighted', zero_division=0),
+                    'f1': f1_score(y_test, y_pred, average='weighted', zero_division=0)
+                }
+                print(f"  {name}: Acc={results[name]['accuracy']:.3f}, F1={results[name]['f1']:.3f}")
+            except Exception as e:
+                print(f"  {name} failed: {e}")
+    
+    else:  # regression
+        models = {
+            'RandomForest': RandomForestRegressor(n_estimators=50, random_state=42, max_depth=5),
+            'XGBoost': xgb.XGBRegressor(n_estimators=50, random_state=42, max_depth=3)
+        }
+        
+        for name, model in models.items():
+            try:
+                model.fit(X_train, y_train)
+                y_pred = model.predict(X_test)
+                
+                results[name] = {
+                    'mse': mean_squared_error(y_test, y_pred),
+                    'mae': mean_absolute_error(y_test, y_pred),
+                    'r2': r2_score(y_test, y_pred)
+                }
+                print(f"  {name}: R²={results[name]['r2']:.3f}, MAE={results[name]['mae']:.3f}")
+            except Exception as e:
+                print(f"  {name} failed: {e}")
+    
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--csv', type=str, default='training_data_2021.csv', help='Path to training CSV')
+    parser.add_argument('--seq_len', type=int, default=14)
+    parser.add_argument('--seed', type=int, default=42)
+    parser.add_argument('--cv', action='store_true', help='Run walk-forward cross-validation')
+    parser.add_argument('--baseline', action='store_true', help='Run baseline model evaluation')
+    args = parser.parse_args()
+
+    set_seed(args.seed)
+
+    df = load_dataset(args.csv)
+    # Create return-based targets from actual data
+    df = create_return_based_targets(df)
+    X_df, y_dict, feature_cols, target_cols = advanced_preprocessing(df)
+
+    # Build candidate targets: prefer direction (classification) then return (regression)
+    direction_targets = [t for t in target_cols if 'direction' in t.lower()]
+    return_targets = [t for t in target_cols if 'return' in t.lower()]
+    other_targets = [t for t in target_cols if t not in direction_targets + return_targets]
+    candidate_targets = direction_targets + return_targets + other_targets
+
+    seq = None
+    chosen_target = None
+    for tgt in candidate_targets:
+        try:
+            tmp_seq = prepare_sequence_data(X_df, y_dict[tgt], seq_len=args.seq_len, task_hint=tgt)
+            # For classification, ensure at least two classes in train labels
+            if tmp_seq['task_type'] == 'classification':
+                unique_train = len(torch.unique(tmp_seq['y_train']))
+                if unique_train < 2:
+                    print(f"Skipping target {tgt}: single class in training subset")
+                    continue
+            seq = tmp_seq
+            chosen_target = tgt
+            break
+        except Exception as e:
+            print(f"Candidate target {tgt} failed: {e}")
+            continue
+
+    if seq is None or chosen_target is None:
+        raise ValueError("Failed to prepare any viable target (classification had <2 classes; regression failed). Try a different CSV or sequence length.")
+
+    print(f"Primary target: {chosen_target} ({seq['task_type']})")
+
+    # Run baseline evaluation if requested  
+    if args.baseline:
+        # Use simpler non-sequence data for baseline
+        valid_idx = ~np.isnan(y_dict[chosen_target])
+        X_simple = X_df.values[valid_idx]
+        y_simple = y_dict[chosen_target][valid_idx]
+        
+        if len(y_simple) > 50:  # Minimum data for meaningful evaluation
+            task_hint = 'classification' if 'direction' in chosen_target.lower() else 'regression'
+            baseline_results = baseline_evaluation(X_simple, y_simple, task_hint)
+            
+            print(f"\n📊 Baseline Assessment:")
+            if baseline_results:
+                best_model = max(baseline_results.keys(), 
+                               key=lambda k: baseline_results[k].get('accuracy', baseline_results[k].get('r2', -999)))
+                best_score = baseline_results[best_model].get('accuracy', baseline_results[best_model].get('r2'))
+                print(f"Best baseline: {best_model} with score {best_score:.3f}")
+                
+                if task_hint == 'classification' and best_score > 0.6:
+                    print("✅ Target appears predictable - proceed with deep learning")
+                elif task_hint == 'regression' and best_score > 0.1:
+                    print("✅ Target shows some predictability - proceed with deep learning")
+                else:
+                    print("❌ Target may be too noisy for reliable prediction")
+            
+            with open('data/results/baseline_results.json', 'w') as f:
+                json.dump(baseline_results, f, indent=2)
+            print("Saved data/results/baseline_results.json")
+        return
+
+    # Run CV if requested
+    if args.cv:
+        cv_results = walk_forward_cv(X_df, y_dict[chosen_target], args.seq_len, chosen_target, n_splits=5)
+        if cv_results:
+            print("\n🎯 Cross-Validation Results:")
+            print(json.dumps(cv_results, indent=2))
+            with open('data/results/cv_results.json', 'w') as f:
+                json.dump(cv_results, f, indent=2)
+            print("Saved data/results/cv_results.json")
+        return
+
+    models = {
+        'Transformer': TransformerModel(seq['feature_dim'], num_classes=seq['num_classes']),
+        'LSTM': AttentionLSTM(seq['feature_dim'], num_classes=seq['num_classes'])
+    }
+
+    results: Dict[str, Dict[str, float]] = {}
+    trained: Dict[str, nn.Module] = {}
+    for name, model in models.items():
+        print(f"\n==== Training {name} ====")
+        trainer = Trainer(model, seq['task_type'])
+        trainer.train(seq['X_train'], seq['y_train'], seq['X_val'], seq['y_val'], epochs=30, batch_size=32, lr=1e-3, patience=6)
+        metrics, preds, targets = trainer.evaluate(seq['X_test'], seq['y_test'])
+        results[name] = metrics
+        trained[name] = trainer.model
+        print(f"{name} metrics: {metrics}")
+
+    print("\nFinal Results:")
+    print(json.dumps(results, indent=2))
+
+    # Save scaler and results
+    try:
+        import joblib
+        joblib.dump(seq['scaler'], 'feature_scaler.pkl')
+        print('Saved feature_scaler.pkl')
+    except Exception as e:
+        print(f'Failed to save scaler: {e}')
+
+    with open('training_results.json', 'w') as f:
+        json.dump({
+            'task_type': seq['task_type'],
+            'target': chosen_target,
+            'sequence_length': seq['sequence_length'],
+            'feature_dim': seq['feature_dim'],
+            'results': results
+        }, f, indent=2)
+        print('Saved training_results.json')
+
+
+if __name__ == '__main__':
+    main()
+
+
