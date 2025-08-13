@@ -1,0 +1,45 @@
+{
+  "quality_report": {
+    "timestamp": "2025-08-10T20:16:05.945290",
+    "datasets": {
+      "unified": {
+        "dataset_name": "unified",
+        "total_records": 3330,
+        "total_columns": 107,
+        "quality_scores": {
+          "completeness": 35.72619348320283,
+          "consistency": 100.0,
+          "accuracy": 85.0,
+          "timeliness": 85.0
+        },
+        "quality_score": 76.4315483708007
+      }
+    },
+    "overall_quality": 76.4315483708007,
+    "alerts": []
+  },
+  "alerts": [
+    {
+      "severity": "WARNING",
+      "dataset": "unified",
+      "metric": "completeness",
+      "message": "completeness below threshold: 35.7% < 85.0%",
+      "timestamp": "2025-08-10T20:16:06.003345"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "unified",
+      "metric": "accuracy",
+      "message": "accuracy below threshold: 85.0% < 95.0%",
+      "timestamp": "2025-08-10T20:16:06.003464"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "unified",
+      "metric": "timeliness",
+      "message": "timeliness below threshold: 85.0% < 98.0%",
+      "timestamp": "2025-08-10T20:16:06.003481"
+    }
+  ],
+  "monitoring_timestamp": "2025-08-10T20:16:06.063945"
+}

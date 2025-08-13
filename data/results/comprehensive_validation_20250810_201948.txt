@@ -1,0 +1,43 @@
+================================================================================
+COMPREHENSIVE DATA VALIDATION REPORT
+================================================================================
+Timestamp: 2025-08-10T20:19:48.335934
+Overall Status: FAIL
+
+📊 FEATURE QUALITY CHECK
+----------------------------------------
+✅ Feature Quality: PASS
+   Total Features: 215
+   Total Samples: 3330
+   Quality Score: 99.8%
+
+🔍 REDDIT FEATURES VERIFICATION
+----------------------------------------
+⚠️ Reddit Features: WARNING
+   Missing Features: 2
+
+❌ NAN VALUES CHECK
+----------------------------------------
+✅ NaN Check: PASS
+   Total NaN Percentage: 0.20%
+
+⏰ TEMPORAL ALIGNMENT
+----------------------------------------
+⚠️ Temporal Alignment: WARNING
+
+🔗 INTEGRATION TEST
+----------------------------------------
+✅ Integration Test: PASS
+   Sample Size: 100
+   Features Loaded: 215
+
+🚫 DATA LEAKAGE CHECK
+----------------------------------------
+⚠️ Data Leakage Check: FAIL
+   Issues Found: 13
+
+📋 SUMMARY
+----------------------------------------
+⚠️ VALIDATION ISSUES DETECTED
+   Please review and fix the issues above
+================================================================================
