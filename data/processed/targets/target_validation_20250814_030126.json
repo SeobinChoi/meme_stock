@@ -1,0 +1,91 @@
+{
+  "y1d": {
+    "count": 5434,
+    "mean": Infinity,
+    "std": NaN,
+    "min": -0.916290731874155,
+    "max": Infinity,
+    "abs_mean": Infinity,
+    "sharpe_annualized": 0.0
+  },
+  "y5d": {
+    "count": 5409,
+    "mean": 0.004086903193262275,
+    "std": 0.19266863065649714,
+    "min": -1.6285423148242026,
+    "max": 2.862200910163226,
+    "abs_mean": 0.1012419887329002,
+    "sharpe_annualized": 0.33673139560676363
+  },
+  "alpha_1d": {
+    "count": 5434,
+    "mean": Infinity,
+    "std": NaN,
+    "min": -0.9303316954224483,
+    "max": Infinity,
+    "abs_mean": Infinity,
+    "sharpe_annualized": 0.0
+  },
+  "alpha_5d": {
+    "count": 5409,
+    "mean": 0.003067097573023606,
+    "std": 0.1805177159651567,
+    "min": -1.6751076255401571,
+    "max": 2.8898184564303864,
+    "abs_mean": 0.08612687017249382,
+    "sharpe_annualized": 0.26971682136361175
+  },
+  "direction_balance": {
+    "up_days": 2306,
+    "down_days": 2481,
+    "neutral_days": 647,
+    "up_pct": 0.42436510857563486
+  },
+  "per_ticker": {
+    "AMC": {
+      "days": 752,
+      "avg_return": -0.0015813268034825612,
+      "volatility": 0.1043858693372213,
+      "sharpe": -0.24048067943102702
+    },
+    "BB": {
+      "days": 752,
+      "avg_return": -0.0008243457677828442,
+      "volatility": 0.04772772814665306,
+      "sharpe": -0.27418198777621283
+    },
+    "DOGE": {
+      "days": 1094,
+      "avg_return": 0.002519282083062345,
+      "volatility": 0.08497795483298139,
+      "sharpe": 0.4706204488425824
+    },
+    "ETH": {
+      "days": 1094,
+      "avg_return": 0.001041158928320814,
+      "volatility": 0.044144373397242045,
+      "sharpe": 0.37440525996504415
+    },
+    "GME": {
+      "days": 752,
+      "avg_return": 0.001864888239023143,
+      "volatility": 0.09632994582891508,
+      "sharpe": 0.3073206650908372
+    },
+    "SHIB": {
+      "days": 990,
+      "avg_return": Infinity,
+      "volatility": NaN,
+      "sharpe": 0.0
+    }
+  },
+  "quality": {
+    "missing_targets": 25,
+    "extreme_returns": 30,
+    "valid_date_range": [
+      "2021-01-01",
+      "2023-12-30"
+    ],
+    "total_observations": 5434
+  }
+}

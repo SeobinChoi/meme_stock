@@ -1,0 +1,30 @@
+🚀 PRICE PREDICTION EVALUATION REPORT
+==================================================
+
+📊 Model Performance Summary:
+   rw:
+      Rank IC: nan
+      IR: 0.000
+      Hit Rate: 0.0%
+   ar:
+      Rank IC: 0.002
+      IR: 32.970
+      Hit Rate: 66.7%
+   price_lgbm:
+      Rank IC: 0.037
+      IR: 179.231
+      Hit Rate: 100.0%
+   reddit_lgbm:
+      Rank IC: 0.066
+      IR: 93645.565
+      Hit Rate: 66.7%
+
+🎯 Go/No-Go Decision: NO-GO
+   IC Improvement: 0.029
+   Reddit IR: 93645.565
+   DM Test Significant: False
+
+💡 Recommendations:
+   ❌ IC improvement (0.029) below threshold (0.03)
+   ❌ Improvement not statistically significant (DM test)
+   🔄 Consider: better Reddit features, longer training, or alternative strategies.
