@@ -1,0 +1,26 @@
+# Asset to Subreddit Mapping Configuration
+# Maps stock/crypto symbols to their relevant subreddit communities
+
+stocks:
+  GME: [wallstreetbets, stocks, GME, Superstonk]
+  AMC: [wallstreetbets, amcstock, stocks]
+  BB:  [wallstreetbets, stocks, BlackBerry]
+  KOSS: [wallstreetbets, stocks]
+  BBBY: [wallstreetbets, stocks, BBBY]
+  AAPL: [stocks, apple]
+  TSLA: [stocks, teslamotors, TeslaInvestorsClub]
+  SPY: [stocks, investing]
+  QQQ: [stocks, investing]
+
+crypto:
+  BTC: [cryptocurrency, Bitcoin]
+  ETH: [cryptocurrency, ethereum]
+  DOGE: [cryptocurrency, dogecoin]
+  SHIB: [cryptocurrency, SHIBArmy]
+  PEPE: [cryptocurrency, pepecoin]
+  BONK: [cryptocurrency, bonk]
+
+# Default fallback mapping for assets not explicitly listed
+defaults:
+  stocks: [wallstreetbets, stocks]
+  crypto: [cryptocurrency]

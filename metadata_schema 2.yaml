@@ -1,0 +1,203 @@
+version: 1
+datetime_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+timezone: "UTC"
+
+# Common fields required in all metadata files
+common_fields:
+  - symbol            # e.g., "GME", "DOGE", or "r/wallstreetbets" for subreddit if needed
+  - asset_type        # "stock" | "crypto" | "reddit" | "features" | "processed"
+  - source            # "yfinance" | "polygon" | "coingecko" | "bigquery" | "praw" | "unknown"
+  - date_range        # "YYYY-MM-DD to YYYY-MM-DD" or "AUTO_START to YYYY-MM-DD"
+  - total_records     # int
+  - missing_dates     # int
+  - collection_timestamp  # ISO8601 UTC
+  - notes             # string - additional context and processing info
+  - version           # "YYYYMMDDHHMMSS" - timestamp when file was created
+  - checksum_sha256   # hex string of CSV file content
+
+# Asset-specific column requirements and validation rules
+asset_specific:
+  stock:
+    required_columns: ["date","open","high","low","close","volume"]
+    optional_columns: ["dividends","stock_splits"]
+    continuity: "business_days"
+    date_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+    column_types:
+      date: "string"
+      open: "float64" 
+      high: "float64"
+      low: "float64"
+      close: "float64"
+      volume: "int64"
+      dividends: "float64"
+      stock_splits: "float64"
+  
+  crypto:
+    required_columns: ["date","open","high","low","close","volume"]
+    optional_columns: ["dividends","stock_splits"]
+    continuity: "calendar_days"
+    date_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+    column_types:
+      date: "string"
+      open: "float64"
+      high: "float64" 
+      low: "float64"
+      close: "float64"
+      volume: "int64"
+      dividends: "float64"
+      stock_splits: "float64"
+  
+  reddit:
+    required_columns: ["date"]
+    optional_columns: ["score","num_comments","comments","posts","total_engagement","is_weekend","title_length","word_count"]
+    continuity: "calendar_days"
+    date_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+    column_types:
+      date: "string"
+      score: "int64"
+      num_comments: "int64"
+      comments: "int64"
+      posts: "int64"
+      total_engagement: "int64"
+      is_weekend: "int64"  # 0 or 1
+      title_length: "int64"
+      word_count: "int64"
+  
+  features:
+    required_columns: ["date"]
+    continuity: "calendar_days" 
+    date_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+    # Feature columns are flexible based on engineering pipeline
+  
+  processed:
+    required_columns: ["date"]
+    continuity: "calendar_days"
+    date_format: "YYYY-MM-DDTHH:MM:SS+00:00"
+    # Processed data columns are flexible based on processing pipeline
+
+# Validation rules applied during data collection and processing
+validation_rules:
+  duplicates: "forbidden"              # No duplicate timestamps allowed
+  monotonic_dates: "strict_increasing" # Dates must be in ascending order
+  
+  bounds:
+    price_low_high: true               # Low <= High for OHLC data
+    price_open_close_in_bounds: true   # Low <= Open,Close <= High
+  
+  non_negative:
+    - "volume"          # Trading volume must be >= 0
+    - "Volume"          # Alternative column name
+    - "score"           # Reddit scores can be negative, but filtered >= 0 
+    - "num_comments"    # Comment counts must be >= 0
+    - "comments"        # Alternative column name
+    - "posts"           # Post counts must be >= 0
+    - "total_engagement" # Engagement metrics must be >= 0
+    - "title_length"    # Text length must be >= 0
+    - "word_count"      # Word counts must be >= 0
+
+# File naming conventions
+naming_conventions:
+  base_pattern: "{symbol}_{asset_type}_data.csv"
+  versioned_pattern: "{symbol}_{asset_type}_data_v{YYYYMMDDHHMMSS}.csv"
+  metadata_pattern: "{symbol}_{asset_type}_data.meta.json"
+  versioned_metadata_pattern: "{symbol}_{asset_type}_data_v{YYYYMMDDHHMMSS}.meta.json"
+  
+  examples:
+    stock_base: "GME_stock_data.csv"
+    stock_versioned: "GME_stock_data_v20250812153000.csv"
+    crypto_base: "BTC_crypto_data.csv"
+    crypto_versioned: "BTC_crypto_data_v20250812153000.csv"
+    reddit_base: "WSB_reddit_data.csv"
+    reddit_versioned: "WSB_reddit_data_v20250812153000.csv"
+
+# Directory structure requirements
+directory_structure:
+  raw_data:
+    stocks: "data/raw/stocks/"
+    crypto: "data/raw/crypto/"
+    reddit: "data/raw/reddit/"
+  
+  processed_data:
+    features: "data/features/"
+    processed: "data/processed/"
+    models: "data/models/"
+  
+  infrastructure:
+    logs: "logs/"
+    index: "data/INDEX.jsonl"
+
+# Versioning policy
+versioning_policy:
+  rule: "never_overwrite_raw"
+  behavior:
+    - "If base file (e.g., GME_stock_data.csv) does not exist: create base file"
+    - "If base file exists: create versioned file (e.g., GME_stock_data_v20250812153000.csv)"
+    - "Always update/create .meta.json with latest version info"
+    - "Always append entry to data/INDEX.jsonl for tracking"
+  
+  metadata_updates:
+    - "version field contains timestamp of current file"
+    - "checksum_sha256 contains hash of current CSV content"
+    - "collection_timestamp contains when data was collected"
+    - "notes field tracks processing history and data source info"
+
+# Data quality thresholds
+quality_thresholds:
+  stock:
+    min_records: 10                    # Minimum rows for valid dataset
+    max_missing_ratio: 0.3             # Max 30% missing business days
+    max_nan_ratio: 0.1                 # Max 10% NaN values in price columns
+  
+  crypto:
+    min_records: 10
+    max_missing_ratio: 0.1             # Crypto trades 24/7, less tolerance for gaps
+    max_nan_ratio: 0.1
+  
+  reddit:
+    min_records: 1                     # More flexible for social media data
+    max_missing_ratio: 0.5             # Social media can have irregular patterns
+    max_nan_ratio: 0.2
+
+# Index file format (data/INDEX.jsonl)
+index_schema:
+  format: "jsonl"  # One JSON object per line
+  required_fields:
+    - path                  # Relative path to CSV file
+    - symbol                # Asset symbol
+    - asset_type            # Asset type
+    - source                # Data source
+    - version               # Version timestamp
+    - total_records         # Record count
+    - missing_dates         # Missing date count
+    - collection_timestamp  # When collected
+    - checksum_sha256       # File hash
+  
+  example_entry: |
+    {
+      "path": "data/raw/stocks/GME_stock_data_v20250812153000.csv",
+      "symbol": "GME",
+      "asset_type": "stock", 
+      "source": "yfinance",
+      "version": "20250812153000",
+      "total_records": 775,
+      "missing_dates": 15,
+      "collection_timestamp": "2025-08-12T15:30:00+00:00",
+      "checksum_sha256": "a1b2c3d4..."
+    }
+
+# Notes field conventions
+notes_conventions:
+  format: "key=value; key=value; description"
+  common_keys:
+    - "delisted_handling"     # true/false
+    - "fallback_used"         # true/false  
+    - "yf_rows"              # Number of rows from yfinance
+    - "polygon_rows"         # Number of rows from Polygon.io
+    - "backfilled"           # Indicates metadata was created retroactively
+    - "data_quality_issues"  # Any known quality problems
+    - "processing_version"   # Version of processing pipeline used
+  
+  examples:
+    stock_with_fallback: "delisted_handling=true; fallback_used=true; yf_rows=0; polygon_rows=500"
+    backfilled_data: "backfilled; source_inferred=yfinance; quality_unknown"
+    normal_collection: "delisted_handling=false; collection_method=standard"

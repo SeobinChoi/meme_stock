@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Reddit 언급 수와 가격 간의 상관관계 분석 및 시각화
+Reddit mentions and price correlation analysis & visualization
 
-이 스크립트는 메모 주식에서 Reddit 언급 수와 가격 변동 간의 관계를 분석합니다.
+Analyzes relationship between Reddit mentions and price movements in meme stocks.
 """
 
 import pandas as pd
@@ -13,34 +13,61 @@ from scipy import stats
 import warnings
 warnings.filterwarnings('ignore')
 
-# 한글 폰트 설정
+# Font settings for compatibility
 plt.rcParams['font.family'] = 'DejaVu Sans'
 plt.rcParams['axes.unicode_minus'] = False
 
 def load_data():
-    """데이터 로딩"""
-    print("📊 데이터 로딩 중...")
+    """Load data efficiently"""
+    print("Loading data...")
     
-    # 훈련 데이터 로딩
-    train_df = pd.read_csv('data/colab_datasets/tabular_train_20250814_031335.csv')
-    val_df = pd.read_csv('data/colab_datasets/tabular_val_20250814_031335.csv')
-    test_df = pd.read_csv('data/colab_datasets/tabular_test_20250814_031335.csv')
+    # Load data with optimal dtypes for memory efficiency
+    dtype_dict = {
+        'ticker': 'category',
+        'returns_1d': 'float32', 
+        'returns_5d': 'float32',
+        'vol_5d': 'float32',
+        'log_mentions': 'float32',
+        'rsi_14': 'float32',
+        'volume_ratio': 'float32',
+        'reddit_ema_3': 'float32',
+        'reddit_momentum_7': 'float32',
+        'reddit_surprise': 'float32',
+        'market_sentiment': 'float32'
+    }
     
-    # 데이터 합치기
+    # Load only essential columns
+    cols_needed = ['date', 'ticker', 'log_mentions', 'returns_1d', 'returns_5d', 
+                   'vol_5d', 'rsi_14', 'volume_ratio', 'reddit_ema_3', 
+                   'reddit_momentum_7', 'reddit_surprise', 'market_sentiment']
+    
+    print("Loading train data...")
+    train_df = pd.read_csv('data/colab_datasets/tabular_train_20250814_031335.csv', 
+                          usecols=cols_needed, dtype=dtype_dict)
+    print("Loading validation data...")
+    val_df = pd.read_csv('data/colab_datasets/tabular_val_20250814_031335.csv',
+                        usecols=cols_needed, dtype=dtype_dict)
+    print("Loading test data...")
+    test_df = pd.read_csv('data/colab_datasets/tabular_test_20250814_031335.csv',
+                         usecols=cols_needed, dtype=dtype_dict)
+    
+    # Combine data
     df = pd.concat([train_df, val_df, test_df], ignore_index=True)
+    del train_df, val_df, test_df  # Free memory
     
-    # 날짜 변환
+    # Convert date efficiently
     df['date'] = pd.to_datetime(df['date'])
     
-    print(f"✅ 데이터 로딩 완료: {len(df)} 샘플")
-    print(f"   기간: {df['date'].min()} ~ {df['date'].max()}")
-    print(f"   티커: {df['ticker'].unique()}")
+    print(f"Data loaded: {len(df)} samples")
+    print(f"Period: {df['date'].min()} ~ {df['date'].max()}")
+    print(f"Tickers: {df['ticker'].unique()}")
+    print(f"Memory usage: {df.memory_usage(deep=True).sum() / 1024**2:.1f} MB")
     
     return df
 
-def analyze_mentions_distribution(df):
-    """언급 수 분포 분석"""
-    print("\n🔍 언급 수 분포 분석...")
+def analyze_ticker_correlations_fast(df):
+    """Fast ticker-specific correlation analysis"""
+    print("\nAnalyzing ticker correlations...")
     
     # log_mentions 분포
     plt.figure(figsize=(15, 10))
@@ -150,11 +177,14 @@ def analyze_lag_correlations(df):
     for lag in lags:
         if lag == 0:
             # 동시 상관관계
-            corr = df['log_mentions'].corr(df['returns_1d'])
+            # NaN 제거하고 같은 인덱스로 맞춤
+            valid_data = df[['log_mentions', 'returns_1d']].dropna()
+            corr = valid_data['log_mentions'].corr(valid_data['returns_1d'])
+            
             lag_correlations.append({
                 'lag': lag,
                 'correlation': corr,
-                'p_value': stats.pearsonr(df['log_mentions'].dropna(), df['returns_1d'].dropna())[1]
+                'p_value': stats.pearsonr(valid_data['log_mentions'], valid_data['returns_1d'])[1]
             })
         else:
             # 지연 상관관계 (언급 수가 미래 수익률에 미치는 영향)

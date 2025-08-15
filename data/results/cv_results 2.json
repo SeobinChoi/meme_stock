@@ -1,0 +1,10 @@
+{
+  "Transformer": {
+    "accuracy_mean": 0.5333333333333333,
+    "accuracy_std": 0.09189365834726812
+  },
+  "LSTM": {
+    "accuracy_mean": 0.4866666666666667,
+    "accuracy_std": 0.07180219742846004
+  }
+}
