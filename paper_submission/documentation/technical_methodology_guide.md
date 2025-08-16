@@ -25,10 +25,25 @@ test:  data/colab_datasets/tabular_test_20250814_031335.csv
 
 ### **계산 과정**
 1. **변수 정의**:
-   - `reddit_surprise`: (실제_언급량 - 예상_언급량) / 예상_언급량
-   - `returns_1d`: 일간 수익률 = (오늘가격 - 어제가격) / 어제가격
+
+**Reddit Surprise 수식:**
+$$RedditSurprise_{i,t} = \frac{ActualMentions_{i,t} - ExpectedMentions_{i,t}}{ExpectedMentions_{i,t}}$$
+
+**일간 수익률 수식:**
+$$Returns_{i,t} = \frac{P_{i,t} - P_{i,t-1}}{P_{i,t-1}}$$
+
+여기서:
+- $i$ = 종목 (GME, AMC, BB)
+- $t$ = 시점 (일)
+- $P_{i,t}$ = 종목 $i$의 $t$일 종가
 
 2. **상관관계 계산**:
+
+**Pearson 상관계수 수식:**
+$$\rho_{X,Y} = \frac{E[(X-\mu_X)(Y-\mu_Y)]}{\sigma_X \sigma_Y} = \frac{\sum_{t=1}^{n}(X_t - \bar{X})(Y_t - \bar{Y})}{\sqrt{\sum_{t=1}^{n}(X_t - \bar{X})^2 \sum_{t=1}^{n}(Y_t - \bar{Y})^2}}$$
+
+여기서 $X = RedditSurprise_{i,t}$, $Y = Returns_{i,t}$
+
    ```python
    from scipy.stats import pearsonr
    
@@ -54,6 +69,15 @@ test:  data/colab_datasets/tabular_test_20250814_031335.csv
 ## 🔥 **Section 2: 핵심 발견 - Overconfidence Paradox (-0.205)**
 
 ### **데이터 전처리**
+
+**확신 점수 계산 수식:**
+$$ConfidenceScore_t = \sum_{j=1}^{N} I(\text{confidence\_word}_j \in \text{post}_t) + \min(\text{ExclamationCount} - 1, 5)$$
+
+여기서:
+- $I(\cdot)$ = 지시함수 (키워드 있으면 1, 없으면 0)
+- $N$ = 확신 키워드 총 개수 (14개)
+- $ExclamationCount$ = 느낌표 개수
+
 ```python
 # 1단계: Reddit 텍스트 로드
 df_raw = pd.read_csv('data/raw/reddit/raw_reddit_wsb.csv')
@@ -87,6 +111,12 @@ market_data['next_day_returns'] = market_data.groupby('ticker')['returns_1d'].sh
 ```
 
 ### **최종 분석**
+
+**Behavioral Paradox 회귀 모델:**
+$$E[Returns_{i,t+1} | ConfidenceScore_t] = \gamma_0 + \gamma_1 \cdot ConfidenceScore_t + \epsilon_t$$
+
+여기서 $\gamma_1$은 확신 점수가 다음날 수익률에 미치는 영향을 나타냄.
+
 ```python
 # 5단계: 병합 + 분석
 merged_data = pd.merge(market_data, daily_confidence, on=['date', 'ticker'])
@@ -95,7 +125,7 @@ valid_data = valid_data[valid_data['confidence_score'] > 0]  # 확신 있는 날
 
 # 6단계: 상관관계
 correlation, p_value = pearsonr(valid_data['confidence_score'], valid_data['next_day_returns'])
-# 결과: -0.2051, p=0.0002, 샘플=326개
+# 결과: γ₁ = -0.2051, p=0.0002, 샘플=326개
 ```
 
 ### **결과 해석**
@@ -170,6 +200,12 @@ df['season'] = df['month'].apply(get_season)
 ## 📊 **Section 5: 기타 주요 수치들**
 
 ### **Price Anchoring Effect (+0.472)**
+
+**가격 언급 추출 수식:**
+$$PriceMentions_t = \sum_{p=1}^{M} I(\text{price\_pattern}_p \in \text{post}_t)$$
+
+여기서 $\text{price\_pattern} = $ 정규표현식 `\$(\d+\.?\d*)`
+
 ```python
 # 가격 언급 추출
 prices = re.findall(r'\$(\d+\.?\d*)', reddit_text)
@@ -181,6 +217,12 @@ correlation = pearsonr(daily_price_mentions, volatility_5d)[0]
 ```
 
 ### **FOMO Reversal (-0.127)**
+
+**FOMO/Urgency 점수 수식:**
+$$FOMOScore_t = \sum_{k=1}^{K} I(\text{urgency\_word}_k \in \text{post}_t)$$
+
+여기서 $K$ = FOMO 키워드 개수 (6개: 'hurry', 'quick', 'now', 'fomo', 'last chance', 'yolo')
+
 ```python
 urgency_words = ['hurry', 'quick', 'now', 'fomo', 'last chance', 'yolo']
 urgency_score = sum([text.lower().count(word) for word in urgency_words])
