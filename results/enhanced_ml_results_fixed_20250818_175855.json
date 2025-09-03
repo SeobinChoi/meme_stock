@@ -1,0 +1,40 @@
+{
+  "timestamp": "20250818_175855",
+  "target_ic": 0.03,
+  "target_hit_rate": 0.55,
+  "summary": [
+    {
+      "feature_set": "price_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": -0.09440425014681639,
+        "ic_p_value": 0.006558842833171096,
+        "rank_ic": 0.006505740196513748,
+        "rank_ic_p_value": 0.8517219681146506,
+        "hit_rate": 0.4178743961352657,
+        "mse": 0.002812826055187598,
+        "mae": 0.029060883367273027,
+        "r2": -0.07183494589157369,
+        "n_samples": 828
+      }
+    },
+    {
+      "feature_set": "price_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": -0.07077110450213696,
+        "ic_p_value": 0.04175893855345505,
+        "rank_ic": -0.0066542045130592855,
+        "rank_ic_p_value": 0.8483786838200686,
+        "hit_rate": 0.42028985507246375,
+        "mse": 0.0032399853701406143,
+        "mae": 0.033836365193106115,
+        "r2": -0.23460515359260126,
+        "n_samples": 828
+      }
+    },
+    {
+      "feature_set": "price_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": 

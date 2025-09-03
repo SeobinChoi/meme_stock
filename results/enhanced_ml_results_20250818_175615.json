@@ -1,0 +1,439 @@
+{
+  "timestamp": "20250818_175615",
+  "target_ic": 0.03,
+  "target_hit_rate": 0.55,
+  "summary": [
+    {
+      "stock": "GME",
+      "feature_set": "price_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "price_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "price_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "reddit_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "reddit_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "reddit_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "full_features",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "full_features",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "GME",
+      "feature_set": "full_features",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "price_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "price_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "price_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "reddit_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "reddit_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "reddit_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "full_features",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "full_features",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "AMC",
+      "feature_set": "full_features",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "price_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "price_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "price_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "reddit_only",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "reddit_only",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "reddit_only",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "full_features",
+      "model": "RandomForest",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "full_features",
+      "model": "LightGBM",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    },
+    {
+      "stock": "BB",
+      "feature_set": "full_features",
+      "model": "XGBoost",
+      "metrics": {
+        "ic": NaN,
+        "ic_p_value": NaN,
+        "rank_ic": NaN,
+        "rank_ic_p_value": NaN,
+        "hit_rate": 1.0,
+        "mse": 0.0,
+        "mae": 0.0,
+        "r2": 1.0,
+        "n_samples": 53
+      }
+    }
+  ]
+}

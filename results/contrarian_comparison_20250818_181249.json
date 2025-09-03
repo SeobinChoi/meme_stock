@@ -1,0 +1,12 @@
+{
+  "timestamp": "20250818_181249",
+  "all_results": [
+    {
+      "strategy": "LightGBM_Standard",
+      "ic_pearson": -0.024232662510126787,
+      "ic_rank": 0.004156119675468374,
+      "ic_p_value": 0.48621377202452626,
+      "hit_rate": 0.43478260869565216,
+      "hit_rate_up": 0.5355029585798816,
+      "hit_rate_down": 0.50997150997151,
+      "up_days_count": 

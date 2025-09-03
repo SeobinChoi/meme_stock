@@ -2,11 +2,27 @@
 
 ## 논문 제출용 주요 이미지 가이드
 
-### 1. fast_correlation_analysis.png
+### 1. event_study_bar_chart.png
+**내용**: 이벤트 스터디 분석 - Reddit 스파이크 전후 주가 변화
+- 극한 Reddit 언급량 스파이크(상위 5%) 전후 ±5일간 평균 수익률
+- GME, AMC, BB 3개 종목을 한 차트에 막대그래프로 표시
+- **논문 메인 Figure 후보**: Contrarian Effect의 시간적 패턴
+
+**핵심 발견**:
+- **이벤트 전날(Day -1)**: 모든 종목 양수 수익률 (GME: +6.73%, AMC: +3.75%, BB: +3.23%)
+- **이벤트 당일(Day 0)**: 모든 종목 음수 수익률 (AMC: -2.58%, GME: -0.51%, BB: -0.45%)
+- **이벤트 다음날(Day +1)**: 부분 회복 (GME: +1.45%, AMC: +1.23%, BB: +0.96%)
+
+**분석 샘플**: GME 32개, AMC 40개, BB 41개 극한 이벤트
+**사용 위치**: 메인 결과 섹션, Event Study 분석
+
+---
+
+### 2. fast_correlation_analysis.png
 **내용**: 핵심 Contrarian Effect 발견
 - GME, AMC, BB의 reddit_surprise vs returns 상관관계
 - 막대그래프로 명확한 음의 상관관계 시각화
-- **논문 메인 Figure 후보**: 가장 중요한 발견
+- **논문 보조 Figure**: 전체 상관관계 요약
 
 **수치**:
 - GME: -0.198
@@ -17,7 +33,7 @@
 
 ---
 
-### 2. advanced_analysis_comprehensive.png
+### 3. advanced_analysis_comprehensive.png
 **내용**: 종합 고급 분석 결과
 - 9개 서브플롯으로 구성
 - Event Study, Market Regime, Spillover, 변동성 분석 등
