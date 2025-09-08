@@ -1,0 +1,18 @@
+{
+  "task_type": "regression",
+  "target": "AMC_amc_daily_return",
+  "sequence_length": 14,
+  "feature_dim": 12,
+  "results": {
+    "Transformer": {
+      "mse": 0.003935839980840683,
+      "mae": 0.04745848476886749,
+      "r2": -0.0020284652709960938
+    },
+    "LSTM": {
+      "mse": 0.029613688588142395,
+      "mae": 0.16064238548278809,
+      "r2": -6.539371490478516
+    }
+  }
+}

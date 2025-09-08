@@ -1,0 +1,74 @@
+========================================================================================================================
+REGULARIZATION EXPERIMENT REPORT
+========================================================================================================================
+
+Experiment Design:
+- Ridge Regression: L2 regularization
+- Lasso Regression: L1 regularization (feature selection)
+- Elastic Net: L1 + L2 regularization
+- Hyperparameter tuning: Alpha and L1 ratio
+- Evaluation: IC (Spearman), Hit Rate, R²
+
+PERFORMANCE COMPARISON
+--------------------------------------------------
+      Model IC_Spearman Hit_Rate      R2    MSE    MAE
+      Ridge     -0.0305   0.4782 -0.2170 0.0028 0.0325
+      Lasso     -0.0122   0.4420 -0.1147 0.0026 0.0299
+Elastic_Net     -0.0305   0.4652 -0.1959 0.0028 0.0320
+
+BEST MODEL
+--------------------------------------------------
+Best Model: Lasso
+Best IC: -0.0122
+
+FEATURE WEIGHT ANALYSIS
+--------------------------------------------------
+Ridge:
+  Mean weight: -0.0014
+  Mean importance: 0.0080
+  Weight std: 0.0130
+
+  Top 5 Reddit Features:
+    reddit_ema_3: 0.0451
+    reddit_ema_5: 0.0242
+    log_mentions: 0.0170
+    vol_reddit_attention: 0.0143
+    reddit_ema_10: 0.0098
+
+Lasso:
+  Mean weight: -0.0010
+  Mean importance: 0.0014
+  Weight std: 0.0023
+
+  Top 5 Reddit Features:
+    vol_reddit_attention: 0.0076
+    log_mentions: 0.0060
+    reddit_low_regime: 0.0032
+    reddit_momentum_3: 0.0026
+    reddit_market_ex: 0.0023
+
+Elastic_Net:
+  Mean weight: -0.0011
+  Mean importance: 0.0040
+  Weight std: 0.0056
+
+  Top 5 Reddit Features:
+    log_mentions: 0.0166
+    vol_reddit_attention: 0.0123
+    reddit_ema_3: 0.0099
+    market_sentiment: 0.0052
+    reddit_market_ex: 0.0047
+
+REGULARIZATION EFFECTIVENESS
+--------------------------------------------------
+Weight Variance (Lower = More Regularized):
+  Ridge: 0.000169
+  Lasso: 0.000005
+  Elastic_Net: 0.000032
+
+CONCLUSIONS
+--------------------------------------------------
+❌ Regularization shows negative impact on prediction performance
+Best regularization approach: Lasso
+
+Lasso provides better regularization than Ridge

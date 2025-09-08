@@ -1,0 +1,10 @@
+{
+  "timestamp": "20250810_202725",
+  "original_features": 215,
+  "original_samples": 3330,
+  "clean_features": 43,
+  "target_variables": 12,
+  "constant_features_removed": 160,
+  "future_features_removed": 0,
+  "data_leakage_fixed": true
+}

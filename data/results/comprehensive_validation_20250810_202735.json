@@ -1,0 +1,1919 @@
+{
+  "timestamp": "2025-08-10T20:27:34.534708",
+  "overall_status": "FAIL",
+  "requirements": {
+    "reddit_features": {
+      "status": "WARNING",
+      "total_reddit_features": 48,
+      "expected_features": 44,
+      "missing_features": [
+        "reddit_total_score",
+        "reddit_avg_score"
+      ],
+      "extra_features": [
+        "reddit_total_score_x",
+        "reddit_avg_score_x",
+        "reddit_posts",
+        "reddit_total_score_y",
+        "reddit_avg_score_y",
+        "reddit_comments"
+      ],
+      "feature_quality": {
+        "reddit_post_count": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 2,
+          "missing_count": "0"
+        },
+        "reddit_total_score_x": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_avg_score_x": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_score_std": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_total_comments": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_avg_comments": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_comment_std": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_score_to_comment_ratio": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_posting_velocity": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 8,
+          "missing_count": "0"
+        },
+        "reddit_engagement_acceleration": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 748,
+          "missing_count": "0"
+        },
+        "reddit_weekend_indicator": {
+          "has_data": "True",
+          "data_type": "int64",
+          "unique_values": 2,
+          "missing_count": "0"
+        },
+        "reddit_weekend_post_ratio": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 7,
+          "missing_count": "0"
+        },
+        "reddit_activity_concentration": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 8,
+          "missing_count": "0"
+        },
+        "reddit_unique_users_estimate": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 2,
+          "missing_count": "0"
+        },
+        "reddit_engagement_volatility": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1167,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_momentum_1d": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 748,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_momentum_3d": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 828,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_momentum_7d": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 790,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_volatility": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1167,
+          "missing_count": "0"
+        },
+        "reddit_extreme_positive_ratio": {
+          "has_data": "True",
+          "data_type": "int64",
+          "unique_values": 2,
+          "missing_count": "0"
+        },
+        "reddit_extreme_negative_ratio": {
+          "has_data": "True",
+          "data_type": "int64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_consensus": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_positive_sentiment_ratio": {
+          "has_data": "True",
+          "data_type": "int64",
+          "unique_values": 2,
+          "missing_count": "0"
+        },
+        "reddit_negative_sentiment_ratio": {
+          "has_data": "True",
+          "data_type": "int64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_mean": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_std": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_min": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_max": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_sentiment_count": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 2,
+          "missing_count": "0"
+        },
+        "reddit_avg_title_length": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_title_length_std": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_avg_word_count": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_word_count_std": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_avg_uppercase_ratio": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_avg_exclamation_count": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_avg_question_count": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_trading_keyword_density": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_linguistic_complexity": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_urgency_indicators": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_emotional_intensity": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_info_opinion_ratio": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_content_diversity": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_engagement_efficiency": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 754,
+          "missing_count": "0"
+        },
+        "reddit_post_quality_index": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_posts": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_total_score_y": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_avg_score_y": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        },
+        "reddit_comments": {
+          "has_data": "True",
+          "data_type": "float64",
+          "unique_values": 1,
+          "missing_count": "0"
+        }
+      }
+    },
+    "nan_check": {
+      "status": "PASS",
+      "total_nan_percentage": 0.2042042042042042,
+      "total_nan_count": "1462",
+      "critical_features_nan": {
+        "reddit_post_count": {
+          "nan_count": "0",
+          "nan_percentage": 0.0
+        },
+        "reddit_total_score_x": {
+          "nan_count": "0",
+          "nan_percentage": 0.0
+        },
+        "reddit_avg_score_x": {
+          "nan_count": "0",
+          "nan_percentage": 0.0
+        },
+        "GME_returns_1d": {
+          "nan_count": "0",
+          "nan_percentage": 0.0
+        },
+        "AMC_returns_1d": {
+          "nan_count": "0",
+          "nan_percentage": 0.0
+        },
+        "BB_returns_1d": {
+          "nan_count": "0",
+          "nan_percentage": 0.0
+        }
+      },
+      "critical_issues": []
+    }
+  },
+  "feature_quality": {
+    "status": "PASS",
+    "metrics": {
+      "total_features": 215,
+      "total_samples": 3330,
+      "missing_data": {
+        "total_missing": "1462",
+        "missing_percentage": 0.2042042042042042,
+        "columns_with_missing": {
+          "date": 1462
+        }
+      },
+      "data_types": {
+        "date": "object",
+        "reddit_post_count": "float64",
+        "reddit_total_score_x": "float64",
+        "reddit_avg_score_x": "float64",
+        "reddit_score_std": "float64",
+        "reddit_total_comments": "float64",
+        "reddit_avg_comments": "float64",
+        "reddit_comment_std": "float64",
+        "reddit_score_to_comment_ratio": "float64",
+        "reddit_posting_velocity": "float64",
+        "reddit_engagement_acceleration": "float64",
+        "reddit_weekend_indicator": "int64",
+        "reddit_weekend_post_ratio": "float64",
+        "reddit_activity_concentration": "float64",
+        "reddit_unique_users_estimate": "float64",
+        "reddit_engagement_volatility": "float64",
+        "reddit_sentiment_momentum_1d": "float64",
+        "reddit_sentiment_momentum_3d": "float64",
+        "reddit_sentiment_momentum_7d": "float64",
+        "reddit_sentiment_volatility": "float64",
+        "reddit_extreme_positive_ratio": "int64",
+        "reddit_extreme_negative_ratio": "int64",
+        "reddit_sentiment_consensus": "float64",
+        "reddit_positive_sentiment_ratio": "int64",
+        "reddit_negative_sentiment_ratio": "int64",
+        "reddit_sentiment_mean": "float64",
+        "reddit_sentiment_std": "float64",
+        "reddit_sentiment_min": "float64",
+        "reddit_sentiment_max": "float64",
+        "reddit_sentiment_count": "float64",
+        "reddit_avg_title_length": "float64",
+        "reddit_title_length_std": "float64",
+        "reddit_avg_word_count": "float64",
+        "reddit_word_count_std": "float64",
+        "reddit_avg_uppercase_ratio": "float64",
+        "reddit_avg_exclamation_count": "float64",
+        "reddit_avg_question_count": "float64",
+        "reddit_trading_keyword_density": "float64",
+        "reddit_linguistic_complexity": "float64",
+        "reddit_urgency_indicators": "float64",
+        "reddit_emotional_intensity": "float64",
+        "reddit_info_opinion_ratio": "float64",
+        "reddit_content_diversity": "float64",
+        "reddit_engagement_efficiency": "float64",
+        "reddit_post_quality_index": "float64",
+        "GME_returns_1d": "float64",
+        "GME_returns_3d": "float64",
+        "GME_returns_7d": "float64",
+        "GME_returns_14d": "float64",
+        "GME_volatility_5d": "float64",
+        "GME_volatility_10d": "float64",
+        "GME_volatility_20d": "float64",
+        "GME_price_momentum_5d": "float64",
+        "GME_price_momentum_10d": "float64",
+        "GME_price_momentum_20d": "float64",
+        "GME_price_acceleration_5d": "float64",
+        "GME_price_acceleration_10d": "float64",
+        "GME_relative_to_ma5": "float64",
+        "GME_relative_to_ma10": "float64",
+        "GME_relative_to_ma20": "float64",
+        "GME_distance_from_high_20d": "float64",
+        "GME_distance_from_low_20d": "float64",
+        "GME_volume_ma5": "float64",
+        "GME_volume_ma10": "float64",
+        "GME_volume_ma20": "float64",
+        "GME_volume_ratio_5d": "float64",
+        "GME_volume_ratio_10d": "float64",
+        "GME_vwap_deviation_5d": "float64",
+        "GME_volume_zscore": "float64",
+        "GME_volume_price_trend": "float64",
+        "GME_volume_momentum_5d": "float64",
+        "GME_volume_momentum_10d": "float64",
+        "GME_volume_volatility_10d": "float64",
+        "GME_daily_range": "float64",
+        "GME_daily_range_ma5": "float64",
+        "GME_gap_up": "float64",
+        "GME_gap_down": "float64",
+        "GME_intraday_momentum": "float64",
+        "GME_intraday_momentum_ma5": "float64",
+        "GME_price_efficiency": "float64",
+        "GME_volatility_clustering": "float64",
+        "GME_price_jumps": "float64",
+        "GME_trend_strength": "float64",
+        "GME_mean_reversion_signal": "float64",
+        "GME_momentum_divergence": "float64",
+        "GME_vol_of_vol": "float64",
+        "GME_RSI_14": "float64",
+        "GME_MACD": "float64",
+        "GME_MACD_signal": "float64",
+        "GME_MACD_hist": "float64",
+        "GME_BB_upper": "float64",
+        "GME_BB_middle": "float64",
+        "GME_BB_lower": "float64",
+        "AMC_returns_1d": "float64",
+        "AMC_returns_3d": "float64",
+        "AMC_returns_7d": "float64",
+        "AMC_returns_14d": "float64",
+        "AMC_volatility_5d": "float64",
+        "AMC_volatility_10d": "float64",
+        "AMC_volatility_20d": "float64",
+        "AMC_price_momentum_5d": "float64",
+        "AMC_price_momentum_10d": "float64",
+        "AMC_price_momentum_20d": "float64",
+        "AMC_price_acceleration_5d": "float64",
+        "AMC_price_acceleration_10d": "float64",
+        "AMC_relative_to_ma5": "float64",
+        "AMC_relative_to_ma10": "float64",
+        "AMC_relative_to_ma20": "float64",
+        "AMC_distance_from_high_20d": "float64",
+        "AMC_distance_from_low_20d": "float64",
+        "AMC_volume_ma5": "float64",
+        "AMC_volume_ma10": "float64",
+        "AMC_volume_ma20": "float64",
+        "AMC_volume_ratio_5d": "float64",
+        "AMC_volume_ratio_10d": "float64",
+        "AMC_vwap_deviation_5d": "float64",
+        "AMC_volume_zscore": "float64",
+        "AMC_volume_price_trend": "float64",
+        "AMC_volume_momentum_5d": "float64",
+        "AMC_volume_momentum_10d": "float64",
+        "AMC_volume_volatility_10d": "float64",
+        "AMC_daily_range": "float64",
+        "AMC_daily_range_ma5": "float64",
+        "AMC_gap_up": "float64",
+        "AMC_gap_down": "float64",
+        "AMC_intraday_momentum": "float64",
+        "AMC_intraday_momentum_ma5": "float64",
+        "AMC_price_efficiency": "float64",
+        "AMC_volatility_clustering": "float64",
+        "AMC_price_jumps": "float64",
+        "AMC_trend_strength": "float64",
+        "AMC_mean_reversion_signal": "float64",
+        "AMC_momentum_divergence": "float64",
+        "AMC_vol_of_vol": "float64",
+        "AMC_RSI_14": "float64",
+        "AMC_MACD": "float64",
+        "AMC_MACD_signal": "float64",
+        "AMC_MACD_hist": "float64",
+        "AMC_BB_upper": "float64",
+        "AMC_BB_middle": "float64",
+        "AMC_BB_lower": "float64",
+        "BB_returns_1d": "float64",
+        "BB_returns_3d": "float64",
+        "BB_returns_7d": "float64",
+        "BB_returns_14d": "float64",
+        "BB_volatility_5d": "float64",
+        "BB_volatility_10d": "float64",
+        "BB_volatility_20d": "float64",
+        "BB_price_momentum_5d": "float64",
+        "BB_price_momentum_10d": "float64",
+        "BB_price_momentum_20d": "float64",
+        "BB_price_acceleration_5d": "float64",
+        "BB_price_acceleration_10d": "float64",
+        "BB_relative_to_ma5": "float64",
+        "BB_relative_to_ma10": "float64",
+        "BB_relative_to_ma20": "float64",
+        "BB_distance_from_high_20d": "float64",
+        "BB_distance_from_low_20d": "float64",
+        "BB_volume_ma5": "float64",
+        "BB_volume_ma10": "float64",
+        "BB_volume_ma20": "float64",
+        "BB_volume_ratio_5d": "float64",
+        "BB_volume_ratio_10d": "float64",
+        "BB_vwap_deviation_5d": "float64",
+        "BB_volume_zscore": "float64",
+        "BB_volume_price_trend": "float64",
+        "BB_volume_momentum_5d": "float64",
+        "BB_volume_momentum_10d": "float64",
+        "BB_volume_volatility_10d": "float64",
+        "BB_daily_range": "float64",
+        "BB_daily_range_ma5": "float64",
+        "BB_gap_up": "float64",
+        "BB_gap_down": "float64",
+        "BB_intraday_momentum": "float64",
+        "BB_intraday_momentum_ma5": "float64",
+        "BB_price_efficiency": "float64",
+        "BB_volatility_clustering": "float64",
+        "BB_price_jumps": "float64",
+        "BB_trend_strength": "float64",
+        "BB_mean_reversion_signal": "float64",
+        "BB_momentum_divergence": "float64",
+        "BB_vol_of_vol": "float64",
+        "BB_RSI_14": "float64",
+        "BB_MACD": "float64",
+        "BB_MACD_signal": "float64",
+        "BB_MACD_hist": "float64",
+        "BB_BB_upper": "float64",
+        "BB_BB_middle": "float64",
+        "BB_BB_lower": "float64",
+        "temporal_day_of_week": "float64",
+        "temporal_month": "float64",
+        "temporal_days_to_holiday": "float64",
+        "temporal_market_session": "float64",
+        "temporal_weekend_indicator": "float64",
+        "temporal_quarter": "float64",
+        "temporal_options_expiration": "float64",
+        "temporal_month_end": "float64",
+        "temporal_year_end": "float64",
+        "reddit_posts": "float64",
+        "reddit_total_score_y": "float64",
+        "reddit_avg_score_y": "float64",
+        "reddit_comments": "float64",
+        "cross_modal_sentiment_GME_corr_7d": "float64",
+        "cross_modal_sentiment_AMC_corr_7d": "float64",
+        "cross_modal_sentiment_BB_corr_7d": "float64",
+        "cross_modal_volume_mention_GME_corr": "float64",
+        "cross_modal_volume_mention_GME_ratio": "float64",
+        "cross_modal_volume_mention_AMC_corr": "float64",
+        "cross_modal_volume_mention_AMC_ratio": "float64",
+        "cross_modal_volume_mention_BB_corr": "float64",
+        "cross_modal_volume_mention_BB_ratio": "float64",
+        "cross_modal_sentiment_future_GME_corr": "float64",
+        "cross_modal_sentiment_prediction_power": "float64",
+        "cross_modal_price_sentiment_feedback": "float64",
+        "cross_modal_volatility_sentiment_response": "float64"
+      },
+      "feature_ranges": {
+        "reddit_post_count": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.32882882882882886,
+          "std": 0.4698581982621418
+        },
+        "reddit_total_score_x": {
+          "min": 0.0,
+          "max": 353133.0,
+          "mean": 1131.2822822822823,
+          "std": 11114.48466057908
+        },
+        "reddit_avg_score_x": {
+          "min": 0.0,
+          "max": 353133.0,
+          "mean": 1131.2822822822823,
+          "std": 11114.48466057908
+        },
+        "reddit_score_std": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_total_comments": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_avg_comments": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_comment_std": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_score_to_comment_ratio": {
+          "min": 0.0,
+          "max": 353133.0,
+          "mean": 1131.2822822822823,
+          "std": 11114.48466057908
+        },
+        "reddit_posting_velocity": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.32882882882882886,
+          "std": 0.45437685860956245
+        },
+        "reddit_engagement_acceleration": {
+          "min": -128382.0,
+          "max": 190129.0,
+          "mean": 0.0,
+          "std": 6960.897390036504
+        },
+        "reddit_weekend_indicator": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.01021021021021021,
+          "std": 0.10054351074372893
+        },
+        "reddit_weekend_post_ratio": {
+          "min": 0.0,
+          "max": 0.5,
+          "mean": 0.009152366652366652,
+          "std": 0.047703461293140674
+        },
+        "reddit_activity_concentration": {
+          "min": 0.0,
+          "max": 0.5345224838248489,
+          "mean": 0.03215285803502422,
+          "std": 0.12513597729888432
+        },
+        "reddit_unique_users_estimate": {
+          "min": 0.0,
+          "max": 0.8,
+          "mean": 0.2630630630630631,
+          "std": 0.3758865586097135
+        },
+        "reddit_engagement_volatility": {
+          "min": 0.0,
+          "max": 146158.94723863047,
+          "mean": 830.5964495925125,
+          "std": 7019.917675375304
+        },
+        "reddit_sentiment_momentum_1d": {
+          "min": -128382.0,
+          "max": 190129.0,
+          "mean": 0.0,
+          "std": 6960.897390036504
+        },
+        "reddit_sentiment_momentum_3d": {
+          "min": -247699.0,
+          "max": 353133.0,
+          "mean": 0.0,
+          "std": 11132.168466016965
+        },
+        "reddit_sentiment_momentum_7d": {
+          "min": -288636.0,
+          "max": 327809.0,
+          "mean": 0.0,
+          "std": 13440.005168436726
+        },
+        "reddit_sentiment_volatility": {
+          "min": 0.0,
+          "max": 146158.94723863047,
+          "mean": 830.5964495925125,
+          "std": 7019.917675375304
+        },
+        "reddit_extreme_positive_ratio": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.2,
+          "std": 0.40006007359048673
+        },
+        "reddit_extreme_negative_ratio": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_sentiment_consensus": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "reddit_positive_sentiment_ratio": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.32642642642642644,
+          "std": 0.46897575852388174
+        },
+        "reddit_negative_sentiment_ratio": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_sentiment_mean": {
+          "min": 0.0,
+          "max": 353133.0,
+          "mean": 1131.2822822822823,
+          "std": 11114.48466057908
+        },
+        "reddit_sentiment_std": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_sentiment_min": {
+          "min": 0.0,
+          "max": 353133.0,
+          "mean": 1131.2822822822823,
+          "std": 11114.48466057908
+        },
+        "reddit_sentiment_max": {
+          "min": 0.0,
+          "max": 353133.0,
+          "mean": 1131.2822822822823,
+          "std": 11114.48466057908
+        },
+        "reddit_sentiment_count": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.32882882882882886,
+          "std": 0.4698581982621418
+        },
+        "reddit_avg_title_length": {
+          "min": 50.0,
+          "max": 3581.33,
+          "mean": 61.312822822822824,
+          "std": 111.14484660579082
+        },
+        "reddit_title_length_std": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_avg_word_count": {
+          "min": 8.0,
+          "max": 1773.665,
+          "mean": 13.65641141141141,
+          "std": 55.57242330289541
+        },
+        "reddit_word_count_std": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_avg_uppercase_ratio": {
+          "min": 0.2,
+          "max": 353.33299999999997,
+          "mean": 1.3312822822822823,
+          "std": 11.11448466057908
+        },
+        "reddit_avg_exclamation_count": {
+          "min": 0.5,
+          "max": 706.766,
+          "mean": 2.7625645645645647,
+          "std": 22.228969321158164
+        },
+        "reddit_avg_question_count": {
+          "min": 0.3,
+          "max": 441.71625,
+          "mean": 1.7141028528528528,
+          "std": 13.893105825723852
+        },
+        "reddit_trading_keyword_density": {
+          "min": 0.0,
+          "max": 353.133,
+          "mean": 1.1312822822822821,
+          "std": 11.114484660579082
+        },
+        "reddit_linguistic_complexity": {
+          "min": 400.0,
+          "max": 6352079.67445,
+          "mean": 7012.046765405403,
+          "std": 151492.4928811059
+        },
+        "reddit_urgency_indicators": {
+          "min": 0.0,
+          "max": 706.266,
+          "mean": 2.2625645645645642,
+          "std": 22.228969321158164
+        },
+        "reddit_emotional_intensity": {
+          "min": 2.5,
+          "max": 4240.096,
+          "mean": 16.075387387387387,
+          "std": 133.373815926949
+        },
+        "reddit_info_opinion_ratio": {
+          "min": 0.5,
+          "max": 353.633,
+          "mean": 1.6312822822822823,
+          "std": 11.114484660579082
+        },
+        "reddit_content_diversity": {
+          "min": 0.7,
+          "max": 177.26649999999998,
+          "mean": 1.2656411411411412,
+          "std": 5.55724233028954
+        },
+        "reddit_engagement_efficiency": {
+          "min": 0.0,
+          "max": 98.5763455628041,
+          "mean": 5.173518677853257,
+          "std": 14.189676530073665
+        },
+        "reddit_post_quality_index": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_returns_1d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_returns_3d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_returns_7d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_returns_14d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volatility_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volatility_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volatility_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_momentum_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_momentum_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_momentum_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_acceleration_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_acceleration_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_relative_to_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_relative_to_ma10": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_relative_to_ma20": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_distance_from_high_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_distance_from_low_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_ma10": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_ma20": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_ratio_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_ratio_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_vwap_deviation_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_zscore": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_price_trend": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_momentum_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_momentum_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volume_volatility_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_daily_range": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_daily_range_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_gap_up": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_gap_down": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_intraday_momentum": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_intraday_momentum_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_efficiency": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_volatility_clustering": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_price_jumps": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_trend_strength": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_mean_reversion_signal": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_momentum_divergence": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_vol_of_vol": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_RSI_14": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_MACD": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_MACD_signal": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_MACD_hist": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_BB_upper": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_BB_middle": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "GME_BB_lower": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_returns_1d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_returns_3d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_returns_7d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_returns_14d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volatility_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volatility_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volatility_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_momentum_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_momentum_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_momentum_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_acceleration_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_acceleration_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_relative_to_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_relative_to_ma10": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_relative_to_ma20": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_distance_from_high_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_distance_from_low_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_ma10": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_ma20": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_ratio_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_ratio_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_vwap_deviation_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_zscore": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_price_trend": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_momentum_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_momentum_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volume_volatility_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_daily_range": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_daily_range_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_gap_up": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_gap_down": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_intraday_momentum": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_intraday_momentum_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_efficiency": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_volatility_clustering": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_price_jumps": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_trend_strength": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_mean_reversion_signal": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_momentum_divergence": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_vol_of_vol": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_RSI_14": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_MACD": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_MACD_signal": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_MACD_hist": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_BB_upper": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_BB_middle": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "AMC_BB_lower": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_returns_1d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_returns_3d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_returns_7d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_returns_14d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volatility_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volatility_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volatility_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_momentum_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_momentum_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_momentum_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_acceleration_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_acceleration_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_relative_to_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_relative_to_ma10": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_relative_to_ma20": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_distance_from_high_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_distance_from_low_20d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_ma10": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_ma20": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_ratio_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_ratio_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_vwap_deviation_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_zscore": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_price_trend": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_momentum_5d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_momentum_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volume_volatility_10d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_daily_range": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_daily_range_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_gap_up": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_gap_down": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_intraday_momentum": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_intraday_momentum_ma5": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_efficiency": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_volatility_clustering": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_price_jumps": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_trend_strength": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_mean_reversion_signal": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_momentum_divergence": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_vol_of_vol": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_RSI_14": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_MACD": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_MACD_signal": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_MACD_hist": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_BB_upper": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_BB_middle": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "BB_BB_lower": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "temporal_day_of_week": {
+          "min": 0.0,
+          "max": 6.0,
+          "mean": 3.8027027027027027,
+          "std": 2.232597711861368
+        },
+        "temporal_month": {
+          "min": 1.0,
+          "max": 12.0,
+          "mean": 5.301201201201201,
+          "std": 2.836216832729383
+        },
+        "temporal_days_to_holiday": {
+          "min": 0.0,
+          "max": 2176.0,
+          "mean": 501.5780780780781,
+          "std": 678.4567760262452
+        },
+        "temporal_market_session": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.5507507507507508,
+          "std": 0.49749239715570837
+        },
+        "temporal_weekend_indicator": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.44924924924924925,
+          "std": 0.49749239715570837
+        },
+        "temporal_quarter": {
+          "min": 1.0,
+          "max": 4.0,
+          "mean": 2.2483483483483484,
+          "std": 0.8717067219923749
+        },
+        "temporal_options_expiration": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.025825825825825825,
+          "std": 0.15863924491350945
+        },
+        "temporal_month_end": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.554954954954955,
+          "std": 0.49704541377960637
+        },
+        "temporal_year_end": {
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.015615615615615615,
+          "std": 0.1240015552233259
+        },
+        "reddit_posts": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_total_score_y": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_avg_score_y": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reddit_comments": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_sentiment_GME_corr_7d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_sentiment_AMC_corr_7d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_sentiment_BB_corr_7d": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volume_mention_GME_corr": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volume_mention_GME_ratio": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volume_mention_AMC_corr": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volume_mention_AMC_ratio": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volume_mention_BB_corr": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volume_mention_BB_ratio": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_sentiment_future_GME_corr": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_sentiment_prediction_power": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_price_sentiment_feedback": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "cross_modal_volatility_sentiment_response": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "quality_score": 99.7957957957958
+    }
+  },
+  "temporal_alignment": {
+    "status": "WARNING",
+    "gme_date_range": [
+      "2020-01-02 00:00:00-05:00",
+      "2021-12-30 00:00:00-05:00"
+    ],
+    "amc_date_range": [
+      "2020-01-02 00:00:00-05:00",
+      "2021-12-30 00:00:00-05:00"
+    ],
+    "bb_date_range": [
+      "2020-01-02 00:00:00-05:00",
+      "2021-12-30 00:00:00-05:00"
+    ],
+    "date_alignment": true,
+    "gme_missing_dates": 557,
+    "amc_missing_dates": 557,
+    "bb_missing_dates": 557,
+    "expected_gaps": 208
+  },
+  "integration_test": {
+    "status": "PASS",
+    "results": {
+      "sample_size": 100,
+      "features_loaded": 215,
+      "data_types_valid": true,
+      "basic_operations": [
+        "Mean calculation: 0.0",
+        "Unique count: 100"
+      ],
+      "pipeline_test": "PASS"
+    }
+  },
+  "data_leakage_check": {
+    "status": "FAIL",
+    "checks": {
+      "future_data_leakage": true,
+      "target_contamination": false,
+      "cross_validation_ready": true,
+      "issues_found": [
+        "Future indicator in column: cross_modal_sentiment_future_GME_corr",
+        "Potential target in features: GME_returns_1d",
+        "Potential target in features: GME_returns_3d",
+        "Potential target in features: GME_returns_7d",
+        "Potential target in features: GME_returns_14d",
+        "Potential target in features: AMC_returns_1d",
+        "Potential target in features: AMC_returns_3d",
+        "Potential target in features: AMC_returns_7d",
+        "Potential target in features: AMC_returns_14d",
+        "Potential target in features: BB_returns_1d",
+        "Potential target in features: BB_returns_3d",
+        "Potential target in features: BB_returns_7d",
+        "Potential target in features: BB_returns_14d"
+      ]
+    }
+  }
+}

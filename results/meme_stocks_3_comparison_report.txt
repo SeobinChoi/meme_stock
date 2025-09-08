@@ -1,0 +1,53 @@
+========================================================================================================================
+MEME STOCKS 3 (AMC, BB, GME) REDDIT FEATURES VS BASELINE REPORT
+========================================================================================================================
+
+Experiment Design:
+- Target Stocks: AMC, BB, GME (Meme Stocks Only)
+- Price Only: Price features only
+- Advanced Reddit: Price features + Advanced Reddit features
+- Models: Ridge, LightGBM, XGBoost
+- Evaluation: IC (Spearman), Hit Rate, R²
+
+PERFORMANCE COMPARISON
+--------------------------------------------------
+   Model Price_Only_IC Advanced_Reddit_IC IC_Improvement Price_Only_Hit_Rate Advanced_Reddit_Hit_Rate Hit_Rate_Improvement Price_Only_R2 Advanced_Reddit_R2
+   Ridge        0.0341             0.0683        +0.0341              0.4474                   0.4452              -0.0022      -26.7876           -34.1135
+LightGBM       -0.1011            -0.1361        -0.0351              0.4989                   0.4609              -0.0380       -0.5513            -0.3862
+ XGBoost       -0.0632            -0.0230        +0.0402              0.4765                   0.4765              +0.0000       -0.4870            -0.7664
+
+REDDIT FEATURE EFFECT ANALYSIS
+--------------------------------------------------
+Average IC Improvement: +0.0131
+Average Hit Rate Improvement: -0.0134
+
+Model-wise Improvements:
+  Ridge: IC +0.0341
+  LightGBM: IC -0.0351
+  XGBoost: IC +0.0402
+
+CONCLUSIONS
+--------------------------------------------------
+✅ REDDIT FEATURES IMPROVE PERFORMANCE
+Reddit features enhance prediction performance for meme stocks
+Social media sentiment is valuable for meme stock prediction
+
+Best Price Only Model: Ridge (IC = 0.0341)
+Best With Reddit Model: Ridge (IC = 0.0683)
+
+STOCK-SPECIFIC INSIGHTS
+--------------------------------------------------
+AMC:
+  Average Log Mentions: 4.8928
+  Average Daily Returns: -0.0021
+  Reddit-Return Correlation: 0.0404
+
+BB:
+  Average Log Mentions: 3.3355
+  Average Daily Returns: -0.0006
+  Reddit-Return Correlation: 0.0495
+
+GME:
+  Average Log Mentions: 5.8663
+  Average Daily Returns: 0.0018
+  Reddit-Return Correlation: 0.0211

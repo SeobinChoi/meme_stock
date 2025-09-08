@@ -1,0 +1,12 @@
+{
+  "symbol": "r/GME",
+  "asset_type": "reddit",
+  "source": "bigquery_mock",
+  "total_records": 7,
+  "collection_timestamp": "2025-08-12T07:08:06.683060+00:00",
+  "notes": "use_keywords=false; templates='posts_daily+comments_daily'; mock_data=true",
+  "version": "20250812070806",
+  "date_range": "2021-01-15 to 2021-01-21",
+  "missing_dates": 0,
+  "checksum_sha256": "ea2576a25439dea47c48cd9bfc19675372dedffb88a6af9f7dde580a8b722103"
+}

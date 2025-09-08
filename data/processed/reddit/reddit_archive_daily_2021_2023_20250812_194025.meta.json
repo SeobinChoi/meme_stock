@@ -1,0 +1,48 @@
+{
+  "source": "Reddit archive data (archive-3)",
+  "years": [
+    "2021",
+    "2022",
+    "2023"
+  ],
+  "subreddits": [
+    "wallstreetbets",
+    "cryptocurrency",
+    "stocks",
+    "investing",
+    "options",
+    "stockmarket",
+    "pennystocks"
+  ],
+  "tickers": [
+    "GME",
+    "AMC",
+    "BB",
+    "BBBY",
+    "KOSS",
+    "DOGE",
+    "SHIB",
+    "PEPE",
+    "BONK",
+    "BTC",
+    "ETH"
+  ],
+  "date_range": [
+    "2021-01-01",
+    "2023-12-31"
+  ],
+  "total_days": 1095,
+  "total_mentions": 7390250,
+  "processing_date": "2025-08-12T19:40:25.735051",
+  "columns": [
+    "date",
+    "score",
+    "daily_records",
+    "subreddits_active",
+    "num_comments",
+    "total_engagement",
+    "title_length",
+    "word_count",
+    "is_weekend"
+  ]
+}

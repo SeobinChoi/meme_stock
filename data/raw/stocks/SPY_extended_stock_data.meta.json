@@ -1,0 +1,12 @@
+{
+  "symbol": "SPY",
+  "asset_type": "stock",
+  "source": "yfinance",
+  "total_records": 1509,
+  "collection_timestamp": "2025-08-12T06:49:56.385309+00:00",
+  "notes": "backfilled",
+  "version": "20250812064956",
+  "date_range": "2019-01-02 to 2024-12-30",
+  "missing_dates": 681,
+  "checksum_sha256": "210e595339f4f48fa48e2380656a38cd4fdd09ce237ff6c893fc74648cd8bcb9"
+}

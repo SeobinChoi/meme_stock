@@ -1,0 +1,376 @@
+# Machine-Learning Upgrade Manual for Predicting Meme-Stock Contrarian Effects
+
+> Drop this straight into Cursor as a working spec. It’s end-to-end: data → features → validation → models → losses/metrics → trading logic → interpretability & robustness.
+
+---
+
+## 1) Data Ingestion & Time Alignment
+
+### 1.1 Reddit data
+
+* **Scope**: r/wallstreetbets (plus optionally r/stocks, r/investing). Range: 2021-01 to 2023-12. Tickers: GME, AMC, BB (extendable).
+* **Fields**: `created_utc`, `author`, `title`, `selftext`, `score`(upvotes), `num_comments`, `id`, `permalink`.
+* **Collection**: Pushshift or Reddit API (`praw`). Save raw to parquet/CSV, then clean.
+* **Cleaning**: remove deleted/removed, normalize text (lowercase, strip URLs, emojis kept), map each post/comment to **ticker(s)** via simple regex list.
+
+### 1.2 Price data
+
+* **Source**: Yahoo Finance (e.g., `yfinance`).
+* **Fields**: `Date`, `Open/High/Low/Close`, `Volume`.
+* **Return**: `return_t = Close_t / Close_{t-1} - 1`; **label** = `next_return_t = return_{t+1}`.
+
+### 1.3 Business-day merge (leak-free)
+
+* Map Reddit activity **observable before the close** to the **next trading day** label.
+* Weekend/holiday posts roll into the next trading day.
+* Example (pandas-ish):
+
+```python
+df_r['date'] = pd.to_datetime(df_r['created_utc'], unit='s').dt.tz_convert('US/Eastern').dt.date
+agg = (df_r.groupby(['date','ticker'])
+          .agg(num_posts=('id','count'),
+               score_sum=('score','sum'),
+               cmt_sum=('num_comments','sum')).reset_index())
+df = (prices.merge(agg, on=['date','ticker'], how='left')
+            .fillna({'num_posts':0,'score_sum':0,'cmt_sum':0}))
+df['return'] = df.groupby('ticker')['Close'].pct_change()
+df['next_return'] = df.groupby('ticker')['return'].shift(-1)
+```
+
+---
+
+## 2) Feature Engineering
+
+### 2.1 Text-level signals (daily aggregates)
+
+* **Confidence** (over-assertiveness): build lexicons (e.g., *definitely, guaranteed, to the moon, 확실…* vs *maybe, perhaps*). Post-level score = `count(confident_terms) - count(hedges)`. Daily = mean/sum per (date,ticker).
+
+```python
+CONF = ["guaranteed","definitely","surely","확실","반드시","to the moon","will 100%"]
+HEDGE = ["maybe","perhaps","guess","아마","불확실","might"]
+def conf_score(text):
+    t = text.lower()
+    return sum(w in t for w in CONF) - sum(w in t for w in HEDGE)
+df_r['conf'] = df_r['text'].apply(conf_score)
+daily_conf = df_r.groupby(['date','ticker'])['conf'].mean().reset_index()
+```
+
+* **Sentiment**: VADER/FinBERT compound ∈ \[-1,1]; daily mean.
+* **Stance** (buy/sell) & **subjectivity** (optional): simple classifiers or rules.
+* **Engagement**: `num_posts`, `score_sum`, `cmt_sum`, unique authors, top-post score.
+* **Topic mix**: LDA (5–10 topics); daily topic proportions per ticker.
+
+### 2.2 Reddit dynamics (levels, speed, surprise)
+
+* **Log volume**: `log_mentions = log(1 + num_posts)`.
+* **EMAs** of mentions: `ema_3/5/10`.
+* **Momentum**: `mom_3 = Mentions_t - Mentions_{t-3}`, same for 7.
+* **RS (Reddit Surprise)**: deviation from expected level (e.g., 7-day MA):
+
+  $$
+  RS_t = \frac{\text{Mentions}_t - \text{MA7}_t}{\text{MA7}_t}
+  $$
+* **Imbalance/dispersion** (optional): Gini of comment distribution, share of highly upvoted posts.
+
+### 2.3 Market/technical features
+
+* **Returns**: 1/3/5/10/20-day cumulative returns.
+* **Trend position**: `price_ratio_sma10 = Close / SMA10`; `price_ratio_sma20`.
+* **RSI(14)**, **Bollinger width**, **MACD signal** (keep a compact set to avoid bloat).
+* **Volatility**: rolling std of returns: 5/10/20-day.
+* **Calendar effects**: `day_of_week` one-hots, `is_monday`, `month`.
+* **Market regime** (optional): VIX high/low dummy; stock’s volume spike dummy (e.g., `Volume > 2×MA10`).
+
+> Keep a tidy feature table: one row per (date,ticker), no future info, clear dtypes. Winsorize heavy-tailed counts; standardize for NNs; leave tree models unscaled if preferred.
+
+---
+
+## 3) Validation Design (no leakage, realistic)
+
+### 3.1 Static split
+
+* **Train**: 2021-01–2022-12
+* **Val**: 2023-01–2023-06
+* **Test**: 2023-07–2023-12
+
+### 3.2 Purged K-Fold (time-series)
+
+* K folds laid on the timeline; for each validation span, **purge** overlapping training samples plus an **embargo** (e.g., 5 trading days) around it to block label bleed.
+
+### 3.3 Walk-forward (rolling/expanding)
+
+* Expanding training window; roll 3-month validation steps through the timeline; aggregate metrics (mean, variance). Reveals regime stability/drift.
+
+### 3.4 Tuning hygiene
+
+* Use **val**/**walk-forward** scores to tune; **test once** (no retuning).
+* Early stopping; conservative depth/regularization for trees; dropout & weight decay for NNs.
+
+---
+
+## 4) Models
+
+### 4.1 Baselines (start here)
+
+* **Ridge** (interpretable coefficients; sanity-check directions).
+* **LightGBM / XGBoost** (fast, robust, handles mixed features).
+
+  * Suggested starter params:
+
+    * `max_depth=5`, `num_leaves≈31` (LGBM), `learning_rate=0.05`
+    * `n_estimators=200–600` with early stopping
+    * `subsample=0.8`, `colsample_bytree=0.8`
+
+```python
+import lightgbm as lgb
+train = lgb.Dataset(X_tr, y_tr)
+valid = lgb.Dataset(X_val, y_val)
+params = dict(objective='regression', metric='rmse',
+              max_depth=5, num_leaves=31, learning_rate=0.05,
+              feature_fraction=0.8, bagging_fraction=0.8, seed=42)
+model = lgb.train(params, train, valid_sets=[valid],
+                  num_boost_round=1000, early_stopping_rounds=50)
+```
+
+### 4.2 Sequence models (capture multi-day patterns)
+
+* **TCN (Temporal Convolutional Network)**
+
+  * Input: window (e.g., last 20 days) × feature\_dim.
+  * Causal 1D conv, dilations (1,2,4,…), residuals, BN, dropout.
+
+```python
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Conv1D, BatchNormalization, ReLU, Dropout, Flatten, Dense
+m = Sequential([
+  Conv1D(64, 3, dilation_rate=1, padding='causal', activation='relu', input_shape=(20, F)),
+  BatchNormalization(),
+  Conv1D(64, 3, dilation_rate=2, padding='causal', activation='relu'),
+  BatchNormalization(),
+  Conv1D(64, 3, dilation_rate=4, padding='causal', activation='relu'),
+  Flatten(), Dropout(0.2), Dense(1)
+])
+m.compile(optimizer='adam', loss='mse')
+```
+
+* **TFT (Temporal Fusion Transformer)**
+
+  * Multivariate sequences with variable/temporal attention; good interpretability (variable importance, attention heatmaps).
+  * Use `pytorch-forecasting` if convenient. Encoder length \~20, prediction length = 1.
+
+### 4.3 Meta-ensemble
+
+* **Simple blend**: weighted mean of predictions (weights ∝ validation IC/Sharpe).
+* **Stacking**: meta-learner (e.g., ridge/LGBM) on out-of-fold predictions from Ridge/LGBM/XGB/TCN/TFT.
+* Guard against leakage: meta-features generated strictly from val folds.
+
+### 4.4 Neutralization (optional, for cross-sectional robustness)
+
+* Demean or regress out market/sector exposures from predictions, then re-rank.
+
+---
+
+## 5) Objectives & Metrics
+
+### 5.1 Training losses
+
+* **MSE/MAE** for regression (stable).
+* **Ranking-aware objective (optional)**:
+
+  * Monitor **RankIC** (Spearman) as a **custom eval** (trees) or add pairwise ranking loss (LambdaRank/grouped settings if you rank across tickers per day).
+
+```python
+import numpy as np
+def rankic_eval(preds, dset):
+    y = dset.get_label()
+    rp = np.argsort(np.argsort(preds)); ry = np.argsort(np.argsort(y))
+    ic = np.corrcoef(rp, ry)[0,1]
+    return ('rankIC', ic, True)  # higher is better
+```
+
+### 5.2 Model/strategy metrics (report all)
+
+* **IC** (Pearson), **RankIC** (Spearman).
+* **Hit-rate**: share of days sign(pred) == sign(actual).
+* **Sharpe (annualized)** on **net** daily strategy returns.
+* **Turnover**: average |w\_t − w\_{t−1}|.
+* **Max Drawdown** (MDD) on cumulative net curve.
+* Provide **by-year** breakdown (2021/2022/2023) to expose regime dependence.
+
+---
+
+## 6) From Predictions to Trading
+
+### 6.1 Positioning rule (single stock; extend to basket)
+
+* **Signal**: regression output $\hat{y}_t$ (next-day return).
+* **Thresholding**:
+
+  * Long if $\hat{y}_t ≥ +\theta$, Short if $\hat{y}_t ≤ -\theta$, Flat otherwise (e.g., $\theta=0.1\%$).
+  * Or sign-only (simpler): Long if $\hat{y}_t>0$ else Short.
+* **Sizing** (optional): proportional to |signal|, clipped.
+* **Stateful positions** to reduce turnover: keep yesterday’s side unless the threshold is crossed.
+
+### 6.2 Costs & slippage
+
+* Use realistic **round-trip cost** (e.g., 20–50 bps).
+* Implementation sketch:
+
+```python
+cost_half = 0.001  # 10 bps enter/exit
+pos_prev, rets = 0, []
+for t in range(T):
+    pos = 1 if y_hat[t] > 0 else -1
+    cost = cost_half * abs(pos - pos_prev)  # flip: 2*half = 20 bps
+    rets.append(pos * y_true[t] - cost)
+    pos_prev = pos
+```
+
+* Compute **Sharpe, MDD, Turnover** on `rets` (net).
+
+### 6.3 Multi-asset portfolio (optional)
+
+* Equal-weight or score-weighted across tickers each day.
+* Consider **volatility targeting** (e.g., 10% annual) to stabilize Sharpe.
+
+---
+
+## 7) Interpretability & Robustness
+
+### 7.1 SHAP & feature importance
+
+* For tree models:
+
+```python
+import shap
+ex = shap.TreeExplainer(lgb_model)
+sv = ex.shap_values(X_val)
+shap.summary_plot(sv, X_val, feature_names=feature_cols)
+```
+
+* Validate narratives: **higher confidence** and **RS spikes** should push predictions **down** (contrarian).
+
+### 7.2 Ablations (evidence of contribution)
+
+* Train/evaluate with:
+
+  * **Full** features.
+  * **w/o Reddit** features.
+  * **Reddit-only** (no technicals).
+  * **w/o text semantics** (keep volumes/RS only).
+* Compare IC / Hit / Sharpe. A large drop when removing Reddit/text features supports the core hypothesis.
+
+### 7.3 Placebos (anti-overfit checks)
+
+* **Random pairings**: shuffle Reddit day mapping or cross-ticker swap → performance must collapse.
+* **Lag inversion**: shift Reddit forward/backward improperly → collapse.
+* **Noise features**: add random features → no artificial jump in metrics.
+* **Label shuffle**: train on permuted labels → train/val should fail (detects capacity overfit).
+
+### 7.4 Stability
+
+* **Walk-forward distribution** of IC/Sharpe (mean ± std).
+* **By-year**/regime slices (meme frenzy vs. cool-down).
+* **Drift monitoring**: plot rolling IC (e.g., 60-day).
+
+---
+
+## 8) Practical Defaults (so you can just start)
+
+**Windows**
+
+* Sequence window: 20 trading days (TCN/TFT).
+* EMAs: 3/5/10; momenta: 3/7 days.
+* Vol windows: 5/10/20 days.
+
+**LightGBM Starter**
+
+* `max_depth=5`, `num_leaves=31`, `learning_rate=0.05`, `n_estimators=600 (ES)`, `feature_fraction=0.8`, `bagging_fraction=0.8`, `seed=42`.
+* Monitor `rmse` + custom `rankIC` in `feval`.
+
+**TCN Starter**
+
+* Dilations: 1,2,4 (3 blocks), filters=64, kernel=3, dropout=0.2, Adam, MSE, early stopping on val RMSE.
+
+**Ensemble**
+
+* Simple average of (LGBM, XGB, TCN); weights by val RankIC.
+
+**Threshold**
+
+* Start with `theta = 0` (pure sign) → measure turnover; then introduce `±0.1%` dead-zone to cut churn.
+
+**Costs**
+
+* Test 20/35/50 bps scenarios; report sensitivity.
+
+---
+
+## 9) Reporting Template (copy into your README/appendix)
+
+* **Data hygiene**: exact sources, UTC→US/Eastern conversion, business-day mapping, weekend roll rules.
+* **Leakage defenses**: purged CV (embargo=5d), walk-forward scheme diagram.
+* **Feature table**: definitions & math for RS, EMAs, momentum, confidence, sentiment, topics, RSI, vol.
+* **Model grid**: Ridge, LGBM, XGB, TCN, TFT (+ params).
+* **Validation results** (Val): IC / RankIC / Hit / RMSE (mean±sd across folds or WF splits).
+* **Test once**: IC / RankIC / Hit / **Sharpe (net)** / **Turnover** / **MDD**; yearly breakdown.
+* **Interpretability**: SHAP summary & example day explanations; TFT variable/temporal attention (if used).
+* **Ablations & placebos**: concise table; short conclusions.
+* **Limitations**: sample size, platform bias (only Reddit), regime fragility; extensions (Twitter/Stocktwits; cross-sectional ranking per day).
+
+---
+
+## 10) Folder & Script Skeleton
+
+```
+project/
+  data/
+    reddit_raw.parquet
+    prices.parquet
+  notebooks/
+    01_collect_reddit.ipynb
+    02_prices_clean.ipynb
+  src/
+    features/
+      text_confidence.py
+      sentiment.py
+      topics.py
+      reddit_agg.py
+      technicals.py
+    modeling/
+      dataset.py          # splits, purged kfold, walk-forward
+      lgbm_train.py
+      tcn_train.py
+      ensemble.py
+    eval/
+      metrics.py          # IC, RankIC, Hit, Sharpe, Turnover, MDD
+      backtest.py
+      shap_analysis.py
+  reports/
+    val_results.csv
+    test_results.csv
+    figures/
+      cumret_strategy.png
+      shap_summary.png
+  README.md
+```
+
+---
+
+## 11) Quick Sanity Checklist (pre-commit)
+
+* [ ] No future data in features; all Reddit signals are **T observed → predict T+1**.
+* [ ] Purged/embargoed validation implemented.
+* [ ] At least one **walk-forward** evaluation.
+* [ ] Test set used **once**.
+* [ ] Cost sensitivity (20/35/50 bps) reported.
+* [ ] Yearly (2021/2022/2023) metrics provided.
+* [ ] SHAP or attention-based interpretability plotted.
+* [ ] Ablations + placebos run.
+* [ ] Strategy curve vs Buy\&Hold plotted, with MDD annotated.
+
+---
+
+### Final note
+
+Start with LGBM + text confidence/RS/EMAs + simple sign strategy. Verify contrarian behavior (negative raw IC → positive after trading logic). Then bring in TCN/TFT and an ensemble. Keep validation strict; don’t touch the test until the end.

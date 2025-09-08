@@ -1,0 +1,43 @@
+{
+  "target": "y1d",
+  "generated_at": "2025-08-14T03:10:28.905263",
+  "model_performance": {
+    "rw": {
+      "avg_ic": NaN,
+      "avg_rank_ic": NaN,
+      "ic_hit_rate": 0.0,
+      "avg_rmse": 0.058510252811682546,
+      "n_splits": 8,
+      "ic_std": NaN
+    },
+    "price_lgbm": {
+      "avg_ic": 0.06781091452048257,
+      "avg_rank_ic": 0.06509074481278132,
+      "ic_hit_rate": 1.0,
+      "avg_rmse": 0.0679420887750779,
+      "n_splits": 8,
+      "ic_std": 0.07328979695251175
+    },
+    "ensemble": {
+      "avg_ic": 0.06388906312547497,
+      "avg_rank_ic": 0.03269889637657477,
+      "ic_hit_rate": 0.625,
+      "avg_rmse": 0.06250580358901092,
+      "n_splits": 8,
+      "ic_std": 0.12112609717204366
+    }
+  },
+  "go_no_go_decision": {
+    "ic_improvement": -0.03239184843620655,
+    "ic_improvement_threshold": 0.03,
+    "meets_ic_threshold": false,
+    "best_model": "ensemble",
+    "best_ic": 0.03269889637657477,
+    "overall_decision": "CONTINUE-IMPROVING"
+  },
+  "recommendations": [
+    "\ud83d\udd04 IC improvement (-0.032) - continue feature engineering",
+    "\ud83d\udcca Current best features show promise",
+    "\ud83e\udde0 Ready to try deep learning approaches"
+  ]
+}

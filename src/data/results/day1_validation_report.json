@@ -1,0 +1,34 @@
+{
+  "validation_timestamp": "2025-08-03T23:54:59.257484",
+  "data_directory": "data",
+  "reddit_validation": {
+    "status": "ERROR",
+    "message": "Reddit WSB dataset not found",
+    "file_path": "data/raw/reddit_wsb.csv"
+  },
+  "stock_validation": {
+    "status": "PASS",
+    "stock_files": {},
+    "total_files": 0,
+    "missing_stocks": [
+      "GME",
+      "AMC",
+      "BB"
+    ]
+  },
+  "temporal_alignment": {
+    "status": "PASS",
+    "reddit_date_range": null,
+    "stock_date_ranges": {},
+    "overlap_analysis": {},
+    "recommendations": []
+  },
+  "overall_status": "ERROR",
+  "summary": {
+    "total_datasets": 0,
+    "total_rows": 0,
+    "total_size_mb": 0,
+    "date_coverage": "Unknown",
+    "data_quality_score": 100.0
+  }
+}

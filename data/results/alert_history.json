@@ -1,0 +1,23 @@
+[
+  {
+    "severity": "WARNING",
+    "dataset": "unified",
+    "metric": "completeness",
+    "message": "completeness below threshold: 35.7% < 85.0%",
+    "timestamp": "2025-08-10T20:16:06.003345"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "unified",
+    "metric": "accuracy",
+    "message": "accuracy below threshold: 85.0% < 95.0%",
+    "timestamp": "2025-08-10T20:16:06.003464"
+  },
+  {
+    "severity": "WARNING",
+    "dataset": "unified",
+    "metric": "timeliness",
+    "message": "timeliness below threshold: 85.0% < 98.0%",
+    "timestamp": "2025-08-10T20:16:06.003481"
+  }
+]

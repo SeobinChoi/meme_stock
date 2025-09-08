@@ -1,0 +1,41 @@
+{
+  "lightgbm_classification": {},
+  "xgboost_regression": {
+    "GME_returns_1d": {
+      "error": "'train_data'"
+    },
+    "GME_returns_3d": {
+      "error": "'train_data'"
+    },
+    "GME_returns_7d": {
+      "error": "'train_data'"
+    },
+    "GME_returns_14d": {
+      "error": "'train_data'"
+    },
+    "AMC_returns_1d": {
+      "error": "'train_data'"
+    },
+    "AMC_returns_3d": {
+      "error": "'train_data'"
+    },
+    "AMC_returns_7d": {
+      "error": "'train_data'"
+    },
+    "AMC_returns_14d": {
+      "error": "'train_data'"
+    },
+    "BB_returns_1d": {
+      "error": "'train_data'"
+    },
+    "BB_returns_3d": {
+      "error": "'train_data'"
+    },
+    "BB_returns_7d": {
+      "error": "'train_data'"
+    },
+    "BB_returns_14d": {
+      "error": "'train_data'"
+    }
+  }
+}

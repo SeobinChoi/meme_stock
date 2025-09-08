@@ -1,0 +1,132 @@
+{
+  "processing_info": {
+    "script": "process_archive_reddit_data_ml.py",
+    "created": "2025-08-13T23:38:45.834726",
+    "years": [
+      "2022",
+      "2022"
+    ],
+    "tickers": {
+      "meme_stocks": [
+        "GME",
+        "AMC",
+        "BB",
+        "BBBY",
+        "KOSS"
+      ],
+      "crypto": [
+        "DOGE",
+        "SHIB",
+        "PEPE",
+        "BONK",
+        "BTC",
+        "ETH"
+      ]
+    }
+  },
+  "data_stats": {
+    "total_records": 8030,
+    "unique_dates": 365,
+    "date_range": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "total_mentions": 1394366,
+    "file_sizes_mb": {
+      "parquet": 0.53,
+      "full_csv": 2.21
+    }
+  },
+  "ticker_stats": {
+    "AMC": {
+      "total_mentions": 68930,
+      "active_days": 365,
+      "peak_day": "2022-08-22",
+      "peak_mentions": 2620
+    },
+    "BB": {
+      "total_mentions": 8075,
+      "active_days": 365,
+      "peak_day": "2022-11-29",
+      "peak_mentions": 355
+    },
+    "BBBY": {
+      "total_mentions": 237572,
+      "active_days": 365,
+      "peak_day": "2022-08-18",
+      "peak_mentions": 24258
+    },
+    "BTC": {
+      "total_mentions": 483493,
+      "active_days": 365,
+      "peak_day": "2022-06-18",
+      "peak_mentions": 4356
+    },
+    "DOGE": {
+      "total_mentions": 60382,
+      "active_days": 365,
+      "peak_day": "2022-01-25",
+      "peak_mentions": 1130
+    },
+    "ETH": {
+      "total_mentions": 237372,
+      "active_days": 365,
+      "peak_day": "2022-08-09",
+      "peak_mentions": 2080
+    },
+    "GME": {
+      "total_mentions": 272303,
+      "active_days": 365,
+      "peak_day": "2022-03-23",
+      "peak_mentions": 4283
+    },
+    "SHIB": {
+      "total_mentions": 26239,
+      "active_days": 365,
+      "peak_day": "2022-01-30",
+      "peak_mentions": 1015
+    }
+  },
+  "ml_features": {
+    "time_features": [
+      "day_of_week",
+      "month",
+      "quarter",
+      "is_weekend"
+    ],
+    "lag_features": [
+      "mentions_lag_1",
+      "mentions_lag_3",
+      "mentions_lag_7",
+      "mentions_lag_14",
+      "mentions_lag_30"
+    ],
+    "rolling_features": [
+      "mentions_ma_7",
+      "mentions_ma_14",
+      "mentions_ma_30",
+      "mentions_std_7",
+      "mentions_std_14",
+      "mentions_std_30",
+      "mentions_max_7",
+      "mentions_max_14",
+      "mentions_max_30"
+    ],
+    "derived_features": [
+      "mention_velocity",
+      "mention_acceleration",
+      "momentum_score",
+      "is_spike"
+    ]
+  },
+  "output_files": {
+    "parquet": "reddit_mentions_full_2022_2022_20250813_233845.parquet",
+    "full_csv": "reddit_mentions_full_2022_2022_20250813_233845.csv",
+    "ml_datasets": {
+      "timeseries": "reddit_ml_timeseries_2022_2022_20250813_233845.csv",
+      "wide_format": "reddit_ml_wide_format_2022_2022_20250813_233845.csv",
+      "sequences": "reddit_ml_sequences_2022_2022_20250813_233845.csv",
+      "daily_aggregate": "reddit_ml_daily_aggregate_2022_2022_20250813_233845.csv"
+    }
+  }
+}

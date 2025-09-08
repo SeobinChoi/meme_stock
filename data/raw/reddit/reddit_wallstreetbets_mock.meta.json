@@ -1,0 +1,12 @@
+{
+  "symbol": "r/wallstreetbets",
+  "asset_type": "reddit",
+  "source": "bigquery_mock",
+  "total_records": 14,
+  "collection_timestamp": "2025-08-12T07:08:06.666363+00:00",
+  "notes": "use_keywords=false; templates='posts_daily+comments_daily'; mock_data=true",
+  "version": "20250812070806",
+  "date_range": "2021-01-01 to 2021-01-14",
+  "missing_dates": 0,
+  "checksum_sha256": "b5c7255e9f5acf20a2d25429e475faaded447ab750ee78941da8bc1f3f20074e"
+}

@@ -1,0 +1,78 @@
+{
+  "target": "y1d",
+  "generated_at": "2025-08-14T03:07:31.925044",
+  "model_performance": {
+    "rw": {
+      "avg_ic": NaN,
+      "avg_rank_ic": NaN,
+      "ic_hit_rate": 0.0,
+      "avg_rmse": 0.06113961474145602,
+      "n_splits": 6
+    },
+    "ar": {
+      "avg_ic": 0.03137707885259818,
+      "avg_rank_ic": 0.0015122393051495385,
+      "ic_hit_rate": 0.6666666666666666,
+      "avg_rmse": 0.06297412097500373,
+      "n_splits": 6,
+      "avg_ir": 32.97033253037022,
+      "avg_sharpe": 32.97033253037022,
+      "avg_total_return": 0.018911001822635498,
+      "avg_max_dd": -0.23111757817478792
+    },
+    "price_lgbm": {
+      "avg_ic": 0.04135891597920613,
+      "avg_rank_ic": 0.03677632832682098,
+      "ic_hit_rate": 1.0,
+      "avg_rmse": 0.07174012483488479,
+      "n_splits": 6,
+      "avg_ir": 179.23104814077269,
+      "avg_sharpe": 179.23104814077269,
+      "avg_total_return": 0.12303357882151816,
+      "avg_max_dd": -0.27999624845994703
+    },
+    "reddit_lgbm": {
+      "avg_ic": 0.08116349765431592,
+      "avg_rank_ic": 0.06579078611643853,
+      "ic_hit_rate": 0.6666666666666666,
+      "avg_rmse": 0.06250705065314506,
+      "n_splits": 6,
+      "avg_ir": 93645.56545461802,
+      "avg_sharpe": 93645.56545461802,
+      "avg_total_return": 0.31729379320434853,
+      "avg_max_dd": -0.18641712995502005
+    }
+  },
+  "statistical_tests": {
+    "ar": {
+      "dm_statistic": -2.2878067019236865,
+      "dm_p_value": 0.022148780382565736,
+      "is_significant": true
+    },
+    "price_lgbm": {
+      "dm_statistic": -3.90142194206451,
+      "dm_p_value": 9.562929868556225e-05,
+      "is_significant": true
+    },
+    "reddit_lgbm": {
+      "dm_statistic": -1.5195916225360282,
+      "dm_p_value": 0.1286136447081656,
+      "is_significant": false
+    }
+  },
+  "go_no_go_decision": {
+    "ic_improvement": 0.029014457789617552,
+    "ic_improvement_threshold": 0.03,
+    "meets_ic_threshold": false,
+    "ir_improvement": 93466.33440647724,
+    "ir_threshold": 0.3,
+    "meets_ir_threshold": true,
+    "dm_test_significant": false,
+    "overall_decision": "NO-GO"
+  },
+  "recommendations": [
+    "\u274c IC improvement (0.029) below threshold (0.03)",
+    "\u274c Improvement not statistically significant (DM test)",
+    "\ud83d\udd04 Consider: better Reddit features, longer training, or alternative strategies."
+  ]
+}

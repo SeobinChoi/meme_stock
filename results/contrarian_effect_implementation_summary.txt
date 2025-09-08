@@ -1,0 +1,93 @@
+========================================================================================================================
+CONTRARIAN EFFECT IMPLEMENTATION SUMMARY
+========================================================================================================================
+
+OVERVIEW:
+This document explains how the Contrarian Effect (Reddit 관심도와 주가의 역상관관계)
+is implemented in the meme stock prediction model.
+
+1. CORE CONCEPT
+--------------------------------------------------
+Contrarian Effect: 높은 Reddit 관심도 → 낮은 주가 수익률
+Mechanism: 과대관심 → 과대평가 → 가격조정
+Key Insight: Reddit에서 화제가 될수록 오히려 수익률이 낮아짐
+
+2. IMPLEMENTATION METHOD
+--------------------------------------------------
+A. Reddit Surprise 계산:
+   reddit_surprise = log_mentions[t-1] - reddit_ema_5[t]
+   - log_mentions: 로그 변환된 언급 수
+   - reddit_ema_5: 5일 지수이동평균 (예상치)
+   - shift(1): 미래 데이터 누수 방지
+
+B. Contrarian 피처 생성:
+   - reddit_surprise: 기본 Contrarian 지표
+   - reddit_market_ex: 시장 대비 상대적 관심도
+   - reddit_spike_p95: 극한 관심도 스파이크
+   - vol_reddit_attention: 변동성-관심도 상호작용
+
+C. 고급 Contrarian 피처:
+   - contrarian_signal: -reddit_surprise (신호 반전)
+   - contrarian_momentum: -reddit_momentum_3 (모멘텀 반전)
+   - surprise_rsi_interaction: reddit_surprise * rsi_14
+   - high_surprise_regime: 극한 관심도 구간 식별
+
+3. VALIDATION METHOD
+--------------------------------------------------
+A. 상관관계 분석:
+   - Reddit Surprise와 다음날 수익률의 음의 상관관계
+   - 통계적 유의성 검증 (p-value < 0.05)
+
+B. Event Study:
+   - Reddit 스파이크 이벤트 전후 수익률 패턴 분석
+   - 극한 이벤트(상위 5%)에서의 Contrarian Effect 확인
+
+C. 모델 성능 평가:
+   - IC (Information Coefficient): Spearman 상관계수
+   - Hit Rate: 방향성 예측 정확도
+   - Contrarian 피처 포함 시 성능 개선 확인
+
+4. EMPIRICAL RESULTS
+--------------------------------------------------
+AMC: reddit_surprise correlation = -0.1784
+BB: reddit_surprise correlation = -0.1646
+GME: reddit_surprise correlation = -0.1982
+
+Key Findings:
+- 모든 주요 밈스톡에서 음의 상관관계 확인
+- GME에서 가장 강한 Contrarian Effect (-0.198)
+- AMC, BB에서도 일관된 음의 상관관계
+
+5. MODEL IMPLICATIONS
+--------------------------------------------------
+A. 예측 모델에서의 활용:
+   - 높은 reddit_surprise → 낮은 수익률 예측
+   - 높은 reddit_spike_p95 → 강한 하락 신호
+   - 높은 vol_reddit_attention → 불안정성 신호
+
+B. 투자 전략 시사점:
+   - Reddit 관심도 급증 시 매도 신호
+   - 극한 관심도 구간에서 Contrarian 전략
+   - 감정적 과열 구간 회피
+
+C. 리스크 관리:
+   - Reddit 스파이크 이벤트 모니터링
+   - 과대관심 구간에서 포지션 축소
+   - Contrarian 신호 기반 리밸런싱
+
+6. TECHNICAL IMPLEMENTATION
+--------------------------------------------------
+A. 데이터 전처리:
+   - Reddit 데이터와 주가 데이터 시간 정렬
+   - 미래 데이터 누수 방지 (shift 사용)
+   - 이상치 처리 및 정규화
+
+B. 피처 엔지니어링:
+   - 로그 변환으로 분포 정규화
+   - 지수이동평균으로 트렌드 추출
+   - 상호작용 피처로 복합 효과 포착
+
+C. 모델 훈련:
+   - 시계열 분할로 데이터 누수 방지
+   - Contrarian 피처 포함/제외 비교
+   - IC 기반 성능 평가

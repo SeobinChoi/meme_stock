@@ -1,0 +1,165 @@
+{
+  "data_overview": {
+    "total_records": 9125,
+    "date_range": [
+      "2021-01-01",
+      "2021-12-31"
+    ],
+    "unique_dates": 365,
+    "unique_tickers": 8,
+    "subreddits": [
+      "cryptocurrency",
+      "investing",
+      "options",
+      "pennystocks",
+      "stockmarket",
+      "stocks",
+      "wallstreetbets"
+    ],
+    "total_mentions": 5373461
+  },
+  "ticker_totals": {
+    "AMC": {
+      "total_mentions": 628118,
+      "days_active": 365,
+      "subreddits_active": [
+        "cryptocurrency",
+        "investing",
+        "options",
+        "pennystocks",
+        "stockmarket",
+        "stocks",
+        "wallstreetbets"
+      ],
+      "peak_day": {
+        "date": "2021-01-28",
+        "mentions": 57045
+      }
+    },
+    "BB": {
+      "total_mentions": 270108,
+      "days_active": 365,
+      "subreddits_active": [
+        "options",
+        "stockmarket",
+        "stocks",
+        "wallstreetbets"
+      ],
+      "peak_day": {
+        "date": "2021-01-28",
+        "mentions": 39931
+      }
+    },
+    "BBBY": {
+      "total_mentions": 10314,
+      "days_active": 365,
+      "subreddits_active": [
+        "wallstreetbets"
+      ],
+      "peak_day": {
+        "date": "2021-01-28",
+        "mentions": 850
+      }
+    },
+    "BTC": {
+      "total_mentions": 844997,
+      "days_active": 365,
+      "subreddits_active": [
+        "cryptocurrency",
+        "investing",
+        "stockmarket"
+      ],
+      "peak_day": {
+        "date": "2021-05-13",
+        "mentions": 6037
+      }
+    },
+    "DOGE": {
+      "total_mentions": 214997,
+      "days_active": 365,
+      "subreddits_active": [
+        "cryptocurrency",
+        "wallstreetbets"
+      ],
+      "peak_day": {
+        "date": "2021-01-28",
+        "mentions": 7002
+      }
+    },
+    "ETH": {
+      "total_mentions": 527183,
+      "days_active": 365,
+      "subreddits_active": [
+        "cryptocurrency"
+      ],
+      "peak_day": {
+        "date": "2021-05-06",
+        "mentions": 4096
+      }
+    },
+    "GME": {
+      "total_mentions": 2777352,
+      "days_active": 365,
+      "subreddits_active": [
+        "cryptocurrency",
+        "investing",
+        "options",
+        "stockmarket",
+        "stocks",
+        "wallstreetbets"
+      ],
+      "peak_day": {
+        "date": "2021-01-28",
+        "mentions": 279392
+      }
+    },
+    "SHIB": {
+      "total_mentions": 100392,
+      "days_active": 365,
+      "subreddits_active": [
+        "cryptocurrency"
+      ],
+      "peak_day": {
+        "date": "2021-10-27",
+        "mentions": 5660
+      }
+    }
+  },
+  "subreddit_activity": {
+    "cryptocurrency": {
+      "total_mentions": 1710405,
+      "unique_tickers": 6,
+      "top_ticker": "BTC"
+    },
+    "investing": {
+      "total_mentions": 31350,
+      "unique_tickers": 3,
+      "top_ticker": "GME"
+    },
+    "options": {
+      "total_mentions": 29238,
+      "unique_tickers": 3,
+      "top_ticker": "GME"
+    },
+    "pennystocks": {
+      "total_mentions": 15288,
+      "unique_tickers": 1,
+      "top_ticker": "AMC"
+    },
+    "stockmarket": {
+      "total_mentions": 42269,
+      "unique_tickers": 4,
+      "top_ticker": "GME"
+    },
+    "stocks": {
+      "total_mentions": 117301,
+      "unique_tickers": 3,
+      "top_ticker": "GME"
+    },
+    "wallstreetbets": {
+      "total_mentions": 3427610,
+      "unique_tickers": 5,
+      "top_ticker": "GME"
+    }
+  }
+}

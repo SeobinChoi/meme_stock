@@ -1,0 +1,12 @@
+{
+  "model_performance": {},
+  "ensemble_analysis": {},
+  "feature_importance": {},
+  "comparison_summary": {
+    "best_classification_model": "None",
+    "best_classification_score": 0.0,
+    "best_regression_model": "None",
+    "best_regression_score": 0.0,
+    "total_models_trained": 0
+  }
+}

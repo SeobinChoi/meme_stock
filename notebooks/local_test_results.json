@@ -1,0 +1,28 @@
+{
+  "timestamp": "20250814_134306",
+  "device": "cpu",
+  "models_tested": [
+    "MLP",
+    "LSTM",
+    "Transformer"
+  ],
+  "test_results": [
+    {
+      "model": "MLP",
+      "correlation": 0.6225563909774435,
+      "rmse": 0.08804394012626834
+    },
+    {
+      "model": "LSTM",
+      "correlation": 0.3488721804511278,
+      "rmse": 0.13018460454893774
+    },
+    {
+      "model": "Transformer",
+      "correlation": 0.3789473684210526,
+      "rmse": 0.10093895065959949
+    }
+  ],
+  "real_data_available": true,
+  "status": "PASSED"
+}

@@ -1,0 +1,114 @@
+{
+  "quality_report": {
+    "timestamp": "2025-08-04T19:12:47.898036",
+    "datasets": {
+      "stock_GME": {
+        "dataset_name": "stock_GME",
+        "total_records": 504,
+        "total_columns": 6,
+        "quality_scores": {
+          "completeness": 100.0,
+          "consistency": 100.0,
+          "accuracy": 100.0,
+          "timeliness": 85.0
+        },
+        "quality_score": 96.25
+      },
+      "stock_BB": {
+        "dataset_name": "stock_BB",
+        "total_records": 504,
+        "total_columns": 6,
+        "quality_scores": {
+          "completeness": 100.0,
+          "consistency": 100.0,
+          "accuracy": 100.0,
+          "timeliness": 85.0
+        },
+        "quality_score": 96.25
+      },
+      "reddit": {
+        "dataset_name": "reddit",
+        "total_records": 53187,
+        "total_columns": 8,
+        "quality_scores": {
+          "completeness": 93.31392069490664,
+          "consistency": 100.0,
+          "accuracy": 99.93607460469663,
+          "timeliness": 85.0
+        },
+        "quality_score": 94.56249882490081
+      },
+      "stock_AMC": {
+        "dataset_name": "stock_AMC",
+        "total_records": 504,
+        "total_columns": 6,
+        "quality_scores": {
+          "completeness": 100.0,
+          "consistency": 100.0,
+          "accuracy": 100.0,
+          "timeliness": 85.0
+        },
+        "quality_score": 96.25
+      },
+      "unified": {
+        "dataset_name": "unified",
+        "total_records": 176,
+        "total_columns": 18,
+        "quality_scores": {
+          "completeness": 99.90530303030303,
+          "consistency": 100.0,
+          "accuracy": 85.0,
+          "timeliness": 85.0
+        },
+        "quality_score": 92.47632575757575
+      }
+    },
+    "overall_quality": 95.15776491649531,
+    "alerts": []
+  },
+  "alerts": [
+    {
+      "severity": "WARNING",
+      "dataset": "stock_GME",
+      "metric": "timeliness",
+      "message": "timeliness below threshold: 85.0% < 98.0%",
+      "timestamp": "2025-08-04T19:12:48.592304"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "stock_BB",
+      "metric": "timeliness",
+      "message": "timeliness below threshold: 85.0% < 98.0%",
+      "timestamp": "2025-08-04T19:12:48.592318"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "reddit",
+      "metric": "timeliness",
+      "message": "timeliness below threshold: 85.0% < 98.0%",
+      "timestamp": "2025-08-04T19:12:48.592323"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "stock_AMC",
+      "metric": "timeliness",
+      "message": "timeliness below threshold: 85.0% < 98.0%",
+      "timestamp": "2025-08-04T19:12:48.592327"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "unified",
+      "metric": "accuracy",
+      "message": "accuracy below threshold: 85.0% < 95.0%",
+      "timestamp": "2025-08-04T19:12:48.592330"
+    },
+    {
+      "severity": "WARNING",
+      "dataset": "unified",
+      "metric": "timeliness",
+      "message": "timeliness below threshold: 85.0% < 98.0%",
+      "timestamp": "2025-08-04T19:12:48.592332"
+    }
+  ],
+  "monitoring_timestamp": "2025-08-04T19:12:49.964233"
+}

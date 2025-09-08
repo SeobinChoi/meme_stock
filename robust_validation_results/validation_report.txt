@@ -1,0 +1,113 @@
+🔍 ROBUST MEME STOCK ML VALIDATION REPORT
+============================================================
+Generated: 2025-09-07 19:27:19
+
+📊 PURGED K-FOLD VALIDATION RESULTS
+--------------------------------------------------
+GME:
+  Average IC: 0.024 ± 0.063
+  Average R²: -0.035
+  Number of folds: 4
+AMC:
+  Average IC: 0.057 ± 0.038
+  Average R²: -0.051
+  Number of folds: 4
+BB:
+  Average IC: -0.084 ± 0.029
+  Average R²: -0.135
+  Number of folds: 4
+
+📈 WALK-FORWARD VALIDATION RESULTS
+--------------------------------------------------
+GME:
+  Average IC: -0.085 ± 0.065
+  IC Range: [-0.223, 0.036]
+  Number of walks: 10
+AMC:
+  Average IC: 0.052 ± 0.145
+  IC Range: [-0.261, 0.202]
+  Number of walks: 10
+BB:
+  Average IC: -0.050 ± 0.076
+  IC Range: [-0.177, 0.063]
+  Number of walks: 10
+
+🔬 FEATURE ABLATION RESULTS
+--------------------------------------------------
+GME:
+  reddit_only: IC = 0.017, R² = -0.016
+  technical_only: IC = 0.022, R² = -0.034
+  calendar_only: IC = -0.043, R² = -0.015
+  reddit_technical: IC = -0.017, R² = -0.048
+  all_features: IC = -0.023, R² = -0.060
+AMC:
+  reddit_only: IC = 0.020, R² = -0.014
+  technical_only: IC = -0.011, R² = -0.033
+  calendar_only: IC = 0.064, R² = -0.008
+  reddit_technical: IC = -0.000, R² = -0.034
+  all_features: IC = 0.072, R² = -0.026
+BB:
+  reddit_only: IC = -0.030, R² = -0.015
+  technical_only: IC = -0.034, R² = -0.024
+  calendar_only: IC = -0.071, R² = -0.033
+  reddit_technical: IC = -0.056, R² = -0.034
+  all_features: IC = -0.102, R² = -0.106
+
+💰 REALISTIC BACKTEST RESULTS
+--------------------------------------------------
+GME:
+  0.2% cost: Sharpe = -0.237, Return = -20.7%
+  0.4% cost: Sharpe = -0.505, Return = -34.2%
+  0.5% cost: Sharpe = -0.771, Return = -45.4%
+AMC:
+  0.2% cost: Sharpe = -1.059, Return = -49.0%
+  0.4% cost: Sharpe = -1.339, Return = -57.1%
+  0.5% cost: Sharpe = -1.613, Return = -63.8%
+BB:
+  0.2% cost: Sharpe = -0.389, Return = -19.8%
+  0.4% cost: Sharpe = -0.699, Return = -31.2%
+  0.5% cost: Sharpe = -1.002, Return = -41.0%
+
+📅 YEARLY STABILITY ANALYSIS
+--------------------------------------------------
+GME:
+  2021: Sharpe = 0.618, Return = 12.6%
+  2022: Sharpe = -0.922, Return = -23.4%
+  2023: Sharpe = -1.364, Return = -25.6%
+AMC:
+  2021: Sharpe = -1.116, Return = -17.5%
+  2022: Sharpe = -1.217, Return = -26.6%
+  2023: Sharpe = -1.703, Return = -29.1%
+BB:
+  2021: Sharpe = 0.145, Return = 1.2%
+  2022: Sharpe = -1.499, Return = -23.6%
+  2023: Sharpe = -0.652, Return = -11.1%
+
+🔗 GRANGER CAUSALITY ANALYSIS
+--------------------------------------------------
+GME:
+  Min P-value: 0.1532
+  Significant Lags: []
+  Causality Confirmed: False
+AMC:
+  Min P-value: 0.3651
+  Significant Lags: []
+  Causality Confirmed: False
+BB:
+  Min P-value: 0.6234
+  Significant Lags: []
+  Causality Confirmed: False
+
+🎯 OVERALL ASSESSMENT
+--------------------------------------------------
+Overall IC: -0.001 ± 0.076
+Overall Sharpe: -0.846 ± 0.425
+
+💡 RECOMMENDATIONS
+--------------------------------------------------
+• IC < 0.05 suggests weak predictive power
+• Sharpe < 0.5 indicates poor risk-adjusted returns
+• Use realistic transaction costs (20-50bps)
+• Implement proper time-series validation
+• Monitor causality relationships
+• Test on out-of-sample data

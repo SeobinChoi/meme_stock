@@ -1,0 +1,144 @@
+{
+  "processing_info": {
+    "script": "process_archive_reddit_data_ml.py",
+    "created": "2025-08-13T23:39:21.030397",
+    "years": [
+      "2023",
+      "2023"
+    ],
+    "tickers": {
+      "meme_stocks": [
+        "GME",
+        "AMC",
+        "BB",
+        "BBBY",
+        "KOSS"
+      ],
+      "crypto": [
+        "DOGE",
+        "SHIB",
+        "PEPE",
+        "BONK",
+        "BTC",
+        "ETH"
+      ]
+    }
+  },
+  "data_stats": {
+    "total_records": 9490,
+    "unique_dates": 365,
+    "date_range": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "total_mentions": 622423,
+    "file_sizes_mb": {
+      "parquet": 0.51,
+      "full_csv": 2.54
+    }
+  },
+  "ticker_stats": {
+    "AMC": {
+      "total_mentions": 20713,
+      "active_days": 365,
+      "peak_day": "2023-08-24",
+      "peak_mentions": 579
+    },
+    "BB": {
+      "total_mentions": 2954,
+      "active_days": 365,
+      "peak_day": "2023-10-25",
+      "peak_mentions": 257
+    },
+    "BBBY": {
+      "total_mentions": 19415,
+      "active_days": 365,
+      "peak_day": "2023-01-13",
+      "peak_mentions": 2578
+    },
+    "BONK": {
+      "total_mentions": 2175,
+      "active_days": 365,
+      "peak_day": "2023-01-05",
+      "peak_mentions": 596
+    },
+    "BTC": {
+      "total_mentions": 342845,
+      "active_days": 365,
+      "peak_day": "2023-03-19",
+      "peak_mentions": 2275
+    },
+    "DOGE": {
+      "total_mentions": 36043,
+      "active_days": 365,
+      "peak_day": "2023-04-03",
+      "peak_mentions": 826
+    },
+    "ETH": {
+      "total_mentions": 146573,
+      "active_days": 365,
+      "peak_day": "2023-03-29",
+      "peak_mentions": 1130
+    },
+    "GME": {
+      "total_mentions": 21296,
+      "active_days": 365,
+      "peak_day": "2023-03-21",
+      "peak_mentions": 2097
+    },
+    "PEPE": {
+      "total_mentions": 12510,
+      "active_days": 365,
+      "peak_day": "2023-05-05",
+      "peak_mentions": 829
+    },
+    "SHIB": {
+      "total_mentions": 17899,
+      "active_days": 365,
+      "peak_day": "2023-08-05",
+      "peak_mentions": 494
+    }
+  },
+  "ml_features": {
+    "time_features": [
+      "day_of_week",
+      "month",
+      "quarter",
+      "is_weekend"
+    ],
+    "lag_features": [
+      "mentions_lag_1",
+      "mentions_lag_3",
+      "mentions_lag_7",
+      "mentions_lag_14",
+      "mentions_lag_30"
+    ],
+    "rolling_features": [
+      "mentions_ma_7",
+      "mentions_ma_14",
+      "mentions_ma_30",
+      "mentions_std_7",
+      "mentions_std_14",
+      "mentions_std_30",
+      "mentions_max_7",
+      "mentions_max_14",
+      "mentions_max_30"
+    ],
+    "derived_features": [
+      "mention_velocity",
+      "mention_acceleration",
+      "momentum_score",
+      "is_spike"
+    ]
+  },
+  "output_files": {
+    "parquet": "reddit_mentions_full_2023_2023_20250813_233920.parquet",
+    "full_csv": "reddit_mentions_full_2023_2023_20250813_233920.csv",
+    "ml_datasets": {
+      "timeseries": "reddit_ml_timeseries_2023_2023_20250813_233920.csv",
+      "wide_format": "reddit_ml_wide_format_2023_2023_20250813_233920.csv",
+      "sequences": "reddit_ml_sequences_2023_2023_20250813_233920.csv",
+      "daily_aggregate": "reddit_ml_daily_aggregate_2023_2023_20250813_233920.csv"
+    }
+  }
+}

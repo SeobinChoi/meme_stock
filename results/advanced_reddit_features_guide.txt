@@ -1,0 +1,206 @@
+========================================================================================================================
+ADVANCED REDDIT FEATURES COMPREHENSIVE GUIDE
+========================================================================================================================
+
+OVERVIEW:
+This guide explains the advanced Reddit features used in meme stock prediction.
+These features go beyond simple mention counts to capture complex dynamics
+of social media attention and its relationship with stock prices.
+
+1. BASIC FEATURES
+--------------------------------------------------
+log_mentions:
+  Description: 로그 변환된 언급 수
+  Calculation: log(1 + mentions)
+  Purpose: 언급 수의 분포를 정규화하고 극값의 영향을 줄임
+
+reddit_ema_3:
+  Description: 3일 지수이동평균
+  Calculation: EMA(log_mentions, span=3)
+  Purpose: 단기 트렌드를 파악
+
+reddit_ema_5:
+  Description: 5일 지수이동평균
+  Calculation: EMA(log_mentions, span=5)
+  Purpose: 중기 트렌드를 파악
+
+reddit_ema_10:
+  Description: 10일 지수이동평균
+  Calculation: EMA(log_mentions, span=10)
+  Purpose: 장기 트렌드를 파악
+
+2. ADVANCED FEATURES
+--------------------------------------------------
+reddit_surprise:
+  Description: Reddit 서프라이즈 (예상치 대비 편차)
+  Calculation: log_mentions[t-1] - reddit_ema_5[t]
+  Purpose: 예상치 대비 실제 관심도의 편차를 측정
+  Importance: Contrarian Effect의 핵심 지표 - 음의 상관관계가 강함
+
+reddit_market_ex:
+  Description: 시장 전체 대비 초과 관심도
+  Calculation: market_total_mentions - own_mentions
+  Purpose: 전체 시장 대비 상대적 관심도 측정
+  Importance: 시장 전체 분위기와의 상관관계 파악
+
+reddit_spike_p95:
+  Description: 95% 분위수 스파이크 지표
+  Calculation: log_mentions[t-1] > quantile(log_mentions, 0.95)
+  Purpose: 극도로 높은 관심도 구간 식별
+  Importance: 이벤트 스터디의 핵심 변수
+
+reddit_momentum_3:
+  Description: 3일 모멘텀
+  Calculation: mean(log_mentions[t-3:t-1]) - mean(log_mentions[t-6:t-4])
+  Purpose: 단기 관심도 변화 추세 측정
+  Importance: 관심도 변화의 방향성 파악
+
+reddit_momentum_7:
+  Description: 7일 모멘텀
+  Calculation: mean(log_mentions[t-7:t-1]) - mean(log_mentions[t-14:t-8])
+  Purpose: 중기 관심도 변화 추세 측정
+  Importance: 더 안정적인 모멘텀 지표
+
+reddit_momentum_14:
+  Description: 14일 모멘텀
+  Calculation: mean(log_mentions[t-14:t-1]) - mean(log_mentions[t-28:t-15])
+  Purpose: 장기 관심도 변화 추세 측정
+  Importance: 장기 트렌드 파악
+
+reddit_vol_5:
+  Description: 5일 관심도 변동성
+  Calculation: std(log_mentions[t-5:t-1])
+  Purpose: 단기 관심도 변동성 측정
+  Importance: 불확실성과 시장 불안정성 지표
+
+reddit_vol_10:
+  Description: 10일 관심도 변동성
+  Calculation: std(log_mentions[t-10:t-1])
+  Purpose: 중기 관심도 변동성 측정
+  Importance: 더 안정적인 변동성 지표
+
+reddit_percentile:
+  Description: 일별 관심도 백분위수
+  Calculation: rank(log_mentions[t-1]) / total_stocks
+  Purpose: 해당 날짜의 상대적 관심도 순위
+  Importance: 크로스섹션 비교 지표
+
+reddit_high_regime:
+  Description: 고관심도 체제 지표
+  Calculation: log_mentions[t-1] > quantile(log_mentions, 0.8)
+  Purpose: 고관심도 구간 식별
+  Importance: 체제 변화 포착
+
+reddit_low_regime:
+  Description: 저관심도 체제 지표
+  Calculation: log_mentions[t-1] < quantile(log_mentions, 0.2)
+  Purpose: 저관심도 구간 식별
+  Importance: 체제 변화 포착
+
+market_sentiment:
+  Description: 시장 전체 감정 지표
+  Calculation: sum(all_stocks_mentions) - own_mentions
+  Purpose: 시장 전체 분위기 측정
+  Importance: 시장 전체 분위기와의 상관관계
+
+price_reddit_momentum:
+  Description: 주가-Reddit 모멘텀 상호작용
+  Calculation: returns_1d * log_mentions[t-1]
+  Purpose: 주가와 Reddit 관심도의 상호작용 측정
+  Importance: 주가와 Reddit의 동조화 정도
+
+vol_reddit_attention:
+  Description: 변동성-Reddit 관심도 상호작용
+  Calculation: volatility * log_mentions[t-1]
+  Purpose: 변동성과 Reddit 관심도의 상호작용 측정
+  Importance: 변동성과 관심도의 관계 파악
+
+3. FEATURE IMPORTANCE ANALYSIS
+--------------------------------------------------
+Top Features by Correlation Strength:
+  1. price_reddit_momentum
+     Correlation: Strong Positive
+     Average Correlation: 0.4699
+     Significance: Very High
+
+  2. reddit_surprise
+     Correlation: Strong Negative
+     Average Correlation: -0.1804
+     Significance: Very High
+
+  3. reddit_momentum_3
+     Correlation: Moderate Negative
+     Average Correlation: -0.1636
+     Significance: Medium
+
+  4. reddit_momentum_7
+     Correlation: Moderate Positive
+     Average Correlation: 0.1435
+     Significance: Medium
+
+  5. vol_reddit_attention
+     Correlation: Moderate Negative
+     Average Correlation: -0.1353
+     Significance: High
+
+4. FEATURE CATEGORIES
+--------------------------------------------------
+Basic Attention:
+  Features: log_mentions, reddit_ema_3, reddit_ema_5, reddit_ema_10
+  Purpose: 기본적인 Reddit 관심도 측정
+  Importance: Low to Medium
+
+Surprise & Deviation:
+  Features: reddit_surprise, reddit_market_ex, reddit_spike_p95
+  Purpose: 예상치 대비 편차와 극값 식별
+  Importance: Very High
+
+Momentum & Trends:
+  Features: reddit_momentum_3, reddit_momentum_7, reddit_momentum_14
+  Purpose: 관심도 변화 추세와 모멘텀 측정
+  Importance: Medium to High
+
+Volatility & Uncertainty:
+  Features: reddit_vol_5, reddit_vol_10, reddit_vol_20
+  Purpose: 관심도 변동성과 불확실성 측정
+  Importance: Medium
+
+Regime & Percentile:
+  Features: reddit_percentile, reddit_high_regime, reddit_low_regime
+  Purpose: 체제 변화와 상대적 순위 측정
+  Importance: Low to Medium
+
+Market Context:
+  Features: market_sentiment
+  Purpose: 시장 전체 분위기 측정
+  Importance: Medium
+
+Interaction Features:
+  Features: price_reddit_momentum, vol_reddit_attention
+  Purpose: 주가/변동성과 Reddit 관심도의 상호작용
+  Importance: Very High
+
+5. KEY INSIGHTS
+--------------------------------------------------
+🔹 Most Important Features:
+  1. reddit_surprise: Strong negative correlation (-0.1804)
+     → Core contrarian effect indicator
+  2. price_reddit_momentum: Strong positive correlation (+0.4699)
+     → Price-Reddit synchronization measure
+  3. vol_reddit_attention: Moderate negative correlation (-0.1353)
+     → Volatility-attention interaction
+
+🔹 Feature Categories by Importance:
+  1. Interaction Features (Very High)
+  2. Surprise & Deviation (Very High)
+  3. Momentum & Trends (Medium to High)
+  4. Market Context (Medium)
+  5. Volatility & Uncertainty (Medium)
+  6. Regime & Percentile (Low to Medium)
+  7. Basic Attention (Low to Medium)
+
+🔹 Practical Applications:
+  - Use reddit_surprise for contrarian strategies
+  - Monitor price_reddit_momentum for trend confirmation
+  - Watch vol_reddit_attention for uncertainty signals
+  - Combine multiple features for robust predictions

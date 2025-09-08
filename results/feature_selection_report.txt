@@ -1,0 +1,41 @@
+========================================================================================================================
+FEATURE SELECTION EXPERIMENT REPORT
+========================================================================================================================
+
+Experiment Design:
+- Forward IC Analysis: Monthly Spearman correlation
+- Feature Importance Analysis: LightGBM + XGBoost
+- Selection Criteria: ICIR > 0.1, Pos Ratio > 0.6, Importance > 0.01
+- Selection Method: intersection
+
+FEATURE SELECTION RESULTS
+--------------------------------------------------
+Total Reddit Features: 20
+Selected Features: 5
+Selection Rate: 25.0%
+
+Selected Features:
+   1. reddit_ema_5
+   2. reddit_vol_5
+   3. reddit_ema_3
+   4. log_mentions
+   5. reddit_ema_10
+
+PERFORMANCE COMPARISON
+--------------------------------------------------
+   Model Baseline_IC Optimized_IC IC_Improvement Baseline_Hit_Rate Optimized_Hit_Rate Hit_Rate_Improvement Baseline_R2 Optimized_R2
+   Ridge     -0.0086      -0.0299        -0.0213            0.4977             0.4485              -0.0492     -0.0825      -0.1635
+LightGBM      0.0202      -0.0099        -0.0301            0.4735             0.4494              -0.0241     -0.1872      -1.0369
+ XGBoost      0.0585      -0.0189        -0.0774            0.4800             0.4605              -0.0195     -0.5023      -7.0118
+
+KEY FINDINGS
+--------------------------------------------------
+Average IC Improvement: -0.0429
+Average Hit Rate Improvement: -0.0309
+
+Best Improved Model: Ridge (IC Improvement: -0.0213)
+
+CONCLUSIONS
+--------------------------------------------------
+❌ Feature selection shows negative impact on prediction performance
+Selection effectiveness: Negative

@@ -1,0 +1,20 @@
+=== GME STOCK DATA DESCRIPTION ===
+
+Data Source: Yahoo Finance (yfinance)
+Symbol: GME
+Period: 2020-01-01 to 2021-12-31
+Total Records: 504
+Date Range: 2020-01-02 00:00:00-05:00 to 2021-12-30 00:00:00-05:00
+Columns: ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
+
+Description:
+This dataset contains historical stock price data for GME during the meme stock phenomenon period.
+The data covers the period when GME experienced significant price movements and high trading volumes.
+This data will be used to analyze the relationship between Reddit sentiment and stock price movements.
+
+Data Quality:
+- Missing values: 0
+- Data completeness: 100.0%
+- Trading days: 504
+
+Downloaded on: 2025-08-04 17:43:24

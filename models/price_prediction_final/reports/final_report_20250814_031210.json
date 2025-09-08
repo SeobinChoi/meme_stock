@@ -1,0 +1,33 @@
+{
+  "target": "y1d",
+  "generated_at": "2025-08-14T03:12:10.206326",
+  "model_performance": {
+    "baseline_lgbm": {
+      "avg_rank_ic": 0.025090565038412005,
+      "ic_std": 0.06882869380582432,
+      "ic_hit_rate": 0.6,
+      "avg_rmse": 0.06968865773127195,
+      "n_splits": 10,
+      "ic_median": 0.024335292867722895,
+      "best_ic": 0.16366629974834326
+    },
+    "optimized_reddit": {
+      "avg_rank_ic": 0.028390183040039717,
+      "ic_std": 0.06251765709822284,
+      "ic_hit_rate": 0.6,
+      "avg_rmse": 0.06546781183076562,
+      "n_splits": 10,
+      "ic_median": 0.01211419215855417,
+      "best_ic": 0.11203485541161395
+    }
+  },
+  "go_no_go_decision": {
+    "baseline_ic": 0.025090565038412005,
+    "reddit_ic": 0.028390183040039717,
+    "ic_improvement": 0.0032996180016277125,
+    "improvement_threshold": 0.03,
+    "meets_threshold": false,
+    "overall_decision": "NO-GO",
+    "recommendation": "Continue feature engineering"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "symbol": "REDDIT",
+  "asset_type": "reddit",
+  "source": "praw",
+  "total_records": 1095,
+  "collection_timestamp": "2025-08-12T06:49:53.831423+00:00",
+  "notes": "backfilled",
+  "version": "20250812064953",
+  "date_range": "2021-01-01 to 2023-12-31",
+  "missing_dates": 0,
+  "checksum_sha256": "4818a6602f2a38b7d3f0aff094587c81d5c535e1641bf14a2f147087c2889690"
+}

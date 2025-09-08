@@ -1,0 +1,64 @@
+========================================================================================================================
+MEME STOCKS REDDIT-PRICE CORRELATION ANALYSIS REPORT
+========================================================================================================================
+
+Analysis Overview:
+- Target Stocks: AMC, BB, GME (Meme Stocks)
+- Analysis Period: 2021-2023
+- Correlation Methods: Pearson, Spearman
+- Lag Analysis: 1-5 days
+
+CORRELATION SUMMARY TABLE
+--------------------------------------------------
+Ticker Avg_Log_Mentions Avg_Daily_Returns Same_Day_Corr Same_Day_P Reddit_Lead_Corr Reddit_Lead_P Price_Lead_Corr Price_Lead_P
+   AMC           4.8761           -0.0022        0.0408     0.2654              nan           nan             nan          nan
+    BB           3.3244           -0.0008        0.0514     0.1601              nan           nan             nan          nan
+   GME           5.8461            0.0017        0.0213     0.5602              nan           nan             nan          nan
+
+STOCK-SPECIFIC ANALYSIS
+--------------------------------------------------
+
+AMC ANALYSIS:
+  Total Records: 748
+  Date Range: 2021-01-04 00:00:00 ~ 2023-12-21 00:00:00
+  Average Log Mentions: 4.8761
+  Average Daily Returns: -0.0022
+  Same Day Correlation: 0.0408 (p=0.2654)
+  Reddit Lead (1d) Correlation: nan (p=nan)
+  → No significant same-day correlation
+  → No significant Reddit lead effect
+
+BB ANALYSIS:
+  Total Records: 748
+  Date Range: 2021-01-04 00:00:00 ~ 2023-12-21 00:00:00
+  Average Log Mentions: 3.3244
+  Average Daily Returns: -0.0008
+  Same Day Correlation: 0.0514 (p=0.1601)
+  Reddit Lead (1d) Correlation: nan (p=nan)
+  → No significant same-day correlation
+  → No significant Reddit lead effect
+
+GME ANALYSIS:
+  Total Records: 748
+  Date Range: 2021-01-04 00:00:00 ~ 2023-12-21 00:00:00
+  Average Log Mentions: 5.8461
+  Average Daily Returns: 0.0017
+  Same Day Correlation: 0.0213 (p=0.5602)
+  Reddit Lead (1d) Correlation: nan (p=nan)
+  → No significant same-day correlation
+  → No significant Reddit lead effect
+
+OVERALL CONCLUSIONS
+--------------------------------------------------
+Average Same Day Correlation: 0.0378
+Average Reddit Lead Correlation: nan
+
+❌ No meaningful same-day correlation
+❌ No meaningful Reddit lead effect
+
+INVESTMENT STRATEGY IMPLICATIONS
+--------------------------------------------------
+📊 Neutral Reddit effect suggests:
+  - Reddit attention has limited predictive power
+  - Other factors may be more important
+  - Traditional analysis methods may be more reliable

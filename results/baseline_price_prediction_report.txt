@@ -1,0 +1,56 @@
+================================================================================
+BASELINE PRICE PREDICTION MODELS REPORT
+================================================================================
+
+Models: Ridge Regression, LightGBM, XGBoost
+Features: Technical indicators only (price-based)
+Target: Next-day returns
+
+MODEL PERFORMANCE SUMMARY
+--------------------------------------------------
+Model        IC(Pearson)  IC(Spearman) Hit Rate   R²      
+--------------------------------------------------
+Ridge        0.0334       0.0248       0.5050     -0.4784 
+LightGBM     0.1226       0.0939       0.5380     -0.5553 
+XGBoost      0.1093       0.0634       0.4983     -0.0645 
+
+DETAILED RESULTS
+--------------------------------------------------
+
+Ridge:
+  Information Coefficient (Pearson): 0.0334 (p=0.5624)
+  Information Coefficient (Spearman): 0.0248 (p=0.6671)
+  Hit Rate: 0.5050
+  R² Score: -0.4784
+  MSE: 0.003309
+  MAE: 0.043465
+
+LightGBM:
+  Information Coefficient (Pearson): 0.1226 (p=0.0329)
+  Information Coefficient (Spearman): 0.0939 (p=0.1027)
+  Hit Rate: 0.5380
+  R² Score: -0.5553
+  MSE: 0.003481
+  MAE: 0.042611
+
+XGBoost:
+  Information Coefficient (Pearson): 0.1093 (p=0.0573)
+  Information Coefficient (Spearman): 0.0634 (p=0.2710)
+  Hit Rate: 0.4983
+  R² Score: -0.0645
+  MSE: 0.002382
+  MAE: 0.034959
+
+INTERPRETATION
+--------------------------------------------------
+• IC (Information Coefficient): Correlation between predictions and actual returns
+  - Higher IC indicates better predictive power
+  - IC > 0.05 is considered good for stock prediction
+• Hit Rate: Percentage of correct direction predictions
+  - Hit Rate > 0.5 indicates positive directional accuracy
+• R²: Proportion of variance explained by the model
+
+BEST PERFORMING MODELS
+--------------------------------------------------
+Best IC (Pearson): LightGBM (IC = 0.1226)
+Best Hit Rate: LightGBM (Hit Rate = 0.5380)

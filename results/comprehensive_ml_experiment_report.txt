@@ -1,0 +1,60 @@
+====================================================================================================
+COMPREHENSIVE MACHINE LEARNING EXPERIMENT REPORT
+====================================================================================================
+
+Experiment Design:
+- Baseline: Price data only
+- Extended: Price data + Reddit features
+- Models: Ridge, LightGBM, XGBoost
+- Evaluation: IC (Spearman), Hit Rate
+- Time Series Split: Strict chronological order
+
+PERFORMANCE COMPARISON TABLE
+----------------------------------------------------------------------------------------------------
+   Model Baseline_IC Extended_IC IC_Improvement Baseline_Hit_Rate Extended_Hit_Rate Hit_Rate_Improvement Baseline_R2 Extended_R2
+   Ridge     -0.0086     -0.0305        -0.0220            0.4977            0.4782              -0.0195     -0.0825     -0.2170
+LightGBM      0.0202      0.0040        -0.0161            0.4735            0.4810              +0.0074     -0.1872     -1.0798
+ XGBoost      0.0585      0.0435        -0.0150            0.4800            0.4828              +0.0028     -0.5023     -3.3698
+
+KEY FINDINGS
+--------------------------------------------------
+Best Baseline Model: XGBoost (IC = 0.0585)
+Best Extended Model: XGBoost (IC = 0.0435)
+
+REDDIT FEATURE EFFECTIVENESS
+--------------------------------------------------
+Ridge:
+  IC Improvement: -0.0220
+  Hit Rate Improvement: -0.0195
+  Effectiveness: Negative
+
+LightGBM:
+  IC Improvement: -0.0161
+  Hit Rate Improvement: +0.0074
+  Effectiveness: Negative
+
+XGBoost:
+  IC Improvement: -0.0150
+  Hit Rate Improvement: +0.0028
+  Effectiveness: Negative
+
+SPIKE EVENT ANALYSIS
+--------------------------------------------------
+Total spike events: 75
+Average event-day return: -0.0084
+Average next-day return: -0.0115
+
+By Ticker:
+  AMC: 11.0 events, avg return = -0.0676
+  BB: 10.0 events, avg return = 0.0157
+  DOGE: 15.0 events, avg return = 0.0095
+  ETH: 14.0 events, avg return = -0.0087
+  GME: 14.0 events, avg return = -0.0060
+  SHIB: 11.0 events, avg return = 0.0020
+
+CONCLUSIONS
+--------------------------------------------------
+❌ Reddit features show negative impact on prediction performance
+Average IC improvement: -0.0177
+
+🎯 Recommended Model: XGBoost (Baseline)
