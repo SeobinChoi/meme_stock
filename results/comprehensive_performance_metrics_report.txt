@@ -1,0 +1,130 @@
+========================================================================================================================================================================================================
+COMPREHENSIVE PERFORMANCE METRICS: 6 KEY INDICATORS
+========================================================================================================================================================================================================
+
+Experiment Design:
+- Target Stocks: AMC, BB, GME (Meme Stocks Only)
+- Price Only: Price features only
+- Reddit All: Price features + Basic Reddit + Advanced Reddit
+- Advanced Reddit: Price features + Advanced Reddit only
+- Models: Ridge, LightGBM, XGBoost
+- Evaluation: 6 Key Indicators (IC, Hit Rate, ICIR, Sharpe Ratio, MDD, Quintile Spread Return)
+
+COMPREHENSIVE PERFORMANCE METRICS TABLE
+------------------------------------------------------------------------------------------------------------------------------------------------------
+   Model Price_Only_IC Reddit_All_IC Advanced_Reddit_IC Price_Only_Hit_Rate Reddit_All_Hit_Rate Advanced_Reddit_Hit_Rate Price_Only_ICIR Reddit_All_ICIR Advanced_Reddit_ICIR Price_Only_Sharpe Reddit_All_Sharpe Advanced_Reddit_Sharpe Price_Only_MDD Reddit_All_MDD Advanced_Reddit_MDD Price_Only_Quintile_Spread Reddit_All_Quintile_Spread Advanced_Reddit_Quintile_Spread
+   Ridge        0.0341        0.0772             0.0683              0.4474              0.4497                   0.4452          0.3393          0.8787               0.5819               nan               nan                    nan            nan            nan                 nan                     0.0016                    -0.0002                          0.0041
+LightGBM       -0.1011       -0.0631            -0.1361              0.4989              0.4720                   0.4609         -0.5472         -0.4922              -1.1766               nan               nan                    nan            nan            nan                 nan                    -0.0100                    -0.0041                         -0.0078
+ XGBoost       -0.0632       -0.0638            -0.0230              0.4765              0.4743                   0.4765         -0.8344         -0.4444              -0.2053               nan               nan                    nan            nan            nan                 nan                    -0.0159                    -0.0081                         -0.0042
+
+METRIC-SPECIFIC DETAILED ANALYSIS
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. INFORMATION COEFFICIENT (IC) ANALYSIS:
+   - Measures predictive power of models
+   - Higher IC indicates better prediction accuracy
+   - Spearman rank correlation between predictions and actual returns
+
+2. HIT RATE ANALYSIS:
+   - Measures directional prediction accuracy
+   - Percentage of correct directional predictions
+   - Higher hit rate indicates better directional forecasting
+
+3. ICIR (INFORMATION COEFFICIENT INFORMATION RATIO) ANALYSIS:
+   - Measures stability of predictive power
+   - ICIR = Mean IC / Std IC
+   - Higher ICIR indicates more consistent performance
+
+4. SHARPE RATIO ANALYSIS:
+   - Measures risk-adjusted returns
+   - Higher Sharpe Ratio indicates better risk-adjusted performance
+   - Investment perspective metric
+
+5. MAXIMUM DRAWDOWN (MDD) ANALYSIS:
+   - Measures maximum loss from peak
+   - Lower MDD indicates better risk management
+   - Investment perspective metric
+
+6. QUINTILE SPREAD RETURN ANALYSIS:
+   - Measures factor effectiveness
+   - Q5 (top) - Q1 (bottom) return spread
+   - Factor validation perspective metric
+
+MODEL-SPECIFIC DETAILED ANALYSIS
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ridge DETAILED ANALYSIS:
+  Best IC: 0.0772
+  Best Hit Rate: 0.4497
+  Best ICIR: 0.8787
+  Best Sharpe Ratio: nan
+  Best MDD: nan
+  Best Quintile Spread: 0.0041
+
+LightGBM DETAILED ANALYSIS:
+  Best IC: -0.0631
+  Best Hit Rate: 0.4989
+  Best ICIR: -0.4922
+  Best Sharpe Ratio: nan
+  Best MDD: nan
+  Best Quintile Spread: -0.0041
+
+XGBoost DETAILED ANALYSIS:
+  Best IC: -0.0230
+  Best Hit Rate: 0.4765
+  Best ICIR: -0.2053
+  Best Sharpe Ratio: nan
+  Best MDD: nan
+  Best Quintile Spread: -0.0042
+
+OVERALL CONCLUSIONS
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Average Performance Across All Models:
+
+IC:
+  price_only: -0.0434
+  reddit_all: -0.0165
+  advanced_reddit: -0.0303
+
+Hit_Rate:
+  price_only: 0.4743
+  reddit_all: 0.4653
+  advanced_reddit: 0.4609
+
+ICIR:
+  price_only: -0.3474
+  reddit_all: -0.0193
+  advanced_reddit: -0.2667
+
+Sharpe_Ratio:
+  price_only: nan
+  reddit_all: nan
+  advanced_reddit: nan
+
+MDD:
+  price_only: nan
+  reddit_all: nan
+  advanced_reddit: nan
+
+Quintile_Spread_Return:
+  price_only: -0.0081
+  reddit_all: -0.0041
+  advanced_reddit: -0.0026
+
+PRACTICAL APPLICATION GUIDE
+------------------------------------------------------------------------------------------------------------------------------------------------------
+🔹 For Maximum IC (Predictive Power):
+  - Focus on models with highest IC values
+  - Consider ICIR for stability
+
+🔹 For Investment Strategy:
+  - Use Sharpe Ratio and MDD for risk assessment
+  - Higher Sharpe Ratio, Lower MDD preferred
+
+🔹 For Factor Validation:
+  - Use Quintile Spread Return
+  - Higher spread indicates better factor effectiveness
+
+🔹 For Directional Trading:
+  - Use Hit Rate
+  - Higher hit rate indicates better directional accuracy
