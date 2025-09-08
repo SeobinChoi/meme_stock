@@ -1,0 +1,103 @@
+======================================================================================================================================================
+ADVANCED ML MODELS COMPARISON: 4 KEY INDICATORS
+======================================================================================================================================================
+
+Experiment Design:
+- Target Stocks: AMC, BB, GME (Meme Stocks Only)
+- Features: Price data only (chart data)
+- Models: Baseline (XGBoost, LightGBM) + Deep Learning (LSTM, GRU, CNN-LSTM, Transformer)
+- Evaluation: 4 Key Indicators (IC, Hit Rate, ICIR, QSR)
+
+COMPREHENSIVE PERFORMANCE METRICS TABLE
+----------------------------------------------------------------------------------------------------
+      Model      IC Hit_Rate    ICIR     QSR
+   LightGBM -0.1011   0.4989 -0.5472 -0.0100
+    XGBoost -0.0632   0.4765 -0.8344 -0.0159
+       LSTM -0.0286   0.5323 -0.7588 -0.0130
+        GRU -0.0463   0.5556 -0.5437  0.0063
+   CNN-LSTM  0.0370   0.4264  0.1563  0.0058
+Transformer -0.0114   0.4599 -0.2458 -0.0048
+
+METRIC-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+1. INFORMATION COEFFICIENT (IC) ANALYSIS:
+   - Measures predictive power of models
+   - Higher IC indicates better prediction accuracy
+   - Spearman rank correlation between predictions and actual returns
+
+2. HIT RATE ANALYSIS:
+   - Measures directional prediction accuracy
+   - Percentage of correct directional predictions
+   - Higher hit rate indicates better directional forecasting
+
+3. ICIR (INFORMATION COEFFICIENT INFORMATION RATIO) ANALYSIS:
+   - Measures stability of predictive power
+   - ICIR = Mean IC / Std IC
+   - Higher ICIR indicates more consistent performance
+
+4. QUINTILE SPREAD RETURN (QSR) ANALYSIS:
+   - Measures factor effectiveness
+   - Q5 (top) - Q1 (bottom) return spread
+   - Factor validation perspective metric
+
+MODEL-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+LightGBM DETAILED ANALYSIS:
+  IC: -0.1011
+  Hit Rate: 0.4989
+  ICIR: -0.5472
+  QSR: -0.0100
+
+XGBoost DETAILED ANALYSIS:
+  IC: -0.0632
+  Hit Rate: 0.4765
+  ICIR: -0.8344
+  QSR: -0.0159
+
+LSTM DETAILED ANALYSIS:
+  IC: -0.0286
+  Hit Rate: 0.5323
+  ICIR: -0.7588
+  QSR: -0.0130
+
+GRU DETAILED ANALYSIS:
+  IC: -0.0463
+  Hit Rate: 0.5556
+  ICIR: -0.5437
+  QSR: 0.0063
+
+CNN-LSTM DETAILED ANALYSIS:
+  IC: 0.0370
+  Hit Rate: 0.4264
+  ICIR: 0.1563
+  QSR: 0.0058
+
+Transformer DETAILED ANALYSIS:
+  IC: -0.0114
+  Hit Rate: 0.4599
+  ICIR: -0.2458
+  QSR: -0.0048
+
+OVERALL CONCLUSIONS
+----------------------------------------------------------------------------------------------------
+Average Performance Across All Models:
+  IC: -0.0356
+  Hit_Rate: 0.4916
+  ICIR: -0.4623
+  QSR: -0.0053
+
+PRACTICAL APPLICATION GUIDE
+----------------------------------------------------------------------------------------------------
+🔹 For Maximum IC (Predictive Power):
+  - Focus on models with highest IC values
+  - Consider ICIR for stability
+
+🔹 For Directional Trading:
+  - Use Hit Rate
+  - Higher hit rate indicates better directional accuracy
+
+🔹 For Factor Validation:
+  - Use QSR
+  - Higher spread indicates better factor effectiveness

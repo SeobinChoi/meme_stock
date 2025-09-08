@@ -1,0 +1,156 @@
+======================================================================================================================================================
+DEEP LEARNING REDDIT INTEGRATION: 4 KEY INDICATORS
+======================================================================================================================================================
+
+Experiment Design:
+- Target Stocks: AMC, BB, GME (Meme Stocks Only)
+- Models: Multimodal LSTM, GRU, CNN-LSTM, Transformer
+- Features: Price + Basic Reddit, Price + Advanced Reddit, Price + All Reddit
+- Architecture: Multimodal with Cross-Attention
+- Evaluation: 4 Key Indicators (IC, Hit Rate, ICIR, QSR)
+
+COMPREHENSIVE PERFORMANCE METRICS TABLE
+----------------------------------------------------------------------------------------------------
+     Reddit_Set                  Model      IC Hit_Rate    ICIR     QSR
+   basic_reddit        Multimodal_LSTM -0.0193   0.5711  0.2961 -0.0015
+   basic_reddit         Multimodal_GRU -0.0541   0.4755 -0.8318 -0.0220
+   basic_reddit    Multimodal_CNN-LSTM  0.0711   0.5556  0.8895  0.0096
+   basic_reddit Multimodal_Transformer -0.0110   0.5762 -0.2068 -0.0017
+advanced_reddit        Multimodal_LSTM  0.0144   0.4961 -0.3215 -0.0040
+advanced_reddit         Multimodal_GRU -0.0077   0.5711 -0.1764  0.0130
+advanced_reddit    Multimodal_CNN-LSTM -0.0321   0.5711 -0.2401 -0.0032
+advanced_reddit Multimodal_Transformer  0.0100   0.5711  0.1418 -0.0049
+     all_reddit        Multimodal_LSTM -0.0332   0.4496 -0.6444 -0.0054
+     all_reddit         Multimodal_GRU  0.0101   0.4367 -0.0760  0.0053
+     all_reddit    Multimodal_CNN-LSTM  0.0615   0.5814  0.4562 -0.0071
+     all_reddit Multimodal_Transformer -0.0432   0.5711 -0.6202 -0.0094
+
+METRIC-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+1. INFORMATION COEFFICIENT (IC) ANALYSIS:
+   - Measures predictive power of models
+   - Higher IC indicates better prediction accuracy
+   - Spearman rank correlation between predictions and actual returns
+
+2. HIT RATE ANALYSIS:
+   - Measures directional prediction accuracy
+   - Percentage of correct directional predictions
+   - Higher hit rate indicates better directional forecasting
+
+3. ICIR (INFORMATION COEFFICIENT INFORMATION RATIO) ANALYSIS:
+   - Measures stability of predictive power
+   - ICIR = Mean IC / Std IC
+   - Higher ICIR indicates more consistent performance
+
+4. QUINTILE SPREAD RETURN (QSR) ANALYSIS:
+   - Measures factor effectiveness
+   - Q5 (top) - Q1 (bottom) return spread
+   - Factor validation perspective metric
+
+MODEL-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+BASIC_REDDIT RESULTS:
+  Multimodal_LSTM:
+    IC: -0.0193
+    Hit Rate: 0.5711
+    ICIR: 0.2961
+    QSR: -0.0015
+  Multimodal_GRU:
+    IC: -0.0541
+    Hit Rate: 0.4755
+    ICIR: -0.8318
+    QSR: -0.0220
+  Multimodal_CNN-LSTM:
+    IC: 0.0711
+    Hit Rate: 0.5556
+    ICIR: 0.8895
+    QSR: 0.0096
+  Multimodal_Transformer:
+    IC: -0.0110
+    Hit Rate: 0.5762
+    ICIR: -0.2068
+    QSR: -0.0017
+
+ADVANCED_REDDIT RESULTS:
+  Multimodal_LSTM:
+    IC: 0.0144
+    Hit Rate: 0.4961
+    ICIR: -0.3215
+    QSR: -0.0040
+  Multimodal_GRU:
+    IC: -0.0077
+    Hit Rate: 0.5711
+    ICIR: -0.1764
+    QSR: 0.0130
+  Multimodal_CNN-LSTM:
+    IC: -0.0321
+    Hit Rate: 0.5711
+    ICIR: -0.2401
+    QSR: -0.0032
+  Multimodal_Transformer:
+    IC: 0.0100
+    Hit Rate: 0.5711
+    ICIR: 0.1418
+    QSR: -0.0049
+
+ALL_REDDIT RESULTS:
+  Multimodal_LSTM:
+    IC: -0.0332
+    Hit Rate: 0.4496
+    ICIR: -0.6444
+    QSR: -0.0054
+  Multimodal_GRU:
+    IC: 0.0101
+    Hit Rate: 0.4367
+    ICIR: -0.0760
+    QSR: 0.0053
+  Multimodal_CNN-LSTM:
+    IC: 0.0615
+    Hit Rate: 0.5814
+    ICIR: 0.4562
+    QSR: -0.0071
+  Multimodal_Transformer:
+    IC: -0.0432
+    Hit Rate: 0.5711
+    ICIR: -0.6202
+    QSR: -0.0094
+
+OVERALL CONCLUSIONS
+----------------------------------------------------------------------------------------------------
+Average Performance Across All Models:
+
+IC:
+  basic_reddit: -0.0033
+  advanced_reddit: -0.0038
+  all_reddit: -0.0012
+
+Hit_Rate:
+  basic_reddit: 0.5446
+  advanced_reddit: 0.5523
+  all_reddit: 0.5097
+
+ICIR:
+  basic_reddit: 0.0367
+  advanced_reddit: -0.1490
+  all_reddit: -0.2211
+
+QSR:
+  basic_reddit: -0.0039
+  advanced_reddit: 0.0002
+  all_reddit: -0.0042
+
+PRACTICAL APPLICATION GUIDE
+----------------------------------------------------------------------------------------------------
+🔹 For Maximum IC (Predictive Power):
+  - Focus on models with highest IC values
+  - Consider ICIR for stability
+
+🔹 For Directional Trading:
+  - Use Hit Rate
+  - Higher hit rate indicates better directional accuracy
+
+🔹 For Factor Validation:
+  - Use QSR
+  - Higher spread indicates better factor effectiveness

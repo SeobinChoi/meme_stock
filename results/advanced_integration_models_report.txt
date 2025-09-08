@@ -1,0 +1,174 @@
+======================================================================================================================================================
+ADVANCED INTEGRATION MODELS: 4 KEY INDICATORS
+======================================================================================================================================================
+
+Experiment Design:
+- Target Stocks: AMC, BB, GME (Meme Stocks Only)
+- Models: Hybrid LSTM, GRU, CNN-LSTM, Transformer, Hierarchical Integration
+- Features: Price + Basic Reddit, Price + Advanced Reddit, Price + All Reddit
+- Architecture: Advanced Hybrid with Hierarchical Integration
+- Evaluation: 4 Key Indicators (IC, Hit Rate, ICIR, QSR)
+
+COMPREHENSIVE PERFORMANCE METRICS TABLE
+----------------------------------------------------------------------------------------------------
+    Feature_Set                    Model      IC Hit_Rate    ICIR     QSR
+   basic_reddit              Hybrid_LSTM  0.0195   0.5426 -0.1467  0.0007
+   basic_reddit               Hybrid_GRU -0.0241   0.5711  0.2611 -0.0104
+   basic_reddit          Hybrid_CNN-LSTM  0.0365   0.5711  0.1908 -0.0019
+   basic_reddit       Hybrid_Transformer -0.0156   0.4858 -0.2849 -0.0028
+   basic_reddit Hierarchical_Integration  0.0323   0.5685  0.2951  0.0073
+advanced_reddit              Hybrid_LSTM -0.0030   0.5556 -0.3036  0.0001
+advanced_reddit               Hybrid_GRU -0.0147   0.5194 -0.4323 -0.0096
+advanced_reddit          Hybrid_CNN-LSTM -0.0049   0.5711 -0.3291  0.0135
+advanced_reddit       Hybrid_Transformer  0.0368   0.5581  0.1059 -0.0121
+advanced_reddit Hierarchical_Integration  0.0133   0.4341  0.2922  0.0089
+     all_reddit              Hybrid_LSTM  0.0508   0.5711  0.1624 -0.0129
+     all_reddit               Hybrid_GRU     nan   0.5711     nan  0.0000
+     all_reddit          Hybrid_CNN-LSTM  0.0892   0.5711  0.8821  0.0175
+     all_reddit       Hybrid_Transformer  0.0614   0.5401  0.2221  0.0096
+     all_reddit Hierarchical_Integration  0.0571   0.5375 -0.0404  0.0070
+
+METRIC-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+1. INFORMATION COEFFICIENT (IC) ANALYSIS:
+   - Measures predictive power of models
+   - Higher IC indicates better prediction accuracy
+   - Spearman rank correlation between predictions and actual returns
+
+2. HIT RATE ANALYSIS:
+   - Measures directional prediction accuracy
+   - Percentage of correct directional predictions
+   - Higher hit rate indicates better directional forecasting
+
+3. ICIR (INFORMATION COEFFICIENT INFORMATION RATIO) ANALYSIS:
+   - Measures stability of predictive power
+   - ICIR = Mean IC / Std IC
+   - Higher ICIR indicates more consistent performance
+
+4. QUINTILE SPREAD RETURN (QSR) ANALYSIS:
+   - Measures factor effectiveness
+   - Q5 (top) - Q1 (bottom) return spread
+   - Factor validation perspective metric
+
+MODEL-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+BASIC_REDDIT RESULTS:
+  Hybrid_LSTM:
+    IC: 0.0195
+    Hit Rate: 0.5426
+    ICIR: -0.1467
+    QSR: 0.0007
+  Hybrid_GRU:
+    IC: -0.0241
+    Hit Rate: 0.5711
+    ICIR: 0.2611
+    QSR: -0.0104
+  Hybrid_CNN-LSTM:
+    IC: 0.0365
+    Hit Rate: 0.5711
+    ICIR: 0.1908
+    QSR: -0.0019
+  Hybrid_Transformer:
+    IC: -0.0156
+    Hit Rate: 0.4858
+    ICIR: -0.2849
+    QSR: -0.0028
+  Hierarchical_Integration:
+    IC: 0.0323
+    Hit Rate: 0.5685
+    ICIR: 0.2951
+    QSR: 0.0073
+
+ADVANCED_REDDIT RESULTS:
+  Hybrid_LSTM:
+    IC: -0.0030
+    Hit Rate: 0.5556
+    ICIR: -0.3036
+    QSR: 0.0001
+  Hybrid_GRU:
+    IC: -0.0147
+    Hit Rate: 0.5194
+    ICIR: -0.4323
+    QSR: -0.0096
+  Hybrid_CNN-LSTM:
+    IC: -0.0049
+    Hit Rate: 0.5711
+    ICIR: -0.3291
+    QSR: 0.0135
+  Hybrid_Transformer:
+    IC: 0.0368
+    Hit Rate: 0.5581
+    ICIR: 0.1059
+    QSR: -0.0121
+  Hierarchical_Integration:
+    IC: 0.0133
+    Hit Rate: 0.4341
+    ICIR: 0.2922
+    QSR: 0.0089
+
+ALL_REDDIT RESULTS:
+  Hybrid_LSTM:
+    IC: 0.0508
+    Hit Rate: 0.5711
+    ICIR: 0.1624
+    QSR: -0.0129
+  Hybrid_GRU:
+    IC: nan
+    Hit Rate: 0.5711
+    ICIR: nan
+    QSR: 0.0000
+  Hybrid_CNN-LSTM:
+    IC: 0.0892
+    Hit Rate: 0.5711
+    ICIR: 0.8821
+    QSR: 0.0175
+  Hybrid_Transformer:
+    IC: 0.0614
+    Hit Rate: 0.5401
+    ICIR: 0.2221
+    QSR: 0.0096
+  Hierarchical_Integration:
+    IC: 0.0571
+    Hit Rate: 0.5375
+    ICIR: -0.0404
+    QSR: 0.0070
+
+OVERALL CONCLUSIONS
+----------------------------------------------------------------------------------------------------
+Average Performance Across All Models:
+
+IC:
+  basic_reddit: 0.0097
+  advanced_reddit: 0.0055
+  all_reddit: nan
+
+Hit_Rate:
+  basic_reddit: 0.5478
+  advanced_reddit: 0.5276
+  all_reddit: 0.5581
+
+ICIR:
+  basic_reddit: 0.0631
+  advanced_reddit: -0.1334
+  all_reddit: nan
+
+QSR:
+  basic_reddit: -0.0014
+  advanced_reddit: 0.0002
+  all_reddit: 0.0042
+
+PRACTICAL APPLICATION GUIDE
+----------------------------------------------------------------------------------------------------
+🔹 For Maximum IC (Predictive Power):
+  - Focus on models with highest IC values
+  - Consider ICIR for stability
+
+🔹 For Directional Trading:
+  - Use Hit Rate
+  - Higher hit rate indicates better directional accuracy
+
+🔹 For Factor Validation:
+  - Use QSR
+  - Higher spread indicates better factor effectiveness

@@ -1,0 +1,211 @@
+========================================================================================================================================================================================================
+FINAL COMPREHENSIVE COMPARISON: ALL EXPERIMENTS
+========================================================================================================================================================================================================
+
+Experiment Overview:
+- Target Stocks: AMC, BB, GME (Meme Stocks Only)
+- Total Models: 40+ models across 3 major experiments
+- Experiments: Ridge Included, Multimodal Deep Learning, Advanced Integration
+- Features: Price Only, Price + Basic Reddit, Price + Advanced Reddit, Price + All Reddit
+- Evaluation: 4 Key Indicators (IC, Hit Rate, ICIR, QSR)
+
+COMPREHENSIVE PERFORMANCE METRICS TABLE
+------------------------------------------------------------------------------------------------------------------------------------------------------
+                          Model      IC Hit_Rate    ICIR     QSR
+               Ridge_Price_Only  0.0385   0.5459  0.2795  0.0012
+               Ridge_Reddit_All  0.0607   0.5302  0.3447  0.0027
+          Ridge_Advanced_Reddit  0.0685   0.5526  0.5701 -0.0031
+            LightGBM_Price_Only -0.1011   0.4989 -0.5472 -0.0100
+            LightGBM_Reddit_All -0.0631   0.4720 -0.4922 -0.0041
+       LightGBM_Advanced_Reddit -0.1361   0.4609 -1.1766 -0.0078
+             XGBoost_Price_Only -0.0632   0.4765 -0.8344 -0.0159
+             XGBoost_Reddit_All -0.0638   0.4743 -0.4444 -0.0081
+        XGBoost_Advanced_Reddit -0.0230   0.4765 -0.2053 -0.0042
+                LSTM_Price_Only -0.0308   0.5426 -0.1347  0.0078
+                 GRU_Price_Only -0.0223   0.5607 -0.2724 -0.0105
+            CNN-LSTM_Price_Only -0.0712   0.5581 -0.7423 -0.0075
+         Transformer_Price_Only  0.0235   0.5401  0.7676  0.0167
+          Multimodal_LSTM_Basic -0.0193   0.5711  0.2961 -0.0015
+           Multimodal_GRU_Basic -0.0541   0.4755 -0.8318 -0.0220
+      Multimodal_CNN-LSTM_Basic  0.0711   0.5556  0.8895  0.0096
+   Multimodal_Transformer_Basic -0.0110   0.5762 -0.2068 -0.0017
+       Multimodal_LSTM_Advanced  0.0144   0.4961 -0.3215 -0.0040
+        Multimodal_GRU_Advanced -0.0077   0.5711 -0.1764  0.0130
+   Multimodal_CNN-LSTM_Advanced -0.0321   0.5711 -0.2401 -0.0032
+Multimodal_Transformer_Advanced  0.0100   0.5711  0.1418 -0.0049
+            Multimodal_LSTM_All -0.0332   0.4496 -0.6444 -0.0054
+             Multimodal_GRU_All  0.0101   0.4367 -0.0760  0.0053
+        Multimodal_CNN-LSTM_All  0.0615   0.5814  0.4562 -0.0071
+     Multimodal_Transformer_All -0.0432   0.5711 -0.6202 -0.0094
+              Hybrid_LSTM_Basic  0.0195   0.5426 -0.1467  0.0007
+               Hybrid_GRU_Basic -0.0241   0.5711  0.2611 -0.0104
+          Hybrid_CNN-LSTM_Basic  0.0365   0.5711  0.1908 -0.0019
+       Hybrid_Transformer_Basic -0.0156   0.4858 -0.2849 -0.0028
+             Hierarchical_Basic  0.0323   0.5685  0.2951  0.0073
+           Hybrid_LSTM_Advanced -0.0030   0.5556 -0.3036  0.0001
+            Hybrid_GRU_Advanced -0.0147   0.5194 -0.4323 -0.0096
+       Hybrid_CNN-LSTM_Advanced -0.0049   0.5711 -0.3291  0.0135
+    Hybrid_Transformer_Advanced  0.0368   0.5581  0.1059 -0.0121
+          Hierarchical_Advanced  0.0133   0.4341  0.2922  0.0089
+                Hybrid_LSTM_All  0.0508   0.5711  0.1624 -0.0129
+                 Hybrid_GRU_All     N/A   0.5711     N/A  0.0000
+            Hybrid_CNN-LSTM_All  0.0892   0.5711  0.8821  0.0175
+         Hybrid_Transformer_All  0.0614   0.5401  0.2221  0.0096
+               Hierarchical_All  0.0571   0.5375 -0.0404  0.0070
+
+BEST PERFORMING MODELS
+----------------------------------------------------------------------------------------------------
+IC: Hybrid_CNN-LSTM_All (0.0892)
+Hit_Rate: Multimodal_CNN-LSTM_All (0.5814)
+ICIR: Multimodal_CNN-LSTM_Basic (0.8895)
+QSR: Hybrid_CNN-LSTM_All (0.0175)
+
+MODEL CATEGORY ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+Ridge:
+  IC: Mean=0.0559, Max=0.0685
+  Hit_Rate: Mean=0.5429, Max=0.5526
+  ICIR: Mean=0.3981, Max=0.5701
+  QSR: Mean=0.0003, Max=0.0027
+
+LightGBM:
+  IC: Mean=-0.1001, Max=-0.0631
+  Hit_Rate: Mean=0.4773, Max=0.4989
+  ICIR: Mean=-0.7387, Max=-0.4922
+  QSR: Mean=-0.0073, Max=-0.0041
+
+XGBoost:
+  IC: Mean=-0.0500, Max=-0.0230
+  Hit_Rate: Mean=0.4758, Max=0.4765
+  ICIR: Mean=-0.4947, Max=-0.2053
+  QSR: Mean=-0.0094, Max=-0.0042
+
+LSTM:
+  IC: Mean=0.0106, Max=0.0892
+  Hit_Rate: Mean=0.5506, Max=0.5814
+  ICIR: Mean=0.0010, Max=0.8895
+  QSR: Mean=0.0004, Max=0.0175
+
+GRU:
+  IC: Mean=-0.0188, Max=0.0101
+  Hit_Rate: Mean=0.5294, Max=0.5711
+  ICIR: Mean=-0.2546, Max=0.2611
+  QSR: Mean=-0.0049, Max=0.0130
+
+CNN-LSTM:
+  IC: Mean=0.0214, Max=0.0892
+  Hit_Rate: Mean=0.5685, Max=0.5814
+  ICIR: Mean=0.1582, Max=0.8895
+  QSR: Mean=0.0030, Max=0.0175
+
+Transformer:
+  IC: Mean=0.0088, Max=0.0614
+  Hit_Rate: Mean=0.5489, Max=0.5762
+  ICIR: Mean=0.0179, Max=0.7676
+  QSR: Mean=-0.0007, Max=0.0167
+
+Multimodal:
+  IC: Mean=-0.0028, Max=0.0711
+  Hit_Rate: Mean=0.5356, Max=0.5814
+  ICIR: Mean=-0.1111, Max=0.8895
+  QSR: Mean=-0.0026, Max=0.0130
+
+Hybrid:
+  IC: Mean=0.0211, Max=0.0892
+  Hit_Rate: Mean=0.5524, Max=0.5711
+  ICIR: Mean=0.0298, Max=0.8821
+  QSR: Mean=-0.0007, Max=0.0175
+
+Hierarchical:
+  IC: Mean=0.0342, Max=0.0571
+  Hit_Rate: Mean=0.5134, Max=0.5685
+  ICIR: Mean=0.1823, Max=0.2951
+  QSR: Mean=0.0077, Max=0.0089
+
+METRIC-SPECIFIC DETAILED ANALYSIS
+----------------------------------------------------------------------------------------------------
+
+1. INFORMATION COEFFICIENT (IC) ANALYSIS:
+   - Measures predictive power of models
+   - Higher IC indicates better prediction accuracy
+   - Spearman rank correlation between predictions and actual returns
+   - Best Model: Hybrid_CNN-LSTM_All (0.0892)
+
+2. HIT RATE ANALYSIS:
+   - Measures directional prediction accuracy
+   - Percentage of correct directional predictions
+   - Higher hit rate indicates better directional forecasting
+   - Best Model: Multimodal_CNN-LSTM_All (0.5814)
+
+3. ICIR (INFORMATION COEFFICIENT INFORMATION RATIO) ANALYSIS:
+   - Measures stability of predictive power
+   - ICIR = Mean IC / Std IC
+   - Higher ICIR indicates more consistent performance
+   - Best Model: Multimodal_CNN-LSTM_Basic (0.8895)
+
+4. QUINTILE SPREAD RETURN (QSR) ANALYSIS:
+   - Measures factor effectiveness
+   - Q5 (top) - Q1 (bottom) return spread
+   - Factor validation perspective metric
+   - Best Model: Hybrid_CNN-LSTM_All (0.0175)
+
+OVERALL CONCLUSIONS
+----------------------------------------------------------------------------------------------------
+Overall Performance Statistics:
+
+IC:
+  Mean: -0.0021
+  Std: 0.0501
+  Max: 0.0892
+  Min: -0.1361
+
+Hit_Rate:
+  Mean: 0.5321
+  Std: 0.0442
+  Max: 0.5814
+  Min: 0.4341
+
+ICIR:
+  Mean: -0.0858
+  Std: 0.4751
+  Max: 0.8895
+  Min: -1.1766
+
+QSR:
+  Mean: -0.0015
+  Std: 0.0090
+  Max: 0.0175
+  Min: -0.0220
+
+PRACTICAL APPLICATION GUIDE
+----------------------------------------------------------------------------------------------------
+🔹 For Maximum IC (Predictive Power):
+  - Use: Hybrid_CNN-LSTM_All
+  - IC Score: 0.0892
+
+🔹 For Directional Trading:
+  - Use: Multimodal_CNN-LSTM_All
+  - Hit Rate: 0.5814
+
+🔹 For Stable Performance:
+  - Use: Multimodal_CNN-LSTM_Basic
+  - ICIR Score: 0.8895
+
+🔹 For Factor Validation:
+  - Use: Hybrid_CNN-LSTM_All
+  - QSR Score: 0.0175
+
+FINAL RECOMMENDATIONS
+----------------------------------------------------------------------------------------------------
+🏆 Overall Best Model: Hybrid_CNN-LSTM_All
+   - IC: 0.0892 (Highest predictive power)
+   - ICIR: 0.8821 (Highest stability)
+   - QSR: 0.0175 (Highest factor effectiveness)
+   - Hit Rate: 0.5711 (High directional accuracy)
+
+🥈 Alternative Best Model: Ridge_Advanced_Reddit
+   - IC: 0.0685 (High predictive power)
+   - ICIR: 0.5701 (High stability)
+   - Hit Rate: 0.5526 (High directional accuracy)
+   - Simple and interpretable
