@@ -125,12 +125,24 @@ def create_performance_plot(df, x_axis='Hit_Rate', y_axis='IC', title_suffix='')
                        label=f'{model_type.replace("_", " ")}',
                        edgecolors='black', linewidth=0.5)
             
-            # 모델명 라벨 추가
+            # 모델명 라벨 추가 (간소화된 이름)
             for idx, row in subset.iterrows():
-                plt.annotate(idx.replace('_', ' '), 
+                # 모델명 간소화
+                model_name = idx.replace('_', ' ')
+                # 중복 부분 제거
+                if 'Price Only' in model_name:
+                    model_name = model_name.replace(' Price Only', '')
+                elif 'Reddit All' in model_name:
+                    model_name = model_name.replace(' Reddit All', '')
+                elif 'Advanced Reddit' in model_name:
+                    model_name = model_name.replace(' Advanced Reddit', '')
+                elif 'Basic' in model_name:
+                    model_name = model_name.replace(' Basic', '')
+                
+                plt.annotate(model_name, 
                            (row[x_axis], row[y_axis]),
-                           xytext=(5, 5), textcoords='offset points',
-                           fontsize=8, alpha=0.8)
+                           xytext=(3, 3), textcoords='offset points',
+                           fontsize=6, alpha=0.7)
     
     # 축 라벨 및 제목
     plt.xlabel(f'{x_axis.replace("_", " ")}', fontsize=12, fontweight='bold')
@@ -201,6 +213,24 @@ def create_comparison_plots():
             ax1.scatter(subset['Hit_Rate'], subset['IC'], 
                        c=color_mapping[model_type], s=80, alpha=0.7,
                        label=f'{model_type.replace("_", " ")}')
+            
+            # 모델명 라벨 추가 (간소화된 이름)
+            for idx, row in subset.iterrows():
+                model_name = idx.replace('_', ' ')
+                if 'Price Only' in model_name:
+                    model_name = model_name.replace(' Price Only', '')
+                elif 'Reddit All' in model_name:
+                    model_name = model_name.replace(' Reddit All', '')
+                elif 'Advanced Reddit' in model_name:
+                    model_name = model_name.replace(' Advanced Reddit', '')
+                elif 'Basic' in model_name:
+                    model_name = model_name.replace(' Basic', '')
+                
+                ax1.annotate(model_name, 
+                           (row['Hit_Rate'], row['IC']),
+                           xytext=(2, 2), textcoords='offset points',
+                           fontsize=5, alpha=0.6)
+    
     ax1.set_xlabel('Hit Rate')
     ax1.set_ylabel('IC')
     ax1.set_title('IC vs Hit Rate')
@@ -216,6 +246,24 @@ def create_comparison_plots():
             ax2.scatter(subset['ICIR'], subset['IC'], 
                        c=color_mapping[model_type], s=80, alpha=0.7,
                        label=f'{model_type.replace("_", " ")}')
+            
+            # 모델명 라벨 추가 (간소화된 이름)
+            for idx, row in subset.iterrows():
+                model_name = idx.replace('_', ' ')
+                if 'Price Only' in model_name:
+                    model_name = model_name.replace(' Price Only', '')
+                elif 'Reddit All' in model_name:
+                    model_name = model_name.replace(' Reddit All', '')
+                elif 'Advanced Reddit' in model_name:
+                    model_name = model_name.replace(' Advanced Reddit', '')
+                elif 'Basic' in model_name:
+                    model_name = model_name.replace(' Basic', '')
+                
+                ax2.annotate(model_name, 
+                           (row['ICIR'], row['IC']),
+                           xytext=(2, 2), textcoords='offset points',
+                           fontsize=5, alpha=0.6)
+    
     ax2.set_xlabel('ICIR')
     ax2.set_ylabel('IC')
     ax2.set_title('IC vs ICIR')
@@ -231,6 +279,24 @@ def create_comparison_plots():
             ax3.scatter(subset['ICIR'], subset['Hit_Rate'], 
                        c=color_mapping[model_type], s=80, alpha=0.7,
                        label=f'{model_type.replace("_", " ")}')
+            
+            # 모델명 라벨 추가 (간소화된 이름)
+            for idx, row in subset.iterrows():
+                model_name = idx.replace('_', ' ')
+                if 'Price Only' in model_name:
+                    model_name = model_name.replace(' Price Only', '')
+                elif 'Reddit All' in model_name:
+                    model_name = model_name.replace(' Reddit All', '')
+                elif 'Advanced Reddit' in model_name:
+                    model_name = model_name.replace(' Advanced Reddit', '')
+                elif 'Basic' in model_name:
+                    model_name = model_name.replace(' Basic', '')
+                
+                ax3.annotate(model_name, 
+                           (row['ICIR'], row['Hit_Rate']),
+                           xytext=(2, 2), textcoords='offset points',
+                           fontsize=5, alpha=0.6)
+    
     ax3.set_xlabel('ICIR')
     ax3.set_ylabel('Hit Rate')
     ax3.set_title('Hit Rate vs ICIR')
@@ -246,6 +312,24 @@ def create_comparison_plots():
             ax4.scatter(subset['IC'], subset['QSR'], 
                        c=color_mapping[model_type], s=80, alpha=0.7,
                        label=f'{model_type.replace("_", " ")}')
+            
+            # 모델명 라벨 추가 (간소화된 이름)
+            for idx, row in subset.iterrows():
+                model_name = idx.replace('_', ' ')
+                if 'Price Only' in model_name:
+                    model_name = model_name.replace(' Price Only', '')
+                elif 'Reddit All' in model_name:
+                    model_name = model_name.replace(' Reddit All', '')
+                elif 'Advanced Reddit' in model_name:
+                    model_name = model_name.replace(' Advanced Reddit', '')
+                elif 'Basic' in model_name:
+                    model_name = model_name.replace(' Basic', '')
+                
+                ax4.annotate(model_name, 
+                           (row['IC'], row['QSR']),
+                           xytext=(2, 2), textcoords='offset points',
+                           fontsize=5, alpha=0.6)
+    
     ax4.set_xlabel('IC')
     ax4.set_ylabel('QSR')
     ax4.set_title('QSR vs IC')
